@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net-Monitor Pro | Login</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    }
+
+    .container {
+      width: 900px;
+      max-width: 95%;
+      display: flex;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+      background: #fff;
+    }
+
+    /* Left panel */
+    .left {
+      flex: 1;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .left h1 {
+      font-size: 32px;
+      margin-bottom: 15px;
+    }
+
+    .left p {
+      font-size: 15px;
+      line-height: 1.6;
+      opacity: 0.9;
+    }
+
+    /* Right panel */
+    .right {
+      flex: 1;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .right h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .input-group {
+      margin-bottom: 15px;
+    }
+
+    .input-group label {
+      display: block;
+      margin-bottom: 5px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    .input-group input {
+      width: 100%;
+      padding: 12px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      outline: none;
+      transition: 0.3s;
+    }
+
+    .input-group input:focus {
+      border-color: #4facfe;
+      box-shadow: 0 0 5px rgba(79,172,254,0.5);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4facfe, #00f2fe);
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .footer {
+      margin-top: 15px;
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .footer a {
+      color: #4facfe;
+      text-decoration: none;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+      }
+
+      .left {
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <!-- Left branding -->
+    <div class="left">
+      <h1>Welcome to<br>Net-Monitor Pro</h1>
+      <p>
+        A modern network monitoring solution designed to help you track,
+        analyze, and manage your network performance in real time.
+        Stay connected. Stay informed. Stay in control.
+      </p>
+    </div>
+
+    <!-- Right login -->
+    <div class="right">
+      <h2>Login to your account</h2>
+
+      <form>
+        <div class="input-group">
+          <label>Username</label>
+          <input type="text" placeholder="Enter your username" required>
+        </div>
+
+        <div class="input-group">
+          <label>Password</label>
+          <input type="password" placeholder="Enter your password" required>
+        </div>
+
+        <button class="btn" type="submit">Login</button>
+
+        <div class="footer">
+          Don't have an account? <a href="#">Sign up</a>
+        </div>
+      </form>
+    </div>
+
+  </div>
+
+  <!-- JavaScript login logic -->
+  <script>
+    const form = document.querySelector("form");
+
+    form.addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const username = form.querySelector("input[type='text']").value;
+      const password = form.querySelector("input[type='password']").value;
+
+      if (username === "admin" && password === "password123") {
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Invalid username or password");
+      }
+    });
+  </script>
+
+</body>
+</html>

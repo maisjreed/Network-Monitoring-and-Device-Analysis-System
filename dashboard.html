@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Net-Monitor Pro</title>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  display: flex;
+  height: 100vh;
+  background: linear-gradient(135deg, #0f2027, #1c3b4a, #274b63);
+  color: #fff;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: blur(12px);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #4facfe;
+}
+
+.menu {
+  list-style: none;
+}
+
+.menu li {
+  padding: 14px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.menu li:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+.menu li.active {
+  background: linear-gradient(135deg, #4facfe, #00c6ff);
+  color: #000;
+  font-weight: bold;
+}
+
+/* Main */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Topbar */
+.topbar {
+  padding: 15px 25px;
+  background: linear-gradient(135deg, rgba(79,172,254,0.15), rgba(0,198,255,0.15));
+  backdrop-filter: blur(12px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.datetime {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+/* Content */
+.content {
+  padding: 25px;
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 20px;
+}
+
+/* Cards */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background: linear-gradient(135deg, #4facfe, #00f2fe);
+  color: #003344;
+  padding: 20px;
+  border-radius: 15px;
+  transition: 0.3s;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.card h3 {
+  font-size: 14px;
+  margin-bottom: 10px;
+  color: #003344;
+}
+
+.card p {
+  font-size: 24px;
+  font-weight: bold;
+  color: #001f2b;
+}
+
+/* Status */
+.green { color: #00ff9f; }
+.red { color: #ff4d4d; }
+
+/* Logout */
+.logout {
+  margin-top: auto;
+  cursor: pointer;
+  padding: 12px;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(255,0,0,0.15);
+}
+
+.logout:hover {
+  background: red;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="sidebar">
+  <div class="logo">🚀 Net-Monitor Pro</div>
+
+  <ul class="menu">
+    <li class="active">📊 Dashboard Overview</li>
+    <li>📡 Traffic Monitoring</li>
+    <li>🖥️ Device Monitoring</li>
+    <li>⚡ Network Speed Test</li>
+    <li>🌐 Network Map</li>
+    <li>⚙️ Settings</li>
+  </ul>
+
+  <div class="logout" onclick="logout()">🚪 Logout</div>
+</div>
+
+<div class="main">
+
+  <div class="topbar">
+    <div>Dashboard Overview</div>
+    <div class="datetime" id="datetime"></div>
+  </div>
+
+  <div class="content">
+    <div class="title">Network Overview</div>
+
+    <div class="cards">
+      <div class="card">
+        <h3>Devices Online</h3>
+        <p class="green">12</p>
+      </div>
+
+      <div class="card">
+        <h3>Devices Offline</h3>
+        <p class="red">2</p>
+      </div>
+
+      <div class="card">
+        <h3>Network Speed</h3>
+        <p>120 Mbps</p>
+      </div>
+
+      <div class="card">
+        <h3>Latency</h3>
+        <p>25 ms</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+function logout() {
+  window.location.href = "login.html";
+}
+
+// Live Date & Time
+function updateDateTime() {
+  const now = new Date();
+  document.getElementById("datetime").innerText =
+    now.toLocaleDateString() + " | " + now.toLocaleTimeString();
+}
+
+setInterval(updateDateTime, 1000);
+updateDateTime();
+</script>
+
+</body>
+</html>
