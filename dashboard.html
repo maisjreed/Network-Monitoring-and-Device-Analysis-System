@@ -271,7 +271,7 @@ body {
 </div>
 
 <script>
-// --- AUDIT LOG LOGIC (PROFESSIONAL FEED) ---
+// --- AUDIT LOG LOGIC ---
 function pushLog(type, message) {
   const logBox = document.getElementById('activity-log');
   if(!logBox) return;
@@ -301,8 +301,8 @@ function switchPage(pageId, el) {
 // --- LOGOUT ACTION ---
 function handleLogout() {
   if(confirm("Are you sure you want to terminate the administrator session?")) {
-    pushLog('SECURITY', 'Administrator session terminated manually.');
-    alert("Session Ended. Please re-login.");
+    // This redirects the user back to your login.html file
+    window.location.href = "login.html";
   }
 }
 
@@ -321,7 +321,7 @@ function setTheme(mode) {
   }
 }
 
-// --- PASSWORD VALIDATION & LOGGING ---
+// --- PASSWORD VALIDATION ---
 document.getElementById('passwordForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const n = document.getElementById('n-pass').value;
@@ -369,7 +369,7 @@ setInterval(() => {
   if(pkt) pkt.textContent = Math.floor(1000 + Math.random()*800).toLocaleString();
 }, 1000);
 
-// Heartbeat simulator for Audit Log
+// Heartbeat simulator
 setInterval(() => {
   const nodes = ["Gateway_A", "Switch_Internal", "Node_8", "AP_Main"];
   const target = nodes[Math.floor(Math.random()*nodes.length)];
