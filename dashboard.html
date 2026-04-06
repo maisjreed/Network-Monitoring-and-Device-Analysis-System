@@ -3,34 +3,54 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
 <title>Net-Monitor Pro · Traffic Monitor</title>
+=======
+<title>Net-Monitor Pro | Enterprise Dashboard</title>
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  --bg: #080d13;
+  --bg: #05080a;
   --surface: #0d1520;
   --surface2: #111c2a;
   --border: rgba(56,189,248,0.12);
-  --border2: rgba(56,189,248,0.22);
+  --border2: rgba(56,189,248,0.25);
   --accent: #38bdf8;
-  --accent2: #0ea5e9;
-  --accent-glow: rgba(56,189,248,0.18);
+  --accent-glow: rgba(56,189,248,0.15);
   --green: #22d3a0;
-  --green-bg: rgba(34,211,160,0.1);
   --red: #f87171;
-  --red-bg: rgba(248,113,113,0.1);
+  --red-glow: rgba(248, 113, 113, 0.15);
   --amber: #fbbf24;
+<<<<<<< HEAD
   --amber-bg: rgba(251,191,36,0.1);
   --purple: #a78bfa;
   --purple-bg: rgba(167,139,250,0.1);
+=======
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
   --text: #e2eaf4;
-  --text2: #7a94b0;
-  --text3: #3d5570;
+  --text2: #94a3b8;
+  --text3: #475569;
   --mono: 'Space Mono', monospace;
   --sans: 'DM Sans', sans-serif;
+  --panel-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* ─── LIGHT MODE OVERRIDES ─── */
+body.light-mode {
+  --bg: #f0f4f8;
+  --surface: #ffffff;
+  --surface2: #f8fafc;
+  --border: rgba(15, 23, 42, 0.08);
+  --border2: rgba(15, 23, 42, 0.15);
+  --accent: #0284c7;
+  --accent-glow: rgba(2, 132, 199, 0.1);
+  --text: #0f172a;
+  --text2: #475569;
+  --text3: #94a3b8;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, border 0.3s; }
 
 body {
   font-family: var(--sans);
@@ -43,114 +63,28 @@ body {
 
 /* ─── SIDEBAR ─── */
 .sidebar {
-  width: 240px;
+  width: 260px;
   background: var(--surface);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  padding: 0;
   flex-shrink: 0;
 }
 
-.logo-block {
-  padding: 28px 22px 24px;
-  border-bottom: 1px solid var(--border);
-}
+.logo-block { padding: 35px 24px; border-bottom: 1px solid var(--border); }
+.logo-text { font-family: var(--mono); font-size: 16px; font-weight: 700; color: var(--text); letter-spacing: -0.5px; }
+.logo-accent { color: var(--accent); }
 
-.logo-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.logo-icon {
-  width: 34px;
-  height: 34px;
-  background: var(--accent);
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo-icon svg { width: 18px; height: 18px; color: #080d13; }
-
-.logo-text {
-  font-family: var(--mono);
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  color: var(--text);
-  line-height: 1.1;
-}
-
-.logo-sub {
-  font-family: var(--mono);
-  font-size: 9px;
-  color: var(--accent);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.status-pill {
-  margin-top: 10px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
-  background: var(--green-bg);
-  border: 1px solid rgba(34,211,160,0.25);
-  border-radius: 20px;
-  font-size: 10px;
-  font-family: var(--mono);
-  color: var(--green);
-  letter-spacing: 0.05em;
-}
-
-.pulse {
-  width: 6px;
-  height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-  animation: pulse 2s ease infinite;
-}
-
-@keyframes pulse {
-  0%,100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.8); }
-}
-
-.nav-section {
-  padding: 20px 14px 8px;
-  font-size: 9px;
-  font-family: var(--mono);
-  letter-spacing: 0.15em;
-  color: var(--text3);
-  text-transform: uppercase;
-}
-
-.menu {
-  list-style: none;
-  padding: 0 10px;
-  flex: 1;
-}
-
+.nav-section { padding: 24px 20px 8px; font-size: 10px; font-family: var(--mono); color: var(--text3); text-transform: uppercase; }
+.menu { list-style: none; padding: 0 12px; flex: 1; }
 .menu li {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  margin-bottom: 2px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 13.5px;
-  font-weight: 400;
-  color: var(--text2);
-  transition: all 0.18s;
-  letter-spacing: 0.01em;
-  position: relative;
+  display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 4px;
+  border-radius: 10px; cursor: pointer; color: var(--text2); font-size: 14px;
 }
+.menu li:hover { background: var(--accent-glow); color: var(--text); }
+.menu li.active { background: var(--accent-glow); color: var(--accent); border: 1px solid var(--border2); font-weight: 600; }
 
+<<<<<<< HEAD
 .menu li:hover { background: rgba(56,189,248,0.07); color: var(--text); }
 
 .menu li.active {
@@ -174,14 +108,15 @@ body {
 .menu-badge {
   margin-left: auto;
   background: var(--red-bg);
+=======
+.menu li.logout-item:hover {
+  background: var(--red-glow);
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
   color: var(--red);
-  font-size: 10px;
-  font-family: var(--mono);
-  padding: 1px 6px;
-  border-radius: 4px;
-  border: 1px solid rgba(248,113,113,0.2);
+  border: 1px solid rgba(248, 113, 113, 0.2);
 }
 
+<<<<<<< HEAD
 .sidebar-footer {
   padding: 16px 10px;
   border-top: 1px solid var(--border);
@@ -211,17 +146,17 @@ body {
 }
 
 /* ─── TOPBAR ─── */
+=======
+/* ─── MAIN CONTENT ─── */
+.main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
 .topbar {
-  height: 58px;
-  padding: 0 28px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--surface);
-  flex-shrink: 0;
+  height: 64px; padding: 0 32px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between; background: var(--surface);
 }
+.content { flex: 1; overflow-y: auto; padding: 32px; }
 
+<<<<<<< HEAD
 .topbar-left { display: flex; align-items: center; gap: 8px; }
 
 .breadcrumb {
@@ -310,16 +245,32 @@ body {
 
 /* ─── STAT CARDS ─── */
 .cards {
+=======
+/* ─── DASHBOARD STATS ─── */
+.hero-stats {
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 14px;
-  margin-bottom: 22px;
+  gap: 20px;
+  margin-bottom: 30px;
 }
 
-.card {
-  background: var(--surface);
+.stat-card {
+  background: linear-gradient(145deg, var(--surface), var(--surface2));
   border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--panel-shadow);
+}
+
+.stat-val { font-family: var(--mono); font-size: 28px; font-weight: 700; margin: 8px 0; }
+.stat-label { font-size: 10px; text-transform: uppercase; color: var(--text3); font-family: var(--mono); letter-spacing: 1px; }
+
+/* ─── ACTIVITY LOG ─── */
+#activity-log {
+  background: var(--bg);
   border-radius: 12px;
+<<<<<<< HEAD
   padding: 18px 20px;
   transition: border-color 0.2s;
   position: relative;
@@ -722,35 +673,60 @@ body {
   font-family: var(--mono);
   font-size: 20px;
   font-weight: 700;
+=======
+  padding: 15px;
+  height: 280px;
+  overflow-y: auto;
+  border: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 11px;
 }
+
+.log-entry { margin-bottom: 8px; border-left: 2px solid var(--accent); padding-left: 10px; animation: slideIn 0.3s ease-out; }
+.log-ts { color: var(--text3); margin-right: 8px; }
+
+/* ─── GRID & PANELS ─── */
+.dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--panel-shadow); }
+.panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+.panel-title { font-size: 13px; font-family: var(--mono); font-weight: 700; color: var(--text2); }
+
+/* ─── SETTINGS ─── */
+.settings-container { max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.input-group { margin-bottom: 20px; }
+.input-group label { display: block; font-size: 11px; color: var(--text3); margin-bottom: 8px; font-family: var(--mono); }
+.input-group input {
+  width: 100%; padding: 12px; background: var(--bg); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text); font-family: var(--mono); outline: none;
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
+}
+.input-group input:focus { border-color: var(--accent); }
+
+.btn-primary {
+  background: var(--accent); color: #000; border: none; padding: 12px 24px;
+  border-radius: 8px; font-weight: 700; font-family: var(--mono); cursor: pointer; width: 100%;
+}
+
+.theme-selector { display: flex; gap: 15px; }
+.theme-option { flex: 1; padding: 15px; border: 2px solid var(--border); border-radius: 12px; cursor: pointer; text-align: center; }
+.theme-option.active { border-color: var(--accent); background: var(--accent-glow); }
+
+.page-view { display: none; }
+.page-view.active { display: block; animation: fadeIn 0.4s ease-out; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes slideIn { from { transform: translateX(-10px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
 </style>
 </head>
 <body>
 
-<!-- SIDEBAR -->
 <div class="sidebar">
   <div class="logo-block">
-    <div class="logo-badge">
-      <div class="logo-icon">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
-          <path d="M2 12h4M18 12h4M12 2v4M12 18v4"/>
-          <circle cx="12" cy="12" r="4"/>
-          <path d="M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
-        </svg>
-      </div>
-      <div>
-        <div class="logo-text">NET-MONITOR</div>
-        <div class="logo-sub">Pro v2.1</div>
-      </div>
-    </div>
-    <div class="status-pill">
-      <div class="pulse"></div>
-      NETWORK ACTIVE
-    </div>
+    <div class="logo-text">NET-MONITOR <span class="logo-accent">PRO</span></div>
   </div>
-
-  <div class="nav-section">Main</div>
+  
+  <div class="nav-section">Infrastructure</div>
   <ul class="menu">
+<<<<<<< HEAD
     <li onclick="window.location.href='dashboard.html'">
       <span class="menu-icon">⊞</span> Dashboard
     </li>
@@ -764,33 +740,25 @@ body {
     <li>
       <span class="menu-icon">⚡</span> Speed Test
     </li>
+=======
+    <li class="active" onclick="switchPage('dashboard', this)"><span class="menu-icon">⊞</span> Dashboard</li>
+    <li onclick="switchPage('traffic', this)"><span class="menu-icon">↗</span> Traffic Monitor</li>
+    <li onclick="switchPage('devices', this)"><span class="menu-icon">⊡</span> Devices</li>
+    <li onclick="switchPage('speed', this)"><span class="menu-icon">⚡</span> Speed Test</li>
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
   </ul>
 
-  <div class="nav-section">Tools</div>
+  <div class="nav-section">Configuration</div>
   <ul class="menu">
-    <li>
-      <span class="menu-icon">⊕</span> Network Map
-    </li>
-    <li>
-      <span class="menu-icon">◈</span> Diagnostics
-    </li>
-    <li>
-      <span class="menu-icon">⚙</span> Settings
-    </li>
+    <li onclick="switchPage('netmap', this)"><span class="menu-icon">⊕</span> Network Map</li>
+    <li onclick="switchPage('settings', this)"><span class="menu-icon">⚙</span> Settings</li>
+    <li class="logout-item" onclick="handleLogout()"><span class="menu-icon">⏻</span> Logout</li>
   </ul>
-
-  <div class="sidebar-footer">
-    <div class="logout-btn" onclick="window.location.href='login.html'">
-      <span>↩</span> Sign out
-    </div>
-  </div>
 </div>
 
-<!-- MAIN -->
 <div class="main">
-
-  <!-- TOPBAR -->
   <div class="topbar">
+<<<<<<< HEAD
     <div class="topbar-left">
       <span class="breadcrumb">
         NET-MONITOR <span class="breadcrumb-sep">/</span>
@@ -801,11 +769,16 @@ body {
       <div class="datetime" id="datetime">—</div>
       <div class="topbar-divider"></div>
       <div class="avatar">AD</div>
+=======
+    <div class="breadcrumb" style="font-family: var(--mono); font-size: 12px;">
+      SYSTEM / <span id="current-page" style="color: var(--accent)">DASHBOARD</span>
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
     </div>
+    <div id="clock" style="font-family: var(--mono); font-size: 12px;">00:00:00</div>
   </div>
 
-  <!-- CONTENT -->
   <div class="content">
+<<<<<<< HEAD
 
     <div class="page-header">
       <div>
@@ -858,10 +831,51 @@ body {
         <div class="card-value purple" id="total-today">—<span class="card-unit">GB</span></div>
         <div class="card-footer">
           <span class="card-delta up">▲ 4%</span> vs yesterday
+=======
+    
+    <div id="dashboard" class="page-view active">
+      <div class="hero-stats">
+        <div class="stat-card">
+          <div class="stat-label">System Health</div>
+          <div class="stat-val" style="color: var(--green)">98.2%</div>
+          <div style="font-size: 10px; color: var(--text3)">Status: Nominal</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Active Packets</div>
+          <div class="stat-val" style="color: var(--accent)" id="packet-count">1,240</div>
+          <div style="font-size: 10px; color: var(--text3)">Processing...</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Test Speed Result</div>
+          <div class="stat-val" style="color: var(--amber)">425.8 <span style="font-size: 12px">Mbps</span></div>
+          <div style="font-size: 10px; color: var(--text3)">Avg. Latency: 12ms</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Total Device Discover</div>
+          <div class="stat-val">34</div>
+          <div style="font-size: 10px; color: var(--text3)">Network Nodes</div>
+        </div>
+      </div>
+
+      <div class="dashboard-grid">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Throughput Real-Time Feed</div></div>
+          <canvas id="mainChart" style="width:100%; height:280px;"></canvas>
+        </div>
+        
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">System Audit Log</div>
+            <div style="font-size: 10px; color: var(--accent); font-family: var(--mono);">SECURE FEED</div>
+          </div>
+          <div id="activity-log"></div>
+          <p style="margin-top: 10px; font-size: 10px; color: var(--text3); font-family: var(--mono);">* Tracking active system events.</p>
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
         </div>
       </div>
     </div>
 
+<<<<<<< HEAD
     <!-- MAIN LIVE CHART -->
     <div class="panel main-chart-wrap">
       <div class="panel-header">
@@ -934,13 +948,49 @@ body {
             <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;width:46px;">PROTO</span>
           </div>
           <div class="stream-list" id="stream-list"></div>
+=======
+    <div id="settings" class="page-view">
+      <div class="settings-container">
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Security Management</div></div>
+          <form id="passwordForm">
+            <div class="input-group">
+              <label>New Root Password</label>
+              <input type="password" id="n-pass" placeholder="Enter new password" required>
+            </div>
+            <div class="input-group">
+              <label>Confirm Root Password</label>
+              <input type="password" id="c-pass" placeholder="Confirm password" required>
+            </div>
+            <button type="submit" class="btn-primary">UPDATE SECURITY</button>
+            <div id="pass-msg" style="margin-top:15px; font-size:11px; font-family:var(--mono); text-transform: uppercase;"></div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header"><div class="panel-title">Display Preferences</div></div>
+          <div class="theme-selector">
+            <div class="theme-option active" id="dark-btn" onclick="setTheme('dark')">
+              <div style="height:35px; background:#0d1520; border-radius:6px; margin-bottom:8px; border:1px solid #38bdf8"></div>
+              <div class="stat-label">Cyber Dark</div>
+            </div>
+            <div class="theme-option" id="light-btn" onclick="setTheme('light')">
+              <div style="height:35px; background:#ffffff; border-radius:6px; margin-bottom:8px; border:1px solid #ddd"></div>
+              <div class="stat-label">Pristine Light</div>
+            </div>
+          </div>
+          <p style="margin-top:20px; font-size:11px; color:var(--text3); font-family:var(--mono);">Select a theme to refresh system aesthetics.</p>
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
         </div>
       </div>
     </div>
 
-    <!-- BOTTOM ROW -->
-    <div class="grid-3">
+    <div id="traffic" class="page-view"><div class="panel">Traffic Analysis Engine</div></div>
+    <div id="devices" class="page-view"><div class="panel">Hardware Discovery List</div></div>
+    <div id="speed" class="page-view"><div class="panel">Network Benchmarking</div></div>
+    <div id="netmap" class="page-view"><div class="panel">Topological Mapping</div></div>
 
+<<<<<<< HEAD
       <!-- Bandwidth by App -->
       <div class="panel">
         <div class="panel-header">
@@ -1007,10 +1057,13 @@ body {
       </div>
 
     </div>
+=======
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
   </div>
 </div>
 
 <script>
+<<<<<<< HEAD
 // ── Helpers ──
 function rnd(a, b) { return +(a + Math.random() * (b - a)).toFixed(1); }
 function rndInt(a, b) { return Math.floor(a + Math.random() * (b - a)); }
@@ -1331,6 +1384,118 @@ for (let i = 0; i < 8; i++) addStreamRow();
 refreshAll();
 intervalId = setInterval(() => { refreshAll(); addStreamRow(); }, 5000);
 setInterval(addStreamRow, 1500);
+=======
+// --- AUDIT LOG LOGIC (PROFESSIONAL FEED) ---
+function pushLog(type, message) {
+  const logBox = document.getElementById('activity-log');
+  if(!logBox) return;
+  const ts = new Date().toLocaleTimeString();
+  let color = 'var(--accent)';
+  if(type === 'SECURITY') color = '#fbbf24';
+  if(type === 'SYSTEM') color = '#22d3a0';
+  if(type === 'ERROR') color = '#f87171';
+
+  const div = document.createElement('div');
+  div.className = 'log-entry';
+  div.style.borderLeftColor = color;
+  div.innerHTML = `<span class="log-ts">[${ts}]</span> <b style="color:${color}; font-size:9px;">${type}</b>: ${message}`;
+  logBox.prepend(div);
+  if(logBox.children.length > 15) logBox.lastChild.remove();
+}
+
+// --- NAVIGATION ---
+function switchPage(pageId, el) {
+  document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.menu li').forEach(l => l.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  el.classList.add('active');
+  document.getElementById('current-page').textContent = pageId.toUpperCase();
+}
+
+// --- LOGOUT ACTION ---
+function handleLogout() {
+  if(confirm("Are you sure you want to terminate the administrator session?")) {
+    pushLog('SECURITY', 'Administrator session terminated manually.');
+    alert("Session Ended. Please re-login.");
+  }
+}
+
+// --- THEME ENGINE ---
+function setTheme(mode) {
+  if (mode === 'light') {
+    document.body.classList.add('light-mode');
+    document.getElementById('light-btn').classList.add('active');
+    document.getElementById('dark-btn').classList.remove('active');
+    pushLog('SYSTEM', 'Interface switched to Pristine Light Mode.');
+  } else {
+    document.body.classList.remove('light-mode');
+    document.getElementById('dark-btn').classList.add('active');
+    document.getElementById('light-btn').classList.remove('active');
+    pushLog('SYSTEM', 'Interface switched to Cyber Dark Mode.');
+  }
+}
+
+// --- PASSWORD VALIDATION & LOGGING ---
+document.getElementById('passwordForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+  const n = document.getElementById('n-pass').value;
+  const c = document.getElementById('c-pass').value;
+  const msg = document.getElementById('pass-msg');
+  if(n !== c) {
+    msg.style.color = 'var(--red)';
+    msg.textContent = "Error: Password mismatch.";
+    pushLog('ERROR', 'Password update failed: Verification mismatch.');
+  } else {
+    msg.style.color = 'var(--green)';
+    msg.textContent = "Success: Security updated.";
+    pushLog('SECURITY', 'Root administrator password updated successfully.');
+    this.reset();
+  }
+});
+
+// --- PERFORMANCE CHART ---
+function initChart() {
+  const canvas = document.getElementById('mainChart');
+  if(!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const points = Array.from({length: 40}, () => Math.random() * 100);
+  function draw() {
+    if(!document.getElementById('dashboard').classList.contains('active')) return;
+    canvas.width = canvas.clientWidth; canvas.height = 280;
+    ctx.clearRect(0,0,canvas.width, 280);
+    ctx.beginPath(); ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+    points.forEach((v, i) => {
+      const x = (i/(points.length-1)) * canvas.width;
+      const y = 280 - (v/100) * 280;
+      i === 0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    });
+    ctx.stroke();
+    points.shift(); points.push(Math.random() * 100);
+    setTimeout(draw, 1000);
+  }
+  draw();
+}
+
+// --- REAL-TIME UPDATES ---
+setInterval(() => {
+  document.getElementById('clock').textContent = new Date().toLocaleTimeString();
+  const pkt = document.getElementById('packet-count');
+  if(pkt) pkt.textContent = Math.floor(1000 + Math.random()*800).toLocaleString();
+}, 1000);
+
+// Heartbeat simulator for Audit Log
+setInterval(() => {
+  const nodes = ["Gateway_A", "Switch_Internal", "Node_8", "AP_Main"];
+  const target = nodes[Math.floor(Math.random()*nodes.length)];
+  pushLog('NETWORK', `Health-check ping for ${target}: Stable (1ms)`);
+}, 12000);
+
+window.onload = () => { 
+  initChart(); 
+  pushLog('SYSTEM', 'Net-Monitor Core 2.0 Initialized.');
+  pushLog('NETWORK', 'Subnet discovery complete: 34 active nodes found.');
+};
+>>>>>>> 541dae2bc589c34ebb950720868202c9e0d28069
 </script>
 </body>
 </html>
