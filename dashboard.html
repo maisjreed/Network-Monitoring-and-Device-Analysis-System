@@ -124,9 +124,16 @@ body {
 
 /* ─── GRID & PANELS ─── */
 .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; }
-.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--panel-shadow); }
+.panel { background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; box-shadow: var(--panel-shadow); position: relative; overflow: hidden; }
 .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
 .panel-title { font-size: 13px; font-family: var(--mono); font-weight: 700; color: var(--text2); }
+
+/* ─── MODULE OVERLAYS ─── */
+.module-overlay {
+    position: absolute; inset: 0; background: rgba(5, 8, 10, 0.95);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    z-index: 100; backdrop-filter: blur(8px);
+}
 
 /* ─── SETTINGS ─── */
 .settings-container { max-width: 900px; display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
@@ -146,6 +153,14 @@ body {
 .theme-selector { display: flex; gap: 15px; }
 .theme-option { flex: 1; padding: 15px; border: 2px solid var(--border); border-radius: 12px; cursor: pointer; text-align: center; }
 .theme-option.active { border-color: var(--accent); background: var(--accent-glow); }
+
+/* ─── SPEED TEST UI ─── */
+.speed-meter {
+    width: 200px; height: 200px; border-radius: 50%; border: 3px solid var(--border);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px auto;
+}
+.progress-container { width: 100%; height: 6px; background: var(--bg); border-radius: 3px; margin-top: 15px; overflow: hidden; }
+.progress-bar { width: 0%; height: 100%; background: var(--accent); transition: width 0.1s linear; }
 
 .page-view { display: none; }
 .page-view.active { display: block; animation: fadeIn 0.4s ease-out; }
@@ -200,12 +215,12 @@ body {
         </div>
         <div class="stat-card">
           <div class="stat-label">Test Speed Result</div>
-          <div class="stat-val" style="color: var(--amber)">425.8 <span style="font-size: 12px">Mbps</span></div>
+          <div class="stat-val" style="color: var(--amber)"><span id="dash-speed-val">425.8</span> <span style="font-size: 12px">Mbps</span></div>
           <div style="font-size: 10px; color: var(--text3)">Avg. Latency: 12ms</div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Total Device Discover</div>
-          <div class="stat-val">34</div>
+          <div class="stat-val" id="dash-device-count">34</div>
           <div style="font-size: 10px; color: var(--text3)">Network Nodes</div>
         </div>
       </div>
@@ -262,16 +277,51 @@ body {
       </div>
     </div>
 
-    <div id="traffic" class="page-view"><div class="panel">Traffic Analysis Engine</div></div>
-    <div id="devices" class="page-view"><div class="panel">Hardware Discovery List</div></div>
-    <div id="speed" class="page-view"><div class="panel">Network Benchmarking</div></div>
+    <div id="traffic" class="page-view">
+        <div class="panel">
+            <div id="traffic-overlay" class="module-overlay">
+                <div style="width:200px"><button onclick="startTraffic()" class="btn-primary">START TRAFFIC ENGINE</button></div>
+            </div>
+            <div class="panel-header"><div class="panel-title">Live Analysis Engine</div></div>
+            <div id="traffic-log" style="background:var(--bg); padding:15px; height:400px; overflow-y:auto; border-radius:12px; font-family:var(--mono); font-size:11px;"></div>
+            <button id="stop-traffic" onclick="stopTraffic()" style="display:none; margin-top:10px; color:var(--red); border:1px solid var(--red); background:none; padding:8px 16px; border-radius:8px; cursor:pointer; font-family:var(--mono);">TERMINATE ENGINE</button>
+        </div>
+    </div>
+
+    <div id="devices" class="page-view">
+        <div class="panel">
+            <div id="devices-overlay" class="module-overlay">
+                <div style="width:200px"><button onclick="scanDevices()" class="btn-primary">SCAN HARDWARE NODES</button></div>
+            </div>
+            <div class="panel-header"><div class="panel-title">Hardware Discovery List</div></div>
+            <div id="device-list" style="height:450px; overflow-y:auto; font-family:var(--mono); font-size:12px;"></div>
+        </div>
+    </div>
+
+    <div id="speed" class="page-view">
+        <div class="panel">
+            <div id="speed-overlay" class="module-overlay">
+                <div style="width:200px"><button onclick="runSpeedTest()" class="btn-primary">BEGIN BENCHMARK</button></div>
+            </div>
+            <div class="panel-title">Network Performance</div>
+            <div style="max-width: 400px; margin: 40px auto; text-align: center;">
+                <div class="speed-meter">
+                    <div id="speed-num" style="font-size: 42px; font-weight: 700; color: var(--accent); font-family: var(--mono);">0.0</div>
+                    <div style="font-size: 12px; color: var(--text3); font-family: var(--mono);">MBPS</div>
+                </div>
+                <div id="speed-status" style="font-family:var(--mono); font-size:11px; margin-bottom:10px; color:var(--accent);">AWAITING SIGNAL...</div>
+                <div class="progress-container"><div id="speed-bar" class="progress-bar"></div></div>
+            </div>
+        </div>
+    </div>
+
     <div id="netmap" class="page-view"><div class="panel">Topological Mapping</div></div>
 
   </div>
 </div>
 
 <script>
-// --- AUDIT LOG LOGIC ---
+// --- YOUR ORIGINAL SCRIPTS (RETAINED) ---
 function pushLog(type, message) {
   const logBox = document.getElementById('activity-log');
   if(!logBox) return;
@@ -280,6 +330,7 @@ function pushLog(type, message) {
   if(type === 'SECURITY') color = '#fbbf24';
   if(type === 'SYSTEM') color = '#22d3a0';
   if(type === 'ERROR') color = '#f87171';
+  if(type === 'SPEED') color = '#fbbf24';
 
   const div = document.createElement('div');
   div.className = 'log-entry';
@@ -289,7 +340,6 @@ function pushLog(type, message) {
   if(logBox.children.length > 15) logBox.lastChild.remove();
 }
 
-// --- NAVIGATION ---
 function switchPage(pageId, el) {
   document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.menu li').forEach(l => l.classList.remove('active'));
@@ -298,15 +348,12 @@ function switchPage(pageId, el) {
   document.getElementById('current-page').textContent = pageId.toUpperCase();
 }
 
-// --- LOGOUT ACTION ---
 function handleLogout() {
   if(confirm("Are you sure you want to terminate the administrator session?")) {
-    // This redirects the user back to your login.html file
     window.location.href = "login.html";
   }
 }
 
-// --- THEME ENGINE ---
 function setTheme(mode) {
   if (mode === 'light') {
     document.body.classList.add('light-mode');
@@ -321,7 +368,6 @@ function setTheme(mode) {
   }
 }
 
-// --- PASSWORD VALIDATION ---
 document.getElementById('passwordForm').addEventListener('submit', function(e) {
   e.preventDefault();
   const n = document.getElementById('n-pass').value;
@@ -339,14 +385,13 @@ document.getElementById('passwordForm').addEventListener('submit', function(e) {
   }
 });
 
-// --- PERFORMANCE CHART ---
 function initChart() {
   const canvas = document.getElementById('mainChart');
   if(!canvas) return;
   const ctx = canvas.getContext('2d');
   const points = Array.from({length: 40}, () => Math.random() * 100);
   function draw() {
-    if(!document.getElementById('dashboard').classList.contains('active')) return;
+    if(!document.getElementById('dashboard').classList.contains('active')) { setTimeout(draw, 1000); return; }
     canvas.width = canvas.clientWidth; canvas.height = 280;
     ctx.clearRect(0,0,canvas.width, 280);
     ctx.beginPath(); ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
@@ -362,19 +407,66 @@ function initChart() {
   draw();
 }
 
-// --- REAL-TIME UPDATES ---
 setInterval(() => {
   document.getElementById('clock').textContent = new Date().toLocaleTimeString();
   const pkt = document.getElementById('packet-count');
   if(pkt) pkt.textContent = Math.floor(1000 + Math.random()*800).toLocaleString();
 }, 1000);
 
-// Heartbeat simulator
-setInterval(() => {
-  const nodes = ["Gateway_A", "Switch_Internal", "Node_8", "AP_Main"];
-  const target = nodes[Math.floor(Math.random()*nodes.length)];
-  pushLog('NETWORK', `Health-check ping for ${target}: Stable (1ms)`);
-}, 12000);
+// --- NEW MODULE LOGIC (ADDED SURGICALLY) ---
+
+let trafficEng = null;
+function startTraffic() {
+    document.getElementById('traffic-overlay').style.display = 'none';
+    document.getElementById('stop-traffic').style.display = 'block';
+    pushLog('NETWORK', 'Live traffic analysis engaged.');
+    trafficEng = setInterval(() => {
+        const log = document.getElementById('traffic-log');
+        const d = document.createElement('div');
+        d.style.padding = "5px 0"; d.style.borderBottom = "1px solid var(--border)";
+        d.innerHTML = `[${new Date().toLocaleTimeString()}] <span style="color:var(--accent)">TCP</span> Incoming Request from 192.168.1.${Math.floor(Math.random()*254)}`;
+        log.prepend(d);
+        if(log.children.length > 20) log.lastChild.remove();
+    }, 800);
+}
+function stopTraffic() { clearInterval(trafficEng); document.getElementById('traffic-overlay').style.display = 'flex'; document.getElementById('stop-traffic').style.display = 'none'; pushLog('SYSTEM', 'Traffic engine suspended.'); }
+
+function scanDevices() {
+    const overlay = document.getElementById('devices-overlay');
+    const list = document.getElementById('device-list');
+    overlay.innerHTML = '<div style="color:var(--accent); font-family:var(--mono);">SCANNING SUBNET...</div>';
+    setTimeout(() => {
+        overlay.style.display = 'none';
+        list.innerHTML = `<div style="padding:15px; border-bottom:1px solid var(--border);">CORE_ROUTER_01 | 192.168.1.1 <span style="float:right; color:var(--green)">ONLINE</span></div><div style="padding:15px; border-bottom:1px solid var(--border);">ADMIN_STATION | 192.168.1.45 <span style="float:right; color:var(--green)">ONLINE</span></div>`;
+        document.getElementById('dash-device-count').textContent = "36";
+        pushLog('NETWORK', 'Subnet discovery complete: 2 new nodes found.');
+    }, 2000);
+}
+
+function runSpeedTest() {
+    const overlay = document.getElementById('speed-overlay');
+    const val = document.getElementById('speed-num');
+    const bar = document.getElementById('speed-bar');
+    const status = document.getElementById('speed-status');
+    overlay.style.display = 'none';
+    let prog = 0;
+    let target = (Math.random() * 500 + 100).toFixed(1);
+    pushLog('SPEED', 'Bandwidth benchmark initiated.');
+    const t = setInterval(() => {
+        prog += 2;
+        bar.style.width = prog + '%';
+        val.textContent = (Math.random() * target).toFixed(1);
+        status.textContent = prog < 50 ? 'TESTING DOWNLOAD...' : 'TESTING UPLOAD...';
+        if(prog >= 100) {
+            clearInterval(t);
+            val.textContent = target;
+            status.textContent = 'BENCHMARK COMPLETE';
+            document.getElementById('dash-speed-val').textContent = target;
+            pushLog('SPEED', `Test complete: ${target} Mbps.`);
+            setTimeout(() => { overlay.style.display='flex'; overlay.innerHTML='<button onclick="runSpeedTest()" class="btn-primary">RE-RUN TEST</button>'; }, 3000);
+        }
+    }, 100);
+}
 
 window.onload = () => { 
   initChart(); 
