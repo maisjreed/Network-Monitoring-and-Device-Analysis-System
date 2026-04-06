@@ -4,215 +4,1098 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Net-Monitor Pro</title>
-
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: "Poppins", sans-serif;
+:root {
+  --bg: #080d13;
+  --surface: #0d1520;
+  --surface2: #111c2a;
+  --border: rgba(56,189,248,0.12);
+  --border2: rgba(56,189,248,0.22);
+  --accent: #38bdf8;
+  --accent2: #0ea5e9;
+  --accent-glow: rgba(56,189,248,0.18);
+  --green: #22d3a0;
+  --green-bg: rgba(34,211,160,0.1);
+  --red: #f87171;
+  --red-bg: rgba(248,113,113,0.1);
+  --amber: #fbbf24;
+  --amber-bg: rgba(251,191,36,0.1);
+  --text: #e2eaf4;
+  --text2: #7a94b0;
+  --text3: #3d5570;
+  --mono: 'Space Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
 }
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
 body {
+  font-family: var(--sans);
+  background: var(--bg);
+  color: var(--text);
   display: flex;
   height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #1c3b4a, #274b63);
-  color: #fff;
+  overflow: hidden;
 }
 
-/* Sidebar */
+/* ─── SIDEBAR ─── */
 .sidebar {
-  width: 260px;
-  background: rgba(255,255,255,0.06);
-  backdrop-filter: blur(12px);
-  padding: 20px;
+  width: 240px;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
-  border-right: 1px solid rgba(255,255,255,0.1);
+  padding: 0;
+  flex-shrink: 0;
 }
 
-.logo {
-  font-size: 22px;
-  font-weight: bold;
-  margin-bottom: 30px;
-  color: #4facfe;
+.logo-block {
+  padding: 28px 22px 24px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-icon {
+  width: 34px;
+  height: 34px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon svg { width: 18px; height: 18px; color: #080d13; }
+
+.logo-text {
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  line-height: 1.1;
+}
+
+.logo-sub {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--accent);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.status-pill {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  background: var(--green-bg);
+  border: 1px solid rgba(34,211,160,0.25);
+  border-radius: 20px;
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--green);
+  letter-spacing: 0.05em;
+}
+
+.pulse {
+  width: 6px;
+  height: 6px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: pulse 2s ease infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.nav-section {
+  padding: 20px 14px 8px;
+  font-size: 9px;
+  font-family: var(--mono);
+  letter-spacing: 0.15em;
+  color: var(--text3);
+  text-transform: uppercase;
 }
 
 .menu {
   list-style: none;
+  padding: 0 10px;
+  flex: 1;
 }
 
 .menu li {
-  padding: 14px;
-  margin-bottom: 10px;
-  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  margin-bottom: 2px;
+  border-radius: 8px;
   cursor: pointer;
-  transition: 0.3s;
+  font-size: 13.5px;
+  font-weight: 400;
+  color: var(--text2);
+  transition: all 0.18s;
+  letter-spacing: 0.01em;
+  position: relative;
 }
 
 .menu li:hover {
-  background: rgba(255,255,255,0.1);
+  background: rgba(56,189,248,0.07);
+  color: var(--text);
 }
 
 .menu li.active {
-  background: linear-gradient(135deg, #4facfe, #00c6ff);
-  color: #000;
-  font-weight: bold;
+  background: rgba(56,189,248,0.1);
+  color: var(--accent);
+  font-weight: 500;
+  border: 1px solid var(--border2);
 }
 
-/* Main */
+.menu li.active::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 20%;
+  height: 60%;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.menu-icon { font-size: 14px; width: 18px; text-align: center; }
+
+.menu-badge {
+  margin-left: auto;
+  background: var(--red-bg);
+  color: var(--red);
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 1px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(248,113,113,0.2);
+}
+
+.sidebar-footer {
+  padding: 16px 10px;
+  border-top: 1px solid var(--border);
+}
+
+.logout-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13.5px;
+  color: var(--text2);
+  transition: all 0.18s;
+  font-weight: 400;
+}
+
+.logout-btn:hover {
+  background: var(--red-bg);
+  color: var(--red);
+  border-color: rgba(248,113,113,0.2);
+}
+
+/* ─── MAIN ─── */
 .main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
+  background: var(--bg);
 }
 
-/* Topbar */
+/* ─── TOPBAR ─── */
 .topbar {
-  padding: 15px 25px;
-  background: linear-gradient(135deg, rgba(79,172,254,0.15), rgba(0,198,255,0.15));
-  backdrop-filter: blur(12px);
+  height: 58px;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--border);
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid rgba(255,255,255,0.15);
+  justify-content: space-between;
+  background: var(--surface);
+  flex-shrink: 0;
 }
+
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumb {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+  letter-spacing: 0.05em;
+}
+
+.breadcrumb-sep { margin: 0 6px; color: var(--text3); }
+
+.breadcrumb-current {
+  color: var(--text2);
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
 .datetime {
-  font-size: 14px;
-  opacity: 0.8;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
 }
 
-/* Content */
+.topbar-divider {
+  width: 1px;
+  height: 20px;
+  background: var(--border);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  background: linear-gradient(135deg, var(--accent2), #0284c7);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  font-family: var(--mono);
+  color: #fff;
+}
+
+/* ─── CONTENT ─── */
 .content {
-  padding: 25px;
+  flex: 1;
+  overflow-y: auto;
+  padding: 26px 28px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface2) transparent;
 }
 
-.title {
-  font-size: 22px;
-  margin-bottom: 20px;
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 24px;
 }
 
-/* Cards */
+.page-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.page-sub {
+  font-size: 12px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-top: 3px;
+  letter-spacing: 0.04em;
+}
+
+.refresh-btn {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--accent);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+
+.refresh-btn:hover { background: var(--accent-glow); }
+
+/* ─── STAT CARDS ─── */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
 .card {
-  background: linear-gradient(135deg, #4facfe, #00f2fe);
-  color: #003344;
-  padding: 20px;
-  border-radius: 15px;
-  transition: 0.3s;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  transition: border-color 0.2s;
+  position: relative;
+  overflow: hidden;
 }
 
-.card:hover {
-  transform: translateY(-6px) scale(1.02);
+.card::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(56,189,248,0.4), transparent);
+  opacity: 0;
+  transition: opacity 0.2s;
 }
 
-.card h3 {
+.card:hover { border-color: var(--border2); }
+.card:hover::after { opacity: 1; }
+
+.card-label {
+  font-size: 10px;
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text3);
+  margin-bottom: 12px;
+}
+
+.card-value {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.card-value.green { color: var(--green); }
+.card-value.red { color: var(--red); }
+.card-value.accent { color: var(--accent); }
+.card-value.amber { color: var(--amber); }
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  color: var(--text3);
+  font-family: var(--mono);
+}
+
+.card-delta {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 4px;
+}
+
+.card-delta.up { background: var(--green-bg); color: var(--green); }
+.card-delta.down { background: var(--red-bg); color: var(--red); }
+.card-delta.neutral { background: var(--amber-bg); color: var(--amber); }
+
+.card-icon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
   font-size: 14px;
-  margin-bottom: 10px;
-  color: #003344;
 }
 
-.card p {
-  font-size: 24px;
-  font-weight: bold;
-  color: #001f2b;
+.card-icon.green-icon { background: var(--green-bg); }
+.card-icon.red-icon { background: var(--red-bg); }
+.card-icon.blue-icon { background: var(--accent-glow); }
+.card-icon.amber-icon { background: var(--amber-bg); }
+
+/* ─── GRID ─── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 14px;
+  margin-bottom: 22px;
 }
 
-/* Status */
-.green { color: #00ff9f; }
-.red { color: #ff4d4d; }
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
 
-/* Logout */
-.logout {
-  margin-top: auto;
-  cursor: pointer;
-  padding: 12px;
-  border-radius: 10px;
+.panel-header {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.panel-title {
+  font-size: 12px;
+  font-family: var(--mono);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.panel-tag {
+  font-size: 10px;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.06em;
+}
+
+.tag-live { background: var(--green-bg); color: var(--green); border: 1px solid rgba(34,211,160,0.2); }
+.tag-info { background: var(--accent-glow); color: var(--accent); border: 1px solid var(--border2); }
+
+.panel-body { padding: 18px 20px; }
+
+/* ─── TRAFFIC CHART ─── */
+.chart-area {
+  height: 150px;
+  position: relative;
+}
+
+.chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
+  font-size: 10px;
+  font-family: var(--mono);
+  color: var(--text3);
+  letter-spacing: 0.04em;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 14px;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text2);
+}
+
+.legend-dot {
+  width: 8px; height: 8px;
+  border-radius: 2px;
+}
+
+/* ─── DEVICE LIST ─── */
+.device-list { display: flex; flex-direction: column; gap: 0; }
+
+.device-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.device-row:last-child { border-bottom: none; }
+
+.device-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.device-dot.online { background: var(--green); box-shadow: 0 0 6px rgba(34,211,160,0.5); }
+.device-dot.offline { background: var(--red); }
+.device-dot.warning { background: var(--amber); }
+
+.device-name {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--text);
+  flex: 1;
+}
+
+.device-ip {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+}
+
+.device-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+}
+
+.status-online { background: var(--green-bg); color: var(--green); }
+.status-offline { background: var(--red-bg); color: var(--red); }
+.status-warning { background: var(--amber-bg); color: var(--amber); }
+
+/* ─── BOTTOM ROW ─── */
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
+/* ─── MINI BARS ─── */
+.mini-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mini-bar-label {
+  font-size: 11px;
+  font-family: var(--mono);
+  color: var(--text2);
+  width: 70px;
+  flex-shrink: 0;
+}
+
+.mini-bar-track {
+  flex: 1;
+  height: 5px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.mini-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.5s ease;
+}
+
+.mini-bar-val {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  width: 36px;
+  text-align: right;
+}
+
+/* ─── ALERTS ─── */
+.alert-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.alert-row:last-child { border-bottom: none; }
+
+.alert-icon {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.alert-body { flex: 1; }
+
+.alert-title {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 2px;
+}
+
+.alert-time {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text3);
+  letter-spacing: 0.06em;
+}
+
+/* ─── PROTOCOL RINGS ─── */
+.protocol-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.proto-item {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
   text-align: center;
-  background: rgba(255,0,0,0.15);
 }
 
-.logout:hover {
-  background: red;
+.proto-name {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 4px;
+  letter-spacing: 0.06em;
 }
 
+.proto-val {
+  font-family: var(--mono);
+  font-size: 18px;
+  font-weight: 700;
+}
 </style>
 </head>
-
 <body>
 
+<!-- SIDEBAR -->
 <div class="sidebar">
-  <div class="logo">🚀 Net-Monitor Pro</div>
-
-  <ul class="menu">
-    <li class="active">📊 Dashboard Overview</li>
-    <li>📡 Traffic Monitoring</li>
-    <li>🖥️ Device Monitoring</li>
-    <li>⚡ Network Speed Test</li>
-    <li>🌐 Network Map</li>
-    <li>⚙️ Settings</li>
-  </ul>
-
-  <div class="logout" onclick="logout()">🚪 Logout</div>
-</div>
-
-<div class="main">
-
-  <div class="topbar">
-    <div>Dashboard Overview</div>
-    <div class="datetime" id="datetime"></div>
-  </div>
-
-  <div class="content">
-    <div class="title">Network Overview</div>
-
-    <div class="cards">
-      <div class="card">
-        <h3>Devices Online</h3>
-        <p class="green">12</p>
+  <div class="logo-block">
+    <div class="logo-badge">
+      <div class="logo-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+          <path d="M2 12h4M18 12h4M12 2v4M12 18v4"/>
+          <circle cx="12" cy="12" r="4"/>
+          <path d="M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+        </svg>
       </div>
-
-      <div class="card">
-        <h3>Devices Offline</h3>
-        <p class="red">2</p>
+      <div>
+        <div class="logo-text">NET-MONITOR</div>
+        <div class="logo-sub">Pro v2.1</div>
       </div>
-
-      <div class="card">
-        <h3>Network Speed</h3>
-        <p>120 Mbps</p>
-      </div>
-
-      <div class="card">
-        <h3>Latency</h3>
-        <p>25 ms</p>
-      </div>
+    </div>
+    <div class="status-pill">
+      <div class="pulse"></div>
+      NETWORK ACTIVE
     </div>
   </div>
 
+  <div class="nav-section">Main</div>
+  <ul class="menu">
+    <li class="active">
+      <span class="menu-icon">⊞</span> Dashboard
+    </li>
+    <li>
+      <span class="menu-icon">↗</span> Traffic Monitor
+    </li>
+    <li>
+      <span class="menu-icon">⊡</span> Devices
+      <span class="menu-badge">2</span>
+    </li>
+    <li>
+      <span class="menu-icon">⚡</span> Speed Test
+    </li>
+  </ul>
+
+  <div class="nav-section">Tools</div>
+  <ul class="menu">
+    <li>
+      <span class="menu-icon">⊕</span> Network Map
+    </li>
+    <li>
+      <span class="menu-icon">◈</span> Diagnostics
+    </li>
+    <li>
+      <span class="menu-icon">⚙</span> Settings
+    </li>
+  </ul>
+
+  <div class="sidebar-footer">
+    <div class="logout-btn" onclick="window.location.href='login.html'">
+      <span>↩</span> Sign out
+    </div>
+  </div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="breadcrumb">
+        NET-MONITOR <span class="breadcrumb-sep">/</span>
+        <span class="breadcrumb-current">Dashboard</span>
+      </span>
+    </div>
+    <div class="topbar-right">
+      <div class="datetime" id="datetime">—</div>
+      <div class="topbar-divider"></div>
+      <div class="avatar">AD</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <div class="page-header">
+      <div>
+        <div class="page-title">Network Overview</div>
+        <div class="page-sub">Last updated: <span id="last-update">—</span> · Auto-refresh every 30s</div>
+      </div>
+      <button class="refresh-btn" onclick="refreshData()">↻ REFRESH</button>
+    </div>
+
+    <!-- STAT CARDS -->
+    <div class="cards">
+      <div class="card">
+        <div class="card-icon green-icon">🖥</div>
+        <div class="card-label">Devices Online</div>
+        <div class="card-value green" id="online-count">12</div>
+        <div class="card-footer">
+          <span class="card-delta up">▲ 2</span> since last hour
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon red-icon">⚠</div>
+        <div class="card-label">Devices Offline</div>
+        <div class="card-value red" id="offline-count">2</div>
+        <div class="card-footer">
+          <span class="card-delta down">▼ 1</span> needs attention
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon blue-icon">⇅</div>
+        <div class="card-label">Network Speed</div>
+        <div class="card-value accent" id="speed">120</div>
+        <div class="card-footer">
+          <span class="card-delta up">▲ 8%</span> Mbps · peak 145
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon amber-icon">◎</div>
+        <div class="card-label">Avg Latency</div>
+        <div class="card-value amber" id="latency">25</div>
+        <div class="card-footer">
+          <span class="card-delta neutral">— stable</span> ms · threshold 100
+        </div>
+      </div>
+    </div>
+
+    <!-- MIDDLE ROW -->
+    <div class="grid-2">
+
+      <!-- Traffic Chart -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Traffic Overview</span>
+          <span class="panel-tag tag-live">● LIVE</span>
+        </div>
+        <div class="panel-body">
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-dot" style="background: var(--accent);"></div>
+              Download
+            </div>
+            <div class="legend-item">
+              <div class="legend-dot" style="background: var(--green);"></div>
+              Upload
+            </div>
+          </div>
+          <div class="chart-area">
+            <canvas id="trafficChart" style="width:100%;height:150px;"></canvas>
+          </div>
+          <div class="chart-labels" id="chart-labels"></div>
+        </div>
+      </div>
+
+      <!-- Device List -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Active Devices</span>
+          <span class="panel-tag tag-info">14 TOTAL</span>
+        </div>
+        <div class="panel-body" style="padding: 0 20px;">
+          <div class="device-list">
+            <div class="device-row">
+              <div class="device-dot online"></div>
+              <div>
+                <div class="device-name">Gateway Router</div>
+                <div class="device-ip">192.168.0.1</div>
+              </div>
+              <div class="device-status status-online">ONLINE</div>
+            </div>
+            <div class="device-row">
+              <div class="device-dot online"></div>
+              <div>
+                <div class="device-name">Main Server</div>
+                <div class="device-ip">192.168.0.10</div>
+              </div>
+              <div class="device-status status-online">ONLINE</div>
+            </div>
+            <div class="device-row">
+              <div class="device-dot warning"></div>
+              <div>
+                <div class="device-name">Switch-B2</div>
+                <div class="device-ip">192.168.0.44</div>
+              </div>
+              <div class="device-status status-warning">SLOW</div>
+            </div>
+            <div class="device-row">
+              <div class="device-dot offline"></div>
+              <div>
+                <div class="device-name">Printer-01</div>
+                <div class="device-ip">192.168.0.23</div>
+              </div>
+              <div class="device-status status-offline">OFFLINE</div>
+            </div>
+            <div class="device-row">
+              <div class="device-dot online"></div>
+              <div>
+                <div class="device-name">Workstation-05</div>
+                <div class="device-ip">192.168.0.55</div>
+              </div>
+              <div class="device-status status-online">ONLINE</div>
+            </div>
+            <div class="device-row">
+              <div class="device-dot offline"></div>
+              <div>
+                <div class="device-name">IP Camera-03</div>
+                <div class="device-ip">192.168.0.31</div>
+              </div>
+              <div class="device-status status-offline">OFFLINE</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="grid-3">
+
+      <!-- Bandwidth Usage -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Bandwidth Usage</span>
+          <span class="panel-tag tag-info">BY PORT</span>
+        </div>
+        <div class="panel-body">
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">HTTP</div>
+            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:78%;background:var(--accent);"></div></div>
+            <div class="mini-bar-val">78%</div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">HTTPS</div>
+            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:62%;background:var(--green);"></div></div>
+            <div class="mini-bar-val">62%</div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">DNS</div>
+            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:45%;background:var(--amber);"></div></div>
+            <div class="mini-bar-val">45%</div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">FTP</div>
+            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:20%;background:var(--accent2);"></div></div>
+            <div class="mini-bar-val">20%</div>
+          </div>
+          <div class="mini-bar-row">
+            <div class="mini-bar-label">SSH</div>
+            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:12%;background:var(--text3);"></div></div>
+            <div class="mini-bar-val">12%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerts -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Recent Alerts</span>
+          <span class="panel-tag" style="background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,0.2);">3 NEW</span>
+        </div>
+        <div class="panel-body" style="padding:0 20px;">
+          <div class="alert-row">
+            <div class="alert-icon" style="background:var(--red-bg);">⚠</div>
+            <div class="alert-body">
+              <div class="alert-title">Printer-01 unreachable</div>
+              <div class="alert-time">TODAY · 14:32:11</div>
+            </div>
+          </div>
+          <div class="alert-row">
+            <div class="alert-icon" style="background:var(--amber-bg);">◎</div>
+            <div class="alert-body">
+              <div class="alert-title">High latency on Switch-B2</div>
+              <div class="alert-time">TODAY · 14:18:40</div>
+            </div>
+          </div>
+          <div class="alert-row">
+            <div class="alert-icon" style="background:var(--red-bg);">⚠</div>
+            <div class="alert-body">
+              <div class="alert-title">IP Camera-03 offline</div>
+              <div class="alert-time">TODAY · 13:55:02</div>
+            </div>
+          </div>
+          <div class="alert-row">
+            <div class="alert-icon" style="background:var(--green-bg);">✓</div>
+            <div class="alert-body">
+              <div class="alert-title">Main Server back online</div>
+              <div class="alert-time">TODAY · 12:01:44</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Protocol Breakdown -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Protocol Breakdown</span>
+          <span class="panel-tag tag-info">24H</span>
+        </div>
+        <div class="panel-body">
+          <div class="protocol-grid">
+            <div class="proto-item">
+              <div class="proto-name">TCP</div>
+              <div class="proto-val" style="color:var(--accent);">68%</div>
+            </div>
+            <div class="proto-item">
+              <div class="proto-name">UDP</div>
+              <div class="proto-val" style="color:var(--green);">24%</div>
+            </div>
+            <div class="proto-item">
+              <div class="proto-name">ICMP</div>
+              <div class="proto-val" style="color:var(--amber);">5%</div>
+            </div>
+            <div class="proto-item">
+              <div class="proto-name">OTHER</div>
+              <div class="proto-val" style="color:var(--text3);">3%</div>
+            </div>
+          </div>
+          <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
+            <div class="mini-bar-row" style="margin-bottom:6px;">
+              <div class="mini-bar-label" style="font-size:10px;color:var(--text3);">Total today</div>
+              <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text);margin-left:auto;">4.7 GB</div>
+            </div>
+            <div class="mini-bar-row">
+              <div class="mini-bar-label" style="font-size:10px;color:var(--text3);">Packets/sec</div>
+              <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text);margin-left:auto;" id="pps">1,204</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
 
 <script>
-function logout() {
-  window.location.href = "login.html";
-}
-
-// Live Date & Time
+// ── DateTime ──
 function updateDateTime() {
   const now = new Date();
-  document.getElementById("datetime").innerText =
-    now.toLocaleDateString() + " | " + now.toLocaleTimeString();
+  const opts = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
+  document.getElementById('datetime').textContent =
+    now.toLocaleDateString('en-GB') + '  ·  ' + now.toLocaleTimeString('en-GB', opts);
+  document.getElementById('last-update').textContent = now.toLocaleTimeString('en-GB', opts);
 }
-
 setInterval(updateDateTime, 1000);
 updateDateTime();
-</script>
 
+// ── Traffic Chart (Canvas) ──
+const canvas = document.getElementById('trafficChart');
+const ctx = canvas.getContext('2d');
+const labels = [];
+const dlData = [];
+const ulData = [];
+const NUM_POINTS = 20;
+
+function randomBetween(a, b) { return Math.floor(a + Math.random() * (b - a)); }
+
+for (let i = NUM_POINTS; i >= 0; i--) {
+  const d = new Date(Date.now() - i * 30000);
+  labels.push(d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0'));
+  dlData.push(randomBetween(60, 140));
+  ulData.push(randomBetween(15, 55));
+}
+
+document.getElementById('chart-labels').innerHTML =
+  [labels[0], labels[Math.floor(NUM_POINTS/4)], labels[Math.floor(NUM_POINTS/2)], labels[Math.floor(3*NUM_POINTS/4)], labels[NUM_POINTS]]
+    .map(l => `<span>${l}</span>`).join('');
+
+function drawChart() {
+  const W = canvas.clientWidth;
+  const H = 150;
+  canvas.width = W;
+  canvas.height = H;
+
+  const pad = { top: 8, right: 4, bottom: 4, left: 4 };
+  const w = W - pad.left - pad.right;
+  const h = H - pad.top - pad.bottom;
+  const maxVal = 160;
+
+  function getX(i) { return pad.left + (i / (dlData.length - 1)) * w; }
+  function getY(v) { return pad.top + h - (v / maxVal) * h; }
+
+  function drawLine(data, color, fillColor) {
+    ctx.beginPath();
+    data.forEach((v, i) => {
+      const x = getX(i), y = getY(v);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    });
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    ctx.lineTo(getX(data.length - 1), H);
+    ctx.lineTo(getX(0), H);
+    ctx.closePath();
+    ctx.fillStyle = fillColor;
+    ctx.fill();
+  }
+
+  ctx.clearRect(0, 0, W, H);
+
+  // grid lines
+  [0.25, 0.5, 0.75, 1].forEach(f => {
+    const y = pad.top + h * (1 - f);
+    ctx.beginPath();
+    ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y);
+    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+  });
+
+  drawLine(dlData, '#38bdf8', 'rgba(56,189,248,0.08)');
+  drawLine(ulData, '#22d3a0', 'rgba(34,211,160,0.06)');
+}
+
+drawChart();
+
+// ── Refresh ──
+function refreshData() {
+  dlData.shift(); ulData.shift();
+  dlData.push(randomBetween(60, 140));
+  ulData.push(randomBetween(15, 55));
+  drawChart();
+  document.getElementById('speed').textContent = randomBetween(100, 145);
+  document.getElementById('latency').textContent = randomBetween(18, 45);
+  document.getElementById('pps').textContent = randomBetween(900, 1500).toLocaleString();
+}
+
+setInterval(refreshData, 5000);
+window.addEventListener('resize', drawChart);
+</script>
 </body>
 </html>
