@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Net-Monitor Pro</title>
+<title>Net-Monitor Pro · Traffic Monitor</title>
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -21,6 +21,8 @@
   --red-bg: rgba(248,113,113,0.1);
   --amber: #fbbf24;
   --amber-bg: rgba(251,191,36,0.1);
+  --purple: #a78bfa;
+  --purple-bg: rgba(167,139,250,0.1);
   --text: #e2eaf4;
   --text2: #7a94b0;
   --text3: #3d5570;
@@ -149,10 +151,7 @@ body {
   position: relative;
 }
 
-.menu li:hover {
-  background: rgba(56,189,248,0.07);
-  color: var(--text);
-}
+.menu li:hover { background: rgba(56,189,248,0.07); color: var(--text); }
 
 .menu li.active {
   background: rgba(56,189,248,0.1);
@@ -164,10 +163,8 @@ body {
 .menu li.active::before {
   content: '';
   position: absolute;
-  left: 0;
-  top: 20%;
-  height: 60%;
-  width: 2px;
+  left: 0; top: 20%;
+  height: 60%; width: 2px;
   background: var(--accent);
   border-radius: 2px;
 }
@@ -200,14 +197,9 @@ body {
   font-size: 13.5px;
   color: var(--text2);
   transition: all 0.18s;
-  font-weight: 400;
 }
 
-.logout-btn:hover {
-  background: var(--red-bg);
-  color: var(--red);
-  border-color: rgba(248,113,113,0.2);
-}
+.logout-btn:hover { background: var(--red-bg); color: var(--red); }
 
 /* ─── MAIN ─── */
 .main {
@@ -230,11 +222,7 @@ body {
   flex-shrink: 0;
 }
 
-.topbar-left {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
+.topbar-left { display: flex; align-items: center; gap: 8px; }
 
 .breadcrumb {
   font-size: 12px;
@@ -244,16 +232,9 @@ body {
 }
 
 .breadcrumb-sep { margin: 0 6px; color: var(--text3); }
+.breadcrumb-current { color: var(--text2); }
 
-.breadcrumb-current {
-  color: var(--text2);
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
+.topbar-right { display: flex; align-items: center; gap: 18px; }
 
 .datetime {
   font-family: var(--mono);
@@ -262,24 +243,15 @@ body {
   letter-spacing: 0.06em;
 }
 
-.topbar-divider {
-  width: 1px;
-  height: 20px;
-  background: var(--border);
-}
+.topbar-divider { width: 1px; height: 20px; background: var(--border); }
 
 .avatar {
-  width: 32px;
-  height: 32px;
+  width: 32px; height: 32px;
   background: linear-gradient(135deg, var(--accent2), #0284c7);
   border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11px;
-  font-weight: 700;
-  font-family: var(--mono);
-  color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px; font-weight: 700;
+  font-family: var(--mono); color: #fff;
 }
 
 /* ─── CONTENT ─── */
@@ -298,20 +270,10 @@ body {
   margin-bottom: 24px;
 }
 
-.page-title {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text);
-  letter-spacing: -0.01em;
-}
+.page-title { font-size: 20px; font-weight: 600; color: var(--text); letter-spacing: -0.01em; }
+.page-sub { font-size: 12px; color: var(--text3); font-family: var(--mono); margin-top: 3px; letter-spacing: 0.04em; }
 
-.page-sub {
-  font-size: 12px;
-  color: var(--text3);
-  font-family: var(--mono);
-  margin-top: 3px;
-  letter-spacing: 0.04em;
-}
+.header-actions { display: flex; align-items: center; gap: 10px; }
 
 .refresh-btn {
   display: flex;
@@ -330,6 +292,21 @@ body {
 }
 
 .refresh-btn:hover { background: var(--accent-glow); }
+
+.interval-select {
+  padding: 7px 12px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-family: var(--mono);
+  font-size: 11px;
+  border-radius: 6px;
+  cursor: pointer;
+  outline: none;
+  letter-spacing: 0.04em;
+}
+
+.interval-select:focus { border-color: var(--border2); }
 
 /* ─── STAT CARDS ─── */
 .cards {
@@ -373,7 +350,7 @@ body {
 
 .card-value {
   font-family: var(--mono);
-  font-size: 28px;
+  font-size: 26px;
   font-weight: 700;
   line-height: 1;
   margin-bottom: 8px;
@@ -383,6 +360,14 @@ body {
 .card-value.red { color: var(--red); }
 .card-value.accent { color: var(--accent); }
 .card-value.amber { color: var(--amber); }
+.card-value.purple { color: var(--purple); }
+
+.card-unit {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text3);
+  margin-left: 2px;
+}
 
 .card-footer {
   display: flex;
@@ -408,13 +393,9 @@ body {
 
 .card-icon {
   position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  top: 16px; right: 16px;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
   border-radius: 8px;
   font-size: 14px;
 }
@@ -423,15 +404,9 @@ body {
 .card-icon.red-icon { background: var(--red-bg); }
 .card-icon.blue-icon { background: var(--accent-glow); }
 .card-icon.amber-icon { background: var(--amber-bg); }
+.card-icon.purple-icon { background: var(--purple-bg); }
 
-/* ─── GRID ─── */
-.grid-2 {
-  display: grid;
-  grid-template-columns: 1fr 360px;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
+/* ─── PANEL ─── */
 .panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -468,20 +443,15 @@ body {
 
 .panel-body { padding: 18px 20px; }
 
-/* ─── TRAFFIC CHART ─── */
-.chart-area {
-  height: 150px;
-  position: relative;
+/* ─── MAIN CHART ─── */
+.main-chart-wrap {
+  margin-bottom: 22px;
 }
 
-.chart-labels {
+.chart-toolbar {
   display: flex;
-  justify-content: space-between;
-  margin-top: 8px;
-  font-size: 10px;
-  font-family: var(--mono);
-  color: var(--text3);
-  letter-spacing: 0.04em;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
 .chart-legend {
@@ -499,58 +469,144 @@ body {
   color: var(--text2);
 }
 
-.legend-dot {
-  width: 8px; height: 8px;
-  border-radius: 2px;
-}
+.legend-dot { width: 8px; height: 8px; border-radius: 2px; }
 
-/* ─── DEVICE LIST ─── */
-.device-list { display: flex; flex-direction: column; gap: 0; }
-
-.device-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 11px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.device-row:last-child { border-bottom: none; }
-
-.device-dot {
-  width: 8px; height: 8px;
-  border-radius: 50%;
-  flex-shrink: 0;
-}
-
-.device-dot.online { background: var(--green); box-shadow: 0 0 6px rgba(34,211,160,0.5); }
-.device-dot.offline { background: var(--red); }
-.device-dot.warning { background: var(--amber); }
-
-.device-name {
-  font-size: 12.5px;
-  font-weight: 500;
-  color: var(--text);
-  flex: 1;
-}
-
-.device-ip {
+.timerange-btn {
+  padding: 4px 10px;
   font-family: var(--mono);
   font-size: 10px;
+  letter-spacing: 0.06em;
+  border: 1px solid var(--border);
+  background: transparent;
   color: var(--text3);
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
 }
 
-.device-status {
-  font-family: var(--mono);
+.timerange-btn:hover { border-color: var(--border2); color: var(--text2); }
+.timerange-btn.active { background: var(--accent-glow); border-color: var(--border2); color: var(--accent); }
+
+.chart-area {
+  height: 200px;
+  position: relative;
+}
+
+.chart-labels {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 8px;
   font-size: 10px;
-  padding: 2px 7px;
-  border-radius: 4px;
+  font-family: var(--mono);
+  color: var(--text3);
   letter-spacing: 0.04em;
 }
 
-.status-online { background: var(--green-bg); color: var(--green); }
-.status-offline { background: var(--red-bg); color: var(--red); }
-.status-warning { background: var(--amber-bg); color: var(--amber); }
+/* ─── TWO COL ─── */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+/* ─── TOP TALKERS TABLE ─── */
+.talkers-table { width: 100%; border-collapse: collapse; }
+
+.talkers-table th {
+  font-size: 9px;
+  font-family: var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text3);
+  text-align: left;
+  padding: 0 0 10px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.talkers-table td {
+  padding: 10px 0;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: middle;
+}
+
+.talkers-table tr:last-child td { border-bottom: none; }
+
+.talker-ip {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+}
+
+.talker-host {
+  font-size: 10px;
+  color: var(--text3);
+  font-family: var(--mono);
+  margin-top: 2px;
+}
+
+.talker-bar-wrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.talker-bar-track {
+  flex: 1;
+  height: 4px;
+  background: rgba(255,255,255,0.05);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.talker-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+}
+
+.talker-bytes {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  white-space: nowrap;
+}
+
+.proto-tag {
+  font-size: 9px;
+  font-family: var(--mono);
+  padding: 2px 6px;
+  border-radius: 3px;
+  letter-spacing: 0.04em;
+}
+
+/* ─── LIVE STREAM ─── */
+.stream-list { display: flex; flex-direction: column; gap: 0; max-height: 320px; overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--surface2) transparent; }
+
+.stream-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 11px;
+  font-family: var(--mono);
+  animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.stream-row:last-child { border-bottom: none; }
+
+.stream-time { color: var(--text3); width: 54px; flex-shrink: 0; font-size: 10px; }
+.stream-dir { font-size: 13px; width: 18px; flex-shrink: 0; }
+.stream-src { color: var(--text2); flex: 1; }
+.stream-dst { color: var(--text3); flex: 1; }
+.stream-size { color: var(--text2); width: 56px; text-align: right; flex-shrink: 0; }
+.stream-proto { width: 46px; flex-shrink: 0; }
 
 /* ─── BOTTOM ROW ─── */
 .grid-3 {
@@ -586,7 +642,7 @@ body {
 .mini-bar-fill {
   height: 100%;
   border-radius: 3px;
-  transition: width 0.5s ease;
+  transition: width 0.6s ease;
 }
 
 .mini-bar-val {
@@ -597,71 +653,74 @@ body {
   text-align: right;
 }
 
-/* ─── ALERTS ─── */
-.alert-row {
+/* ─── SPEEDOMETER ─── */
+.gauge-wrap {
   display: flex;
-  align-items: flex-start;
-  gap: 10px;
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-}
-
-.alert-row:last-child { border-bottom: none; }
-
-.alert-icon {
-  width: 26px;
-  height: 26px;
-  border-radius: 6px;
-  display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  flex-shrink: 0;
-  margin-top: 1px;
+  padding: 10px 0;
 }
 
-.alert-body { flex: 1; }
-
-.alert-title {
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--text);
-  margin-bottom: 2px;
-}
-
-.alert-time {
+.gauge-labels {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 6px;
+  font-size: 10px;
   font-family: var(--mono);
-  font-size: 9px;
   color: var(--text3);
-  letter-spacing: 0.06em;
 }
 
-/* ─── PROTOCOL RINGS ─── */
-.protocol-grid {
+.gauge-center {
+  text-align: center;
+  margin-top: -40px;
+  position: relative;
+  z-index: 1;
+}
+
+.gauge-val {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+.gauge-unit {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text3);
+  letter-spacing: 0.08em;
+}
+
+/* ─── UTILIZATION RING ─── */
+.util-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 8px;
+  gap: 10px;
 }
 
-.proto-item {
+.util-item {
   background: var(--surface2);
   border: 1px solid var(--border);
   border-radius: 8px;
-  padding: 10px 12px;
-  text-align: center;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
 }
 
-.proto-name {
+.util-label {
   font-family: var(--mono);
-  font-size: 11px;
+  font-size: 9px;
   color: var(--text3);
-  margin-bottom: 4px;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
 
-.proto-val {
+.util-val {
   font-family: var(--mono);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
 }
 </style>
@@ -692,10 +751,10 @@ body {
 
   <div class="nav-section">Main</div>
   <ul class="menu">
-    <li class="active">
+    <li onclick="window.location.href='dashboard.html'">
       <span class="menu-icon">⊞</span> Dashboard
     </li>
-    <li>
+    <li class="active">
       <span class="menu-icon">↗</span> Traffic Monitor
     </li>
     <li>
@@ -735,7 +794,7 @@ body {
     <div class="topbar-left">
       <span class="breadcrumb">
         NET-MONITOR <span class="breadcrumb-sep">/</span>
-        <span class="breadcrumb-current">Dashboard</span>
+        <span class="breadcrumb-current">Traffic Monitor</span>
       </span>
     </div>
     <div class="topbar-right">
@@ -750,135 +809,131 @@ body {
 
     <div class="page-header">
       <div>
-        <div class="page-title">Network Overview</div>
-        <div class="page-sub">Last updated: <span id="last-update">—</span> · Auto-refresh every 30s</div>
+        <div class="page-title">Traffic Monitor</div>
+        <div class="page-sub">Live network traffic analysis · <span id="last-update">—</span></div>
       </div>
-      <button class="refresh-btn" onclick="refreshData()">↻ REFRESH</button>
+      <div class="header-actions">
+        <select class="interval-select" id="interval-select" onchange="changeInterval(this.value)">
+          <option value="2000">Refresh: 2s</option>
+          <option value="5000" selected>Refresh: 5s</option>
+          <option value="10000">Refresh: 10s</option>
+          <option value="30000">Refresh: 30s</option>
+        </select>
+        <button class="refresh-btn" onclick="refreshAll()">↻ REFRESH</button>
+      </div>
     </div>
 
     <!-- STAT CARDS -->
     <div class="cards">
       <div class="card">
-        <div class="card-icon green-icon">🖥</div>
-        <div class="card-label">Devices Online</div>
-        <div class="card-value green" id="online-count">12</div>
+        <div class="card-icon blue-icon">⬇</div>
+        <div class="card-label">Download Speed</div>
+        <div class="card-value accent" id="dl-speed">—<span class="card-unit">Mbps</span></div>
         <div class="card-footer">
-          <span class="card-delta up">▲ 2</span> since last hour
+          <span class="card-delta up" id="dl-delta">▲ —</span> vs last min
         </div>
       </div>
 
       <div class="card">
-        <div class="card-icon red-icon">⚠</div>
-        <div class="card-label">Devices Offline</div>
-        <div class="card-value red" id="offline-count">2</div>
+        <div class="card-icon green-icon">⬆</div>
+        <div class="card-label">Upload Speed</div>
+        <div class="card-value green" id="ul-speed">—<span class="card-unit">Mbps</span></div>
         <div class="card-footer">
-          <span class="card-delta down">▼ 1</span> needs attention
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-icon blue-icon">⇅</div>
-        <div class="card-label">Network Speed</div>
-        <div class="card-value accent" id="speed">120</div>
-        <div class="card-footer">
-          <span class="card-delta up">▲ 8%</span> Mbps · peak 145
+          <span class="card-delta up" id="ul-delta">▲ —</span> vs last min
         </div>
       </div>
 
       <div class="card">
         <div class="card-icon amber-icon">◎</div>
-        <div class="card-label">Avg Latency</div>
-        <div class="card-value amber" id="latency">25</div>
+        <div class="card-label">Packets / Sec</div>
+        <div class="card-value amber" id="pps-card">—</div>
         <div class="card-footer">
-          <span class="card-delta neutral">— stable</span> ms · threshold 100
+          <span class="card-delta neutral">— stable</span> avg rate
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-icon purple-icon">◑</div>
+        <div class="card-label">Total Today</div>
+        <div class="card-value purple" id="total-today">—<span class="card-unit">GB</span></div>
+        <div class="card-footer">
+          <span class="card-delta up">▲ 4%</span> vs yesterday
         </div>
       </div>
     </div>
 
-    <!-- MIDDLE ROW -->
-    <div class="grid-2">
-
-      <!-- Traffic Chart -->
-      <div class="panel">
-        <div class="panel-header">
-          <span class="panel-title">Traffic Overview</span>
+    <!-- MAIN LIVE CHART -->
+    <div class="panel main-chart-wrap">
+      <div class="panel-header">
+        <span class="panel-title">Live Throughput</span>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="chart-toolbar" id="timerange-btns">
+            <button class="timerange-btn active" onclick="setRange(this,'5m')">5M</button>
+            <button class="timerange-btn" onclick="setRange(this,'15m')">15M</button>
+            <button class="timerange-btn" onclick="setRange(this,'1h')">1H</button>
+          </div>
           <span class="panel-tag tag-live">● LIVE</span>
         </div>
-        <div class="panel-body">
-          <div class="chart-legend">
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--accent);"></div>
-              Download
-            </div>
-            <div class="legend-item">
-              <div class="legend-dot" style="background: var(--green);"></div>
-              Upload
-            </div>
+      </div>
+      <div class="panel-body">
+        <div class="chart-legend">
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--accent);"></div>Download
           </div>
-          <div class="chart-area">
-            <canvas id="trafficChart" style="width:100%;height:150px;"></canvas>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:var(--green);"></div>Upload
           </div>
-          <div class="chart-labels" id="chart-labels"></div>
+          <div class="legend-item">
+            <div class="legend-dot" style="background:rgba(255,255,255,0.15);"></div>Threshold
+          </div>
+        </div>
+        <div class="chart-area">
+          <canvas id="mainChart" style="width:100%;height:200px;"></canvas>
+        </div>
+        <div class="chart-labels" id="main-chart-labels"></div>
+      </div>
+    </div>
+
+    <!-- TOP TALKERS + LIVE STREAM -->
+    <div class="grid-2">
+
+      <!-- Top Talkers -->
+      <div class="panel">
+        <div class="panel-header">
+          <span class="panel-title">Top Talkers</span>
+          <span class="panel-tag tag-info">BY BYTES</span>
+        </div>
+        <div class="panel-body" style="padding:0 20px;">
+          <table class="talkers-table">
+            <thead>
+              <tr>
+                <th>Host</th>
+                <th>Proto</th>
+                <th style="width:120px;">Traffic</th>
+                <th style="text-align:right;">Bytes</th>
+              </tr>
+            </thead>
+            <tbody id="talkers-body"></tbody>
+          </table>
         </div>
       </div>
 
-      <!-- Device List -->
+      <!-- Live Packet Stream -->
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">Active Devices</span>
-          <span class="panel-tag tag-info">14 TOTAL</span>
+          <span class="panel-title">Live Packet Stream</span>
+          <span class="panel-tag tag-live">● CAPTURING</span>
         </div>
-        <div class="panel-body" style="padding: 0 20px;">
-          <div class="device-list">
-            <div class="device-row">
-              <div class="device-dot online"></div>
-              <div>
-                <div class="device-name">Gateway Router</div>
-                <div class="device-ip">192.168.0.1</div>
-              </div>
-              <div class="device-status status-online">ONLINE</div>
-            </div>
-            <div class="device-row">
-              <div class="device-dot online"></div>
-              <div>
-                <div class="device-name">Main Server</div>
-                <div class="device-ip">192.168.0.10</div>
-              </div>
-              <div class="device-status status-online">ONLINE</div>
-            </div>
-            <div class="device-row">
-              <div class="device-dot warning"></div>
-              <div>
-                <div class="device-name">Switch-B2</div>
-                <div class="device-ip">192.168.0.44</div>
-              </div>
-              <div class="device-status status-warning">SLOW</div>
-            </div>
-            <div class="device-row">
-              <div class="device-dot offline"></div>
-              <div>
-                <div class="device-name">Printer-01</div>
-                <div class="device-ip">192.168.0.23</div>
-              </div>
-              <div class="device-status status-offline">OFFLINE</div>
-            </div>
-            <div class="device-row">
-              <div class="device-dot online"></div>
-              <div>
-                <div class="device-name">Workstation-05</div>
-                <div class="device-ip">192.168.0.55</div>
-              </div>
-              <div class="device-status status-online">ONLINE</div>
-            </div>
-            <div class="device-row">
-              <div class="device-dot offline"></div>
-              <div>
-                <div class="device-name">IP Camera-03</div>
-                <div class="device-ip">192.168.0.31</div>
-              </div>
-              <div class="device-status status-offline">OFFLINE</div>
-            </div>
+        <div class="panel-body" style="padding:0 20px;">
+          <div style="display:flex;gap:16px;padding:8px 0 10px;border-bottom:1px solid var(--border);margin-bottom:4px;">
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;width:54px;">TIME</span>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;width:18px;"></span>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;flex:1;">SOURCE</span>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;flex:1;">DEST</span>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;width:56px;text-align:right;">SIZE</span>
+            <span style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:0.1em;width:46px;">PROTO</span>
           </div>
+          <div class="stream-list" id="stream-list"></div>
         </div>
       </div>
     </div>
@@ -886,113 +941,67 @@ body {
     <!-- BOTTOM ROW -->
     <div class="grid-3">
 
-      <!-- Bandwidth Usage -->
+      <!-- Bandwidth by App -->
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">Bandwidth Usage</span>
-          <span class="panel-tag tag-info">BY PORT</span>
+          <span class="panel-title">By Application</span>
+          <span class="panel-tag tag-info">TOP 5</span>
         </div>
-        <div class="panel-body">
-          <div class="mini-bar-row">
-            <div class="mini-bar-label">HTTP</div>
-            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:78%;background:var(--accent);"></div></div>
-            <div class="mini-bar-val">78%</div>
-          </div>
-          <div class="mini-bar-row">
-            <div class="mini-bar-label">HTTPS</div>
-            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:62%;background:var(--green);"></div></div>
-            <div class="mini-bar-val">62%</div>
-          </div>
-          <div class="mini-bar-row">
-            <div class="mini-bar-label">DNS</div>
-            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:45%;background:var(--amber);"></div></div>
-            <div class="mini-bar-val">45%</div>
-          </div>
-          <div class="mini-bar-row">
-            <div class="mini-bar-label">FTP</div>
-            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:20%;background:var(--accent2);"></div></div>
-            <div class="mini-bar-val">20%</div>
-          </div>
-          <div class="mini-bar-row">
-            <div class="mini-bar-label">SSH</div>
-            <div class="mini-bar-track"><div class="mini-bar-fill" style="width:12%;background:var(--text3);"></div></div>
-            <div class="mini-bar-val">12%</div>
-          </div>
-        </div>
+        <div class="panel-body" id="app-bars"></div>
       </div>
 
-      <!-- Alerts -->
+      <!-- Gauge -->
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">Recent Alerts</span>
-          <span class="panel-tag" style="background:var(--red-bg);color:var(--red);border:1px solid rgba(248,113,113,0.2);">3 NEW</span>
+          <span class="panel-title">Link Utilization</span>
+          <span class="panel-tag tag-info">1 GBPS LINK</span>
         </div>
-        <div class="panel-body" style="padding:0 20px;">
-          <div class="alert-row">
-            <div class="alert-icon" style="background:var(--red-bg);">⚠</div>
-            <div class="alert-body">
-              <div class="alert-title">Printer-01 unreachable</div>
-              <div class="alert-time">TODAY · 14:32:11</div>
+        <div class="panel-body">
+          <div class="gauge-wrap">
+            <canvas id="gaugeCanvas" width="220" height="130"></canvas>
+            <div class="gauge-center">
+              <div class="gauge-val" id="gauge-val">—</div>
+              <div class="gauge-unit">% UTILIZED</div>
             </div>
-          </div>
-          <div class="alert-row">
-            <div class="alert-icon" style="background:var(--amber-bg);">◎</div>
-            <div class="alert-body">
-              <div class="alert-title">High latency on Switch-B2</div>
-              <div class="alert-time">TODAY · 14:18:40</div>
-            </div>
-          </div>
-          <div class="alert-row">
-            <div class="alert-icon" style="background:var(--red-bg);">⚠</div>
-            <div class="alert-body">
-              <div class="alert-title">IP Camera-03 offline</div>
-              <div class="alert-time">TODAY · 13:55:02</div>
-            </div>
-          </div>
-          <div class="alert-row">
-            <div class="alert-icon" style="background:var(--green-bg);">✓</div>
-            <div class="alert-body">
-              <div class="alert-title">Main Server back online</div>
-              <div class="alert-time">TODAY · 12:01:44</div>
+            <div class="gauge-labels" style="width:220px;margin-top:4px;">
+              <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Protocol Breakdown -->
+      <!-- Direction breakdown -->
       <div class="panel">
         <div class="panel-header">
-          <span class="panel-title">Protocol Breakdown</span>
-          <span class="panel-tag tag-info">24H</span>
+          <span class="panel-title">Inbound vs Outbound</span>
+          <span class="panel-tag tag-info">LIVE</span>
         </div>
         <div class="panel-body">
-          <div class="protocol-grid">
-            <div class="proto-item">
-              <div class="proto-name">TCP</div>
-              <div class="proto-val" style="color:var(--accent);">68%</div>
+          <div class="util-grid" id="util-grid">
+            <div class="util-item">
+              <div class="util-label">Inbound</div>
+              <div class="util-val accent" id="util-in">—</div>
+              <div style="font-size:9px;font-family:var(--mono);color:var(--text3);">Mbps</div>
             </div>
-            <div class="proto-item">
-              <div class="proto-name">UDP</div>
-              <div class="proto-val" style="color:var(--green);">24%</div>
+            <div class="util-item">
+              <div class="util-label">Outbound</div>
+              <div class="util-val green" id="util-out">—</div>
+              <div style="font-size:9px;font-family:var(--mono);color:var(--text3);">Mbps</div>
             </div>
-            <div class="proto-item">
-              <div class="proto-name">ICMP</div>
-              <div class="proto-val" style="color:var(--amber);">5%</div>
+            <div class="util-item">
+              <div class="util-label">Peak In</div>
+              <div class="util-val amber" id="peak-in">—</div>
+              <div style="font-size:9px;font-family:var(--mono);color:var(--text3);">Mbps</div>
             </div>
-            <div class="proto-item">
-              <div class="proto-name">OTHER</div>
-              <div class="proto-val" style="color:var(--text3);">3%</div>
+            <div class="util-item">
+              <div class="util-label">Peak Out</div>
+              <div class="util-val" style="color:var(--purple);" id="peak-out">—</div>
+              <div style="font-size:9px;font-family:var(--mono);color:var(--text3);">Mbps</div>
             </div>
           </div>
-          <div style="margin-top:14px; padding-top:12px; border-top:1px solid var(--border);">
-            <div class="mini-bar-row" style="margin-bottom:6px;">
-              <div class="mini-bar-label" style="font-size:10px;color:var(--text3);">Total today</div>
-              <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text);margin-left:auto;">4.7 GB</div>
-            </div>
-            <div class="mini-bar-row">
-              <div class="mini-bar-label" style="font-size:10px;color:var(--text3);">Packets/sec</div>
-              <div style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text);margin-left:auto;" id="pps">1,204</div>
-            </div>
+          <div style="margin-top:14px;padding-top:12px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;">
+            <span style="font-family:var(--mono);font-size:10px;color:var(--text3);">Ratio In:Out</span>
+            <span style="font-family:var(--mono);font-size:13px;font-weight:700;color:var(--text);" id="ratio">—</span>
           </div>
         </div>
       </div>
@@ -1002,100 +1011,326 @@ body {
 </div>
 
 <script>
+// ── Helpers ──
+function rnd(a, b) { return +(a + Math.random() * (b - a)).toFixed(1); }
+function rndInt(a, b) { return Math.floor(a + Math.random() * (b - a)); }
+function pad(n) { return String(n).padStart(2, '0'); }
+function timeStr(d) { return pad(d.getHours()) + ':' + pad(d.getMinutes()) + ':' + pad(d.getSeconds()); }
+
 // ── DateTime ──
 function updateDateTime() {
   const now = new Date();
-  const opts = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false };
   document.getElementById('datetime').textContent =
-    now.toLocaleDateString('en-GB') + '  ·  ' + now.toLocaleTimeString('en-GB', opts);
-  document.getElementById('last-update').textContent = now.toLocaleTimeString('en-GB', opts);
+    now.toLocaleDateString('en-GB') + '  ·  ' + now.toLocaleTimeString('en-GB');
+  document.getElementById('last-update').textContent = 'Updated ' + now.toLocaleTimeString('en-GB');
 }
 setInterval(updateDateTime, 1000);
 updateDateTime();
 
-// ── Traffic Chart (Canvas) ──
-const canvas = document.getElementById('trafficChart');
-const ctx = canvas.getContext('2d');
-const labels = [];
-const dlData = [];
-const ulData = [];
-const NUM_POINTS = 20;
-
-function randomBetween(a, b) { return Math.floor(a + Math.random() * (b - a)); }
+// ── Chart Data ──
+const NUM_POINTS = 40;
+const dlData = [], ulData = [], timeLabels = [];
+let peakIn = 0, peakOut = 0;
 
 for (let i = NUM_POINTS; i >= 0; i--) {
-  const d = new Date(Date.now() - i * 30000);
-  labels.push(d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0'));
-  dlData.push(randomBetween(60, 140));
-  ulData.push(randomBetween(15, 55));
+  const d = new Date(Date.now() - i * 7500);
+  timeLabels.push(pad(d.getHours()) + ':' + pad(d.getMinutes()));
+  dlData.push(rnd(55, 135));
+  ulData.push(rnd(12, 52));
 }
 
-document.getElementById('chart-labels').innerHTML =
-  [labels[0], labels[Math.floor(NUM_POINTS/4)], labels[Math.floor(NUM_POINTS/2)], labels[Math.floor(3*NUM_POINTS/4)], labels[NUM_POINTS]]
-    .map(l => `<span>${l}</span>`).join('');
+function updateMainChartLabels() {
+  const idxs = [0, Math.floor(NUM_POINTS/4), Math.floor(NUM_POINTS/2), Math.floor(3*NUM_POINTS/4), NUM_POINTS];
+  document.getElementById('main-chart-labels').innerHTML =
+    idxs.map(i => `<span>${timeLabels[i] || ''}</span>`).join('');
+}
+updateMainChartLabels();
 
-function drawChart() {
-  const W = canvas.clientWidth;
-  const H = 150;
-  canvas.width = W;
-  canvas.height = H;
+// ── Canvas Chart ──
+const mainCanvas = document.getElementById('mainChart');
+const mCtx = mainCanvas.getContext('2d');
 
-  const pad = { top: 8, right: 4, bottom: 4, left: 4 };
-  const w = W - pad.left - pad.right;
-  const h = H - pad.top - pad.bottom;
+function drawMainChart() {
+  const W = mainCanvas.clientWidth;
+  const H = 200;
+  mainCanvas.width = W;
+  mainCanvas.height = H;
+
+  const pad4 = { top: 10, right: 4, bottom: 4, left: 32 };
+  const w = W - pad4.left - pad4.right;
+  const h = H - pad4.top - pad4.bottom;
   const maxVal = 160;
 
-  function getX(i) { return pad.left + (i / (dlData.length - 1)) * w; }
-  function getY(v) { return pad.top + h - (v / maxVal) * h; }
+  function gx(i) { return pad4.left + (i / (dlData.length - 1)) * w; }
+  function gy(v) { return pad4.top + h - (v / maxVal) * h; }
 
-  function drawLine(data, color, fillColor) {
-    ctx.beginPath();
-    data.forEach((v, i) => {
-      const x = getX(i), y = getY(v);
-      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
-    });
-    ctx.strokeStyle = color;
-    ctx.lineWidth = 1.5;
-    ctx.stroke();
+  mCtx.clearRect(0, 0, W, H);
 
-    ctx.lineTo(getX(data.length - 1), H);
-    ctx.lineTo(getX(0), H);
-    ctx.closePath();
-    ctx.fillStyle = fillColor;
-    ctx.fill();
-  }
-
-  ctx.clearRect(0, 0, W, H);
-
-  // grid lines
-  [0.25, 0.5, 0.75, 1].forEach(f => {
-    const y = pad.top + h * (1 - f);
-    ctx.beginPath();
-    ctx.moveTo(pad.left, y); ctx.lineTo(W - pad.right, y);
-    ctx.strokeStyle = 'rgba(255,255,255,0.04)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
+  // y-axis labels + grid
+  [0, 40, 80, 120, 160].forEach(v => {
+    const y = gy(v);
+    mCtx.beginPath();
+    mCtx.moveTo(pad4.left, y); mCtx.lineTo(W - pad4.right, y);
+    mCtx.strokeStyle = 'rgba(255,255,255,0.04)';
+    mCtx.lineWidth = 1;
+    mCtx.stroke();
+    mCtx.fillStyle = 'rgba(61,85,112,0.9)';
+    mCtx.font = '9px Space Mono, monospace';
+    mCtx.fillText(v, 0, y + 3);
   });
 
-  drawLine(dlData, '#38bdf8', 'rgba(56,189,248,0.08)');
-  drawLine(ulData, '#22d3a0', 'rgba(34,211,160,0.06)');
+  // threshold line at 140
+  const ty = gy(140);
+  mCtx.beginPath();
+  mCtx.setLineDash([4, 4]);
+  mCtx.moveTo(pad4.left, ty); mCtx.lineTo(W - pad4.right, ty);
+  mCtx.strokeStyle = 'rgba(255,255,255,0.12)';
+  mCtx.lineWidth = 1;
+  mCtx.stroke();
+  mCtx.setLineDash([]);
+
+  function drawLine(data, color, fillColor) {
+    mCtx.beginPath();
+    data.forEach((v, i) => {
+      const x = gx(i), y = gy(v);
+      i === 0 ? mCtx.moveTo(x, y) : mCtx.lineTo(x, y);
+    });
+    mCtx.strokeStyle = color;
+    mCtx.lineWidth = 1.5;
+    mCtx.stroke();
+
+    mCtx.lineTo(gx(data.length - 1), H);
+    mCtx.lineTo(gx(0), H);
+    mCtx.closePath();
+    mCtx.fillStyle = fillColor;
+    mCtx.fill();
+  }
+
+  drawLine(dlData, '#38bdf8', 'rgba(56,189,248,0.1)');
+  drawLine(ulData, '#22d3a0', 'rgba(34,211,160,0.07)');
 }
 
-drawChart();
+drawMainChart();
+window.addEventListener('resize', drawMainChart);
 
-// ── Refresh ──
-function refreshData() {
+// ── Gauge ──
+const gaugeCanvas = document.getElementById('gaugeCanvas');
+const gCtx = gaugeCanvas.getContext('2d');
+
+function drawGauge(pct) {
+  const W = 220, H = 130;
+  const cx = W / 2, cy = H - 10;
+  const r = 95;
+  const startAngle = Math.PI;
+  const endAngle = 2 * Math.PI;
+  const angle = startAngle + (pct / 100) * Math.PI;
+
+  gCtx.clearRect(0, 0, W, H);
+
+  // Track
+  gCtx.beginPath();
+  gCtx.arc(cx, cy, r, startAngle, endAngle);
+  gCtx.strokeStyle = 'rgba(255,255,255,0.06)';
+  gCtx.lineWidth = 12;
+  gCtx.lineCap = 'round';
+  gCtx.stroke();
+
+  // Colored arc
+  const gradient = gCtx.createLinearGradient(cx - r, cy, cx + r, cy);
+  gradient.addColorStop(0, '#22d3a0');
+  gradient.addColorStop(0.5, '#38bdf8');
+  gradient.addColorStop(1, '#f87171');
+
+  gCtx.beginPath();
+  gCtx.arc(cx, cy, r, startAngle, angle);
+  gCtx.strokeStyle = gradient;
+  gCtx.lineWidth = 12;
+  gCtx.lineCap = 'round';
+  gCtx.stroke();
+
+  // Needle
+  const nx = cx + (r - 6) * Math.cos(angle);
+  const ny = cy + (r - 6) * Math.sin(angle);
+  gCtx.beginPath();
+  gCtx.moveTo(cx, cy);
+  gCtx.lineTo(nx, ny);
+  gCtx.strokeStyle = '#fff';
+  gCtx.lineWidth = 2;
+  gCtx.stroke();
+
+  gCtx.beginPath();
+  gCtx.arc(cx, cy, 5, 0, 2 * Math.PI);
+  gCtx.fillStyle = '#fff';
+  gCtx.fill();
+}
+
+// ── Top Talkers ──
+const talkerHosts = [
+  { ip: '192.168.0.10', host: 'Main Server',   proto: 'HTTPS', color: '#38bdf8' },
+  { ip: '192.168.0.55', host: 'Workstation-05',proto: 'HTTP',  color: '#22d3a0' },
+  { ip: '192.168.0.1',  host: 'Gateway Router',proto: 'DNS',   color: '#fbbf24' },
+  { ip: '192.168.0.44', host: 'Switch-B2',     proto: 'TCP',   color: '#a78bfa' },
+  { ip: '192.168.0.88', host: 'NAS Storage',   proto: 'FTP',   color: '#0ea5e9' },
+];
+
+const talkerBytes = [0, 0, 0, 0, 0];
+
+function updateTalkers() {
+  for (let i = 0; i < talkerBytes.length; i++) {
+    talkerBytes[i] += rndInt(100, 8000);
+  }
+  const sorted = talkerBytes.map((b, i) => ({ b, i })).sort((a, c) => c.b - a.b);
+  const max = sorted[0].b;
+  const tbody = document.getElementById('talkers-body');
+  tbody.innerHTML = sorted.map(({ b, i }) => {
+    const h = talkerHosts[i];
+    const mb = (b / 1024 / 1024).toFixed(2);
+    const pct = Math.round((b / max) * 100);
+    const protoColors = { HTTPS: 'var(--accent)', HTTP: 'var(--green)', DNS: 'var(--amber)', TCP: 'var(--purple)', FTP: 'var(--text3)' };
+    const protoColor = protoColors[h.proto] || 'var(--text3)';
+    return `<tr>
+      <td>
+        <div class="talker-ip">${h.ip}</div>
+        <div class="talker-host">${h.host}</div>
+      </td>
+      <td>
+        <span class="proto-tag" style="background:rgba(56,189,248,0.08);color:${protoColor};border:1px solid rgba(56,189,248,0.15);">${h.proto}</span>
+      </td>
+      <td>
+        <div class="talker-bar-wrap">
+          <div class="talker-bar-track">
+            <div class="talker-bar-fill" style="width:${pct}%;background:${h.color};"></div>
+          </div>
+        </div>
+      </td>
+      <td class="talker-bytes" style="text-align:right;">${mb} MB</td>
+    </tr>`;
+  }).join('');
+}
+
+// ── Live Packet Stream ──
+const streamIPs = [
+  '192.168.0.10','192.168.0.55','192.168.0.1','192.168.0.44','192.168.0.31',
+  '10.0.0.5','10.0.0.12','172.16.0.3','8.8.8.8','1.1.1.1'
+];
+const protos = ['TCP','UDP','HTTPS','DNS','ICMP','FTP','SSH'];
+const protoColorsMap = { TCP:'var(--accent)', UDP:'var(--green)', HTTPS:'var(--accent)', DNS:'var(--amber)', ICMP:'var(--text2)', FTP:'var(--purple)', SSH:'var(--red)' };
+const streamRows = [];
+
+function addStreamRow() {
+  const now = new Date();
+  const src = streamIPs[rndInt(0, streamIPs.length)];
+  const dst = streamIPs[rndInt(0, streamIPs.length)];
+  const proto = protos[rndInt(0, protos.length)];
+  const size = rndInt(64, 1500) + ' B';
+  const dir = Math.random() > 0.5 ? '⬇' : '⬆';
+  const color = protoColorsMap[proto] || 'var(--text2)';
+
+  streamRows.unshift({ time: timeStr(now), dir, src, dst, size, proto, color });
+  if (streamRows.length > 20) streamRows.pop();
+
+  const list = document.getElementById('stream-list');
+  list.innerHTML = streamRows.map((r, idx) =>
+    `<div class="stream-row" style="opacity:${1 - idx * 0.04}">
+      <span class="stream-time">${r.time}</span>
+      <span class="stream-dir">${r.dir}</span>
+      <span class="stream-src">${r.src}</span>
+      <span class="stream-dst">${r.dst}</span>
+      <span class="stream-size">${r.size}</span>
+      <span class="stream-proto"><span class="proto-tag" style="color:${r.color};background:rgba(56,189,248,0.05);border:1px solid rgba(56,189,248,0.1);">${r.proto}</span></span>
+    </div>`
+  ).join('');
+}
+
+// ── App Bars ──
+const apps = [
+  { name: 'Streaming',  color: 'var(--accent)' },
+  { name: 'Web Browse', color: 'var(--green)' },
+  { name: 'File Trans', color: 'var(--amber)' },
+  { name: 'VoIP/Video', color: 'var(--purple)' },
+  { name: 'Email/SMTP', color: 'var(--text2)' },
+];
+const appVals = [72, 58, 41, 30, 14];
+
+function renderAppBars() {
+  document.getElementById('app-bars').innerHTML = apps.map((a, i) => `
+    <div class="mini-bar-row">
+      <div class="mini-bar-label">${a.name}</div>
+      <div class="mini-bar-track"><div class="mini-bar-fill" style="width:${appVals[i]}%;background:${a.color};"></div></div>
+      <div class="mini-bar-val">${appVals[i]}%</div>
+    </div>
+  `).join('');
+}
+
+// ── Refresh All ──
+let totalToday = 4.7;
+let intervalId;
+
+function refreshAll() {
+  const dl = rnd(60, 138);
+  const ul = rnd(12, 54);
+
+  // Cards
+  document.getElementById('dl-speed').innerHTML = dl + '<span class="card-unit">Mbps</span>';
+  document.getElementById('ul-speed').innerHTML = ul + '<span class="card-unit">Mbps</span>';
+  document.getElementById('pps-card').textContent = rndInt(900, 1600).toLocaleString();
+  totalToday = +(totalToday + 0.001).toFixed(3);
+  document.getElementById('total-today').innerHTML = totalToday + '<span class="card-unit">GB</span>';
+
+  // Chart
   dlData.shift(); ulData.shift();
-  dlData.push(randomBetween(60, 140));
-  ulData.push(randomBetween(15, 55));
-  drawChart();
-  document.getElementById('speed').textContent = randomBetween(100, 145);
-  document.getElementById('latency').textContent = randomBetween(18, 45);
-  document.getElementById('pps').textContent = randomBetween(900, 1500).toLocaleString();
+  const now = new Date();
+  timeLabels.shift();
+  timeLabels.push(pad(now.getHours()) + ':' + pad(now.getMinutes()));
+  dlData.push(dl);
+  ulData.push(ul);
+  drawMainChart();
+  updateMainChartLabels();
+
+  // Gauge
+  const util = +((dl / 1000) * 100).toFixed(1);
+  drawGauge(util);
+  document.getElementById('gauge-val').textContent = util;
+
+  // Peak tracking
+  if (dl > peakIn) peakIn = dl;
+  if (ul > peakOut) peakOut = ul;
+
+  // Util panel
+  document.getElementById('util-in').textContent = dl;
+  document.getElementById('util-out').textContent = ul;
+  document.getElementById('peak-in').textContent = peakIn;
+  document.getElementById('peak-out').textContent = peakOut;
+  const ratio = (dl / (ul || 1)).toFixed(2);
+  document.getElementById('ratio').textContent = ratio + ' : 1';
+
+  // App bars fluctuate slightly
+  for (let i = 0; i < appVals.length; i++) {
+    appVals[i] = Math.max(5, Math.min(95, appVals[i] + rndInt(-4, 4)));
+  }
+  renderAppBars();
+
+  // Top talkers
+  updateTalkers();
 }
 
-setInterval(refreshData, 5000);
-window.addEventListener('resize', drawChart);
+function changeInterval(ms) {
+  clearInterval(intervalId);
+  intervalId = setInterval(() => { refreshAll(); addStreamRow(); }, parseInt(ms));
+}
+
+function setRange(btn, range) {
+  document.querySelectorAll('.timerange-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+// ── Init ──
+renderAppBars();
+updateTalkers();
+for (let i = 0; i < 8; i++) addStreamRow();
+refreshAll();
+intervalId = setInterval(() => { refreshAll(); addStreamRow(); }, 5000);
+setInterval(addStreamRow, 1500);
 </script>
 </body>
 </html>
