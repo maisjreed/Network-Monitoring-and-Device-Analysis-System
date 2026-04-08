@@ -298,6 +298,61 @@ body {
 /* ─── NODE GRAPH ─── */
 #ng-svg { width:100%; min-height:360px; max-height:420px; border-radius:12px; background:var(--bg); cursor:grab; display:block; overflow:visible; }
 #ng-svg:active { cursor:grabbing; }
+
+/* ─── WIFI SCANNER PAGE ─── */
+.wscan-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.wscan-stats { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; margin-bottom:20px; }
+.wscan-stat { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
+.wscan-stat-val { font-family:var(--mono); font-size:20px; font-weight:700; margin:4px 0; }
+.wscan-stat-label { font-size:10px; text-transform:uppercase; color:var(--text3); font-family:var(--mono); letter-spacing:.8px; }
+.wscan-row { display:grid; grid-template-columns:28px 1fr 110px 80px 70px 140px 145px; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; align-items:center; }
+.wscan-row.header { font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; border-bottom:2px solid var(--border2); cursor:default; }
+.wscan-row.header span { cursor:pointer; user-select:none; }
+.wscan-row.header span:hover { color:var(--accent); }
+.wscan-row:hover:not(.header) { background:var(--accent-glow); border-radius:8px; }
+.wscan-row.mine { border-left:3px solid var(--accent); }
+.sig-wrap { display:flex; align-items:center; gap:6px; }
+.sig-fill { height:5px; border-radius:3px; flex-shrink:0; }
+.wscan-badge { font-size:9px; padding:2px 7px; border-radius:99px; font-family:var(--mono); text-transform:uppercase; letter-spacing:.5px; white-space:nowrap; }
+.wscan-badge.open { background:rgba(248,113,113,0.12); color:var(--red); }
+.wscan-badge.secured { background:rgba(34,211,160,0.12); color:var(--green); }
+.wscan-badge.wpa3 { background:rgba(56,189,248,0.12); color:var(--accent); }
+.auto-refresh-btns { display:flex; gap:4px; }
+.arb { padding:5px 12px; border:1px solid var(--border2); border-radius:6px; font-family:var(--mono); font-size:10px; cursor:pointer; background:none; color:var(--text3); transition:all .15s; }
+.arb.active { background:var(--accent-glow); color:var(--accent); border-color:var(--accent); }
+.sort-arrow { margin-left:3px; opacity:0.5; font-style:normal; }
+.sort-arrow.asc::after { content:"↑"; }
+.sort-arrow.desc::after { content:"↓"; }
+
+/* ─── REPORTS PAGE ─── */
+.report-builder { display:grid; grid-template-columns:280px 1fr; gap:20px; }
+.report-options { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--panel-shadow); height:fit-content; }
+.report-check { display:flex; align-items:center; gap:10px; padding:10px 0; border-bottom:1px solid var(--border); cursor:pointer; font-family:var(--mono); font-size:12px; color:var(--text2); }
+.report-check:last-of-type { border-bottom:none; }
+.report-check input[type=checkbox] { accent-color:var(--accent); width:15px; height:15px; cursor:pointer; flex-shrink:0; }
+.report-preview { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:24px; box-shadow:var(--panel-shadow); min-height:400px; }
+.rpt-section { margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid var(--border); }
+.rpt-section:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.rpt-section-title { font-family:var(--mono); font-size:11px; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:1px; margin-bottom:14px; display:flex; align-items:center; gap:8px; }
+.rpt-row { display:flex; justify-content:space-between; padding:7px 0; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; }
+.rpt-row:last-child { border-bottom:none; }
+.rpt-key { color:var(--text3); }
+.rpt-val { color:var(--text); font-weight:600; }
+.rpt-table { width:100%; border-collapse:collapse; font-family:var(--mono); font-size:10px; margin-top:6px; }
+.rpt-table th { text-align:left; padding:6px 10px; border-bottom:1px solid var(--border2); color:var(--text3); text-transform:uppercase; letter-spacing:.5px; font-size:9px; }
+.rpt-table td { padding:7px 10px; border-bottom:1px solid var(--border); color:var(--text2); }
+.rpt-table tr:last-child td { border-bottom:none; }
+
+@media print {
+  .sidebar, .topbar, #notif-panel { display:none !important; }
+  .main { overflow:visible !important; }
+  .content { overflow:visible !important; padding:0 !important; }
+  #reports { display:block !important; }
+  .page-view:not(#reports) { display:none !important; }
+  .report-builder { grid-template-columns:1fr !important; }
+  .report-options { display:none !important; }
+  body { background:#fff !important; color:#000 !important; }
+}
 </style>
 </head>
 <body>
@@ -343,6 +398,19 @@ body {
     <li onclick="switchPage('diagnostics', this)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
       Diagnostics
+    </li>
+  </ul>
+
+  <hr class="nav-divider">
+  <div class="nav-section">Tools</div>
+  <ul class="menu">
+    <li onclick="switchPage('wifiscan', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+      WiFi Scanner
+    </li>
+    <li onclick="switchPage('reports', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      Reports
     </li>
   </ul>
 
@@ -915,6 +983,138 @@ body {
       </div>
     </div>
 
+    <!-- ─── WIFI SCANNER PAGE ─── -->
+    <div id="wifiscan" class="page-view">
+      <div class="wscan-header">
+        <div>
+          <div style="font-family:var(--mono);font-size:13px;font-weight:700;">WiFi Scanner</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;" id="wscan-last-ts">Scan surrounding wireless networks</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap;">
+          <div>
+            <div style="font-size:9px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.5px;margin-bottom:5px;">Auto Refresh</div>
+            <div class="auto-refresh-btns">
+              <button class="arb active" id="arb-off" onclick="setAutoRefresh(0)">Off</button>
+              <button class="arb" id="arb-30" onclick="setAutoRefresh(30)">30s</button>
+              <button class="arb" id="arb-60" onclick="setAutoRefresh(60)">60s</button>
+            </div>
+          </div>
+          <button onclick="runWifiScan()" class="btn-primary" id="wscan-btn" style="width:148px;display:flex;align-items:center;justify-content:center;gap:8px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
+            SCAN NOW
+          </button>
+        </div>
+      </div>
+
+      <div class="wscan-stats">
+        <div class="wscan-stat">
+          <div class="wscan-stat-label">Total APs</div>
+          <div class="wscan-stat-val" id="wscan-total">—</div>
+        </div>
+        <div class="wscan-stat">
+          <div class="wscan-stat-label">Secured</div>
+          <div class="wscan-stat-val" style="color:var(--green);" id="wscan-secured">—</div>
+        </div>
+        <div class="wscan-stat">
+          <div class="wscan-stat-label">Open</div>
+          <div class="wscan-stat-val" style="color:var(--red);" id="wscan-open">—</div>
+        </div>
+        <div class="wscan-stat">
+          <div class="wscan-stat-label">Best Signal</div>
+          <div class="wscan-stat-val" style="color:var(--accent);" id="wscan-best">—</div>
+        </div>
+        <div class="wscan-stat">
+          <div class="wscan-stat-label">Connected To</div>
+          <div class="wscan-stat-val" style="font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" id="wscan-mynet">—</div>
+        </div>
+      </div>
+
+      <div class="panel" style="overflow:visible;">
+        <div class="panel-header">
+          <div class="panel-title">Nearby Wireless Networks</div>
+          <div style="display:flex;gap:10px;align-items:center;">
+            <input id="wscan-filter" type="text" placeholder="Filter by SSID…"
+              style="padding:7px 12px;background:var(--bg);border:1px solid var(--border2);border-radius:8px;color:var(--text);font-family:var(--mono);font-size:11px;outline:none;width:180px;"
+              oninput="renderWifiTable()">
+            <button onclick="exportWifiScan()" style="background:none;border:1px solid var(--border2);color:var(--accent);border-radius:6px;padding:6px 14px;cursor:pointer;font-family:var(--mono);font-size:10px;text-transform:uppercase;display:flex;align-items:center;gap:5px;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+              Export JSON
+            </button>
+          </div>
+        </div>
+
+        <div id="wscan-loading" style="display:none;padding:30px;text-align:center;color:var(--accent);font-family:var(--mono);font-size:11px;">
+          <div style="font-size:24px;animation:spin 1s linear infinite;display:inline-block;">&#8635;</div>
+          <div style="margin-top:10px;">Scanning wireless environment…</div>
+        </div>
+
+        <div id="wscan-table-wrap">
+          <div class="wscan-row header">
+            <span></span>
+            <span onclick="sortWifiBy('ssid')">SSID <i class="sort-arrow" id="sa-ssid"></i></span>
+            <span onclick="sortWifiBy('signal')">SIGNAL <i class="sort-arrow desc" id="sa-signal"></i></span>
+            <span onclick="sortWifiBy('band')">BAND <i class="sort-arrow" id="sa-band"></i></span>
+            <span onclick="sortWifiBy('channel')">CH <i class="sort-arrow" id="sa-channel"></i></span>
+            <span onclick="sortWifiBy('auth')">SECURITY <i class="sort-arrow" id="sa-auth"></i></span>
+            <span onclick="sortWifiBy('bssid')">BSSID <i class="sort-arrow" id="sa-bssid"></i></span>
+          </div>
+          <div id="wscan-list" style="max-height:480px;overflow-y:auto;">
+            <div style="padding:30px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">Click <strong>SCAN NOW</strong> to discover nearby wireless networks.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── REPORTS PAGE ─── -->
+    <div id="reports" class="page-view">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:12px;">
+        <div>
+          <div style="font-family:var(--mono);font-size:13px;font-weight:700;">Report Generator</div>
+          <div style="font-size:11px;color:var(--text3);margin-top:4px;">Build and export network analysis reports</div>
+        </div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button onclick="exportReportJSON()" id="rpt-export-btn" disabled style="background:none;border:1px solid var(--border2);color:var(--text3);border-radius:8px;padding:9px 18px;cursor:pointer;font-family:var(--mono);font-size:11px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export JSON
+          </button>
+          <button onclick="printReport()" id="rpt-print-btn" disabled style="background:none;border:1px solid var(--border2);color:var(--text3);border-radius:8px;padding:9px 18px;cursor:pointer;font-family:var(--mono);font-size:11px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+            Print / PDF
+          </button>
+          <button onclick="generateReport()" class="btn-primary" id="rpt-gen-btn" style="width:160px;display:flex;align-items:center;justify-content:center;gap:6px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+            GENERATE
+          </button>
+        </div>
+      </div>
+
+      <div class="report-builder">
+        <div class="report-options">
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--text2);margin-bottom:14px;text-transform:uppercase;letter-spacing:.5px;">Report Sections</div>
+          <label class="report-check"><input type="checkbox" id="rpt-sys" checked> System Overview</label>
+          <label class="report-check"><input type="checkbox" id="rpt-wifi" checked> WiFi Environment</label>
+          <label class="report-check"><input type="checkbox" id="rpt-devices" checked> Device Inventory</label>
+          <label class="report-check"><input type="checkbox" id="rpt-alerts"> Active Alerts</label>
+          <label class="report-check"><input type="checkbox" id="rpt-ports"> Port Scan History</label>
+          <hr style="border:none;border-top:1px solid var(--border);margin:16px 0;">
+          <div style="font-family:var(--mono);font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;text-transform:uppercase;letter-spacing:.5px;">Data Sources</div>
+          <div style="font-family:var(--mono);font-size:11px;color:var(--text3);line-height:2.1;">
+            <div>System: <span id="rpt-src-sys" style="color:var(--green);">Live API</span></div>
+            <div>WiFi: <span id="rpt-src-wifi" style="color:var(--text3);">Not loaded</span></div>
+            <div>Devices: <span id="rpt-src-dev" style="color:var(--text3);">Not loaded</span></div>
+            <div>Alerts: <span id="rpt-src-alerts" style="color:var(--text3);">Not loaded</span></div>
+          </div>
+        </div>
+
+        <div class="report-preview" id="rpt-preview">
+          <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;height:340px;color:var(--text3);font-family:var(--mono);font-size:11px;gap:16px;text-align:center;">
+            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--border2)" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+            Select sections and click <strong>GENERATE</strong> to build your network report.
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -975,6 +1175,13 @@ function switchPage(pageId, el) {
   document.getElementById("current-page").textContent = pageId.toUpperCase();
   if (pageId === "netmap") { if (!_wifiLoaded) loadWifi(); renderTopology(); }
   if (pageId === "settings") loadSystemInfo();
+  if (pageId === "wifiscan") { if (_wscanData.length === 0) runWifiScan(); }
+  if (pageId === "reports") {
+    const srcDev = document.getElementById("rpt-src-dev");
+    if (srcDev) { srcDev.textContent = _lastDevices.length > 0 ? _lastDevices.length + " devices" : "No scan (run Devices scan)"; srcDev.style.color = _lastDevices.length > 0 ? "var(--green)" : "var(--text3)"; }
+    const srcAlerts = document.getElementById("rpt-src-alerts");
+    if (srcAlerts) { srcAlerts.textContent = _alerts.length > 0 ? _alerts.length + " alerts" : "No alerts"; srcAlerts.style.color = _alerts.length > 0 ? "var(--green)" : "var(--text3)"; }
+  }
 }
 
 function handleLogout() {
@@ -1986,6 +2193,321 @@ function _ngSetupDrag(svg) {
   };
   svg.addEventListener("mouseup", stop);
   svg.addEventListener("mouseleave", stop);
+}
+
+// ─── WIFI SCANNER MODULE ──────────────────────────────────────────────────────
+let _wscanData     = [];
+let _wscanMyNet    = "";
+let _wscanSortKey  = "signal";
+let _wscanSortAsc  = false;
+let _wscanAutoTimer = null;
+
+function setAutoRefresh(secs) {
+  if (_wscanAutoTimer) { clearInterval(_wscanAutoTimer); _wscanAutoTimer = null; }
+  ["arb-off", "arb-30", "arb-60"].forEach(id => {
+    const b = document.getElementById(id);
+    if (b) b.classList.remove("active");
+  });
+  const map = { 0: "arb-off", 30: "arb-30", 60: "arb-60" };
+  const btnId = map[secs];
+  if (btnId) { const b = document.getElementById(btnId); if (b) b.classList.add("active"); }
+  if (secs > 0) _wscanAutoTimer = setInterval(runWifiScan, secs * 1000);
+}
+
+async function runWifiScan() {
+  const btn      = document.getElementById("wscan-btn");
+  const loading  = document.getElementById("wscan-loading");
+  const tableWrap = document.getElementById("wscan-table-wrap");
+  if (btn) btn.disabled = true;
+  if (loading) loading.style.display = "block";
+  if (tableWrap) tableWrap.style.display = "none";
+  pushLog("NETWORK", "WiFi scan initiated…");
+  try {
+    const data   = await apiGet("/api/wifi");
+    const iface  = data.interface  || {};
+    const nearby = data.nearby_networks || [];
+    _wscanData  = nearby;
+    _wscanMyNet = (iface.ssid || "").trim();
+
+    const secured = nearby.filter(n => n.auth && n.auth.toLowerCase() !== "open").length;
+    const open    = nearby.length - secured;
+    const best    = nearby.length > 0 ? nearby[0].signal : 0;
+    const set     = (id, val) => { const e = document.getElementById(id); if (e) e.textContent = val; };
+    set("wscan-total",   nearby.length);
+    set("wscan-secured", secured);
+    set("wscan-open",    open);
+    set("wscan-best",    best + "%");
+    set("wscan-mynet",   _wscanMyNet || "—");
+
+    const tsEl = document.getElementById("wscan-last-ts");
+    if (tsEl) tsEl.textContent = "Last scan: " + new Date(data.scanned_at).toLocaleTimeString() + " — " + nearby.length + " network(s) found";
+
+    if (loading) loading.style.display = "none";
+    if (tableWrap) tableWrap.style.display = "block";
+    renderWifiTable();
+    pushLog("NETWORK", `WiFi scan complete: ${nearby.length} AP(s) found.`);
+    if (open > 0) pushAlert("warning", `${open} open (unsecured) network(s) detected nearby`);
+  } catch (err) {
+    if (loading) loading.style.display = "none";
+    if (tableWrap) tableWrap.style.display = "block";
+    const list = document.getElementById("wscan-list");
+    if (list) list.innerHTML = `<div style="padding:24px;text-align:center;color:var(--red);font-family:var(--mono);font-size:11px;">Scan failed: ${err.message}</div>`;
+    pushLog("ERROR", "WiFi scan failed: " + err.message);
+  } finally {
+    if (btn) btn.disabled = false;
+  }
+}
+
+function sortWifiBy(key) {
+  if (_wscanSortKey === key) {
+    _wscanSortAsc = !_wscanSortAsc;
+  } else {
+    _wscanSortKey = key;
+    _wscanSortAsc = (key !== "signal");
+  }
+  renderWifiTable();
+}
+
+function renderWifiTable() {
+  const list = document.getElementById("wscan-list");
+  if (!list) return;
+  const filter = (document.getElementById("wscan-filter")?.value || "").toLowerCase().trim();
+
+  ["ssid", "signal", "band", "channel", "auth", "bssid"].forEach(k => {
+    const sa = document.getElementById("sa-" + k);
+    if (!sa) return;
+    if (k === _wscanSortKey) {
+      sa.className = "sort-arrow " + (_wscanSortAsc ? "asc" : "desc");
+    } else {
+      sa.className = "sort-arrow";
+    }
+  });
+
+  let rows = _wscanData.filter(n => !filter || (n.ssid || "").toLowerCase().includes(filter));
+  rows = [...rows].sort((a, b) => {
+    let va = a[_wscanSortKey] ?? "";
+    let vb = b[_wscanSortKey] ?? "";
+    if (_wscanSortKey === "signal" || _wscanSortKey === "channel") { va = Number(va) || 0; vb = Number(vb) || 0; }
+    if (va < vb) return _wscanSortAsc ? -1 : 1;
+    if (va > vb) return _wscanSortAsc ? 1  : -1;
+    return 0;
+  });
+
+  if (rows.length === 0) {
+    list.innerHTML = `<div style="padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">No networks match the current filter.</div>`;
+    return;
+  }
+
+  list.innerHTML = rows.map(n => {
+    const sig      = n.signal || 0;
+    const sigColor = sig > 60 ? "var(--green)" : sig > 30 ? "var(--amber)" : "var(--red)";
+    const isMine   = n.ssid === _wscanMyNet;
+    const isOpen   = !n.auth || n.auth.toLowerCase() === "open";
+    const isWPA3   = (n.auth || "").toUpperCase().includes("WPA3");
+    const secBadge = isOpen
+      ? `<span class="wscan-badge open">Open</span>`
+      : isWPA3
+        ? `<span class="wscan-badge wpa3">${n.auth}</span>`
+        : `<span class="wscan-badge secured">${n.auth || "Secured"}</span>`;
+    const barW = Math.max(4, Math.round(sig * 0.75));
+    return `<div class="wscan-row${isMine ? " mine" : ""}">
+      <span style="color:var(--accent);text-align:center;font-size:13px;">${isMine ? "★" : "○"}</span>
+      <span style="color:${isMine ? "var(--accent)" : "var(--text)"};font-weight:${isMine ? "700" : "400"};">${n.ssid || "<em>Hidden</em>"}</span>
+      <div class="sig-wrap"><div class="sig-fill" style="width:${barW}px;max-width:72px;background:${sigColor};"></div><span style="color:${sigColor}">${sig}%</span></div>
+      <span style="color:var(--text2)">${n.band || "N/A"}</span>
+      <span style="color:var(--text3)">${n.channel || "?"}</span>
+      <span>${secBadge}</span>
+      <span style="color:var(--text3);font-size:10px;">${n.bssid || "N/A"}</span>
+    </div>`;
+  }).join("");
+}
+
+function exportWifiScan() {
+  if (_wscanData.length === 0) { showToast("No scan data to export — run a scan first.", "var(--amber)"); return; }
+  const payload = {
+    exported_at:    new Date().toISOString(),
+    connected_ssid: _wscanMyNet || null,
+    total_networks: _wscanData.length,
+    networks:       _wscanData,
+  };
+  const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+  const a    = document.createElement("a");
+  a.href     = URL.createObjectURL(blob);
+  a.download = "wifi-scan-" + new Date().toISOString().slice(0, 19).replace(/:/g, "-") + ".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  pushLog("SYSTEM", "WiFi scan exported as JSON.");
+  showToast("WiFi scan exported.", "var(--green)");
+}
+
+// ─── REPORT GENERATOR MODULE ──────────────────────────────────────────────────
+let _reportData = null;
+
+async function generateReport() {
+  const genBtn  = document.getElementById("rpt-gen-btn");
+  const preview = document.getElementById("rpt-preview");
+  if (genBtn) { genBtn.disabled = true; genBtn.innerHTML = `<span class="spinning">&#8635;</span>&nbsp;GENERATING…`; }
+
+  pushLog("SYSTEM", "Generating network report…");
+  try {
+    const [sysData, wifiData] = await Promise.all([
+      apiGet("/api/status"),
+      apiGet("/api/wifi"),
+    ]);
+
+    // Update data source indicators
+    const setSrc = (id, txt, ok) => {
+      const e = document.getElementById(id);
+      if (e) { e.textContent = txt; e.style.color = ok ? "var(--green)" : "var(--amber)"; }
+    };
+    setSrc("rpt-src-sys",    "Live — " + new Date(sysData.server_time).toLocaleTimeString(), true);
+    setSrc("rpt-src-wifi",   (wifiData.nearby_networks || []).length + " networks", true);
+    setSrc("rpt-src-dev",    _lastDevices.length > 0 ? _lastDevices.length + " devices" : "No scan — run Devices scan", _lastDevices.length > 0);
+    setSrc("rpt-src-alerts", _alerts.length > 0 ? _alerts.length + " alerts" : "No alerts", _alerts.length > 0);
+
+    _reportData = {
+      generated_at: new Date().toISOString(),
+      generated_by: USERNAME,
+      system:  sysData,
+      wifi:    wifiData,
+      devices: _lastDevices,
+      alerts:  _alerts,
+    };
+
+    const eb = document.getElementById("rpt-export-btn");
+    const pb = document.getElementById("rpt-print-btn");
+    if (eb) { eb.disabled = false; eb.style.color = "var(--accent)"; eb.style.borderColor = "var(--accent)"; }
+    if (pb) { pb.disabled = false; pb.style.color = "var(--accent)"; pb.style.borderColor = "var(--accent)"; }
+
+    const sections = [];
+    const nearby   = wifiData.nearby_networks || [];
+    const iface    = wifiData.interface  || {};
+
+    if (document.getElementById("rpt-sys")?.checked) {
+      sections.push(`<div class="rpt-section">
+        <div class="rpt-section-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>System Overview</div>
+        <div class="rpt-row"><span class="rpt-key">Report Generated</span><span class="rpt-val">${new Date().toLocaleString()}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Generated By</span><span class="rpt-val">${USERNAME}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Hostname</span><span class="rpt-val">${sysData.hostname}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Platform</span><span class="rpt-val">${sysData.platform}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Python Version</span><span class="rpt-val">${sysData.python}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Server Time</span><span class="rpt-val">${new Date(sysData.server_time).toLocaleString()}</span></div>
+      </div>`);
+    }
+
+    if (document.getElementById("rpt-wifi")?.checked) {
+      const secured = nearby.filter(n => n.auth && n.auth.toLowerCase() !== "open").length;
+      const open    = nearby.length - secured;
+      sections.push(`<div class="rpt-section">
+        <div class="rpt-section-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>WiFi Environment</div>
+        <div class="rpt-row"><span class="rpt-key">Connected SSID</span><span class="rpt-val" style="color:var(--accent)">${iface.ssid || "Not connected"}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Signal Strength</span><span class="rpt-val">${iface.signal ? iface.signal + "%" : "N/A"}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Authentication</span><span class="rpt-val">${iface.auth || "N/A"}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Radio Type</span><span class="rpt-val">${iface.radio_type || "N/A"}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Scanned At</span><span class="rpt-val">${new Date(wifiData.scanned_at).toLocaleTimeString()}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Total APs Nearby</span><span class="rpt-val">${nearby.length}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Secured Networks</span><span class="rpt-val" style="color:var(--green)">${secured}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Open Networks</span><span class="rpt-val" style="color:${open > 0 ? "var(--red)" : "var(--text)"}">${open}</span></div>
+        ${nearby.length > 0 ? `<div style="margin-top:14px;overflow-x:auto;"><table class="rpt-table">
+          <thead><tr><th>SSID</th><th>BSSID</th><th>Signal</th><th>Band</th><th>Ch</th><th>Security</th></tr></thead>
+          <tbody>${nearby.map(n => `<tr>
+            <td style="color:var(--text)">${n.ssid}</td>
+            <td>${n.bssid}</td>
+            <td style="color:${n.signal>60?"var(--green)":n.signal>30?"var(--amber)":"var(--red)"}">${n.signal}%</td>
+            <td>${n.band || "N/A"}</td><td>${n.channel}</td>
+            <td style="color:${!n.auth||n.auth.toLowerCase()==="open"?"var(--red)":"var(--green)"}">${n.auth || "Open"}</td>
+          </tr>`).join("")}</tbody></table></div>` : ""}
+      </div>`);
+    }
+
+    if (document.getElementById("rpt-devices")?.checked) {
+      sections.push(`<div class="rpt-section">
+        <div class="rpt-section-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>Device Inventory</div>
+        ${_lastDevices.length === 0 ? `<div style="color:var(--text3);font-family:var(--mono);font-size:11px;padding:8px 0;">No device scan data — run a scan from the Devices page first.</div>` :
+        `<div class="rpt-row"><span class="rpt-key">Total Devices</span><span class="rpt-val">${_lastDevices.length}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Online</span><span class="rpt-val" style="color:var(--green)">${_lastDevices.length}</span></div>
+        <div style="margin-top:14px;overflow-x:auto;"><table class="rpt-table">
+          <thead><tr><th>IP Address</th><th>MAC</th><th>Vendor</th><th>Hostname</th><th>CPU</th><th>RAM</th><th>Latency</th></tr></thead>
+          <tbody>${_lastDevices.map(d => `<tr>
+            <td style="color:var(--accent)">${d.ip}</td><td>${d.mac}</td><td>${d.vendor}</td>
+            <td>${d.hostname !== d.ip ? d.hostname.split(".")[0] : "—"}</td>
+            <td style="color:${d.cpu_pct>70?"var(--red)":d.cpu_pct>40?"var(--amber)":"var(--green)"}">${d.cpu_pct}%</td>
+            <td style="color:${d.ram_pct>80?"var(--red)":d.ram_pct>60?"var(--amber)":"var(--green)"}">${d.ram_pct}%</td>
+            <td>${d.latency_ms}ms</td>
+          </tr>`).join("")}</tbody></table></div>`}
+      </div>`);
+    }
+
+    if (document.getElementById("rpt-alerts")?.checked) {
+      const crit = _alerts.filter(a => a.severity === "critical").length;
+      const warn = _alerts.filter(a => a.severity === "warning").length;
+      sections.push(`<div class="rpt-section">
+        <div class="rpt-section-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>Active Alerts</div>
+        ${_alerts.length === 0 ? `<div style="color:var(--text3);font-family:var(--mono);font-size:11px;padding:8px 0;">No active alerts.</div>` :
+        `<div class="rpt-row"><span class="rpt-key">Total</span><span class="rpt-val">${_alerts.length}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Critical</span><span class="rpt-val" style="color:var(--red)">${crit}</span></div>
+        <div class="rpt-row"><span class="rpt-key">Warning</span><span class="rpt-val" style="color:var(--amber)">${warn}</span></div>
+        <div style="margin-top:12px;display:flex;flex-direction:column;gap:6px;">
+          ${_alerts.slice(0, 15).map(a => `<div style="display:flex;gap:10px;padding:8px 10px;background:var(--bg);border-radius:8px;border-left:3px solid ${a.severity==="critical"?"var(--red)":a.severity==="warning"?"var(--amber)":"var(--accent)"};">
+            <span style="font-family:var(--mono);font-size:10px;color:${a.severity==="critical"?"var(--red)":a.severity==="warning"?"var(--amber)":"var(--accent)"};min-width:60px;text-transform:uppercase;">${a.severity}</span>
+            <span style="font-family:var(--mono);font-size:11px;flex:1;">${a.message}</span>
+            <span style="font-family:var(--mono);font-size:10px;color:var(--text3);">${a.ts}</span>
+          </div>`).join("")}
+        </div>`}
+      </div>`);
+    }
+
+    if (document.getElementById("rpt-ports")?.checked) {
+      const portSummary = document.getElementById("portscan-summary")?.textContent || "";
+      sections.push(`<div class="rpt-section">
+        <div class="rpt-section-title"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>Port Scan History</div>
+        ${portSummary ? `<div class="rpt-row"><span class="rpt-key">Last Scan Result</span><span class="rpt-val">${portSummary}</span></div>` :
+        `<div style="color:var(--text3);font-family:var(--mono);font-size:11px;padding:8px 0;">No port scan data — run a scan from the Port Scanner page.</div>`}
+      </div>`);
+    }
+
+    const header = `<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;padding-bottom:16px;border-bottom:2px solid var(--accent);">
+      <div>
+        <div style="font-family:var(--mono);font-size:15px;font-weight:700;">NET-MONITOR PRO</div>
+        <div style="font-family:var(--mono);font-size:10px;color:var(--text3);margin-top:3px;letter-spacing:1px;">NETWORK ANALYSIS REPORT</div>
+      </div>
+      <div style="text-align:right;font-family:var(--mono);font-size:11px;color:var(--text3);">
+        <div style="color:var(--text);font-size:12px;">${new Date().toLocaleDateString()}</div>
+        <div>${new Date().toLocaleTimeString()}</div>
+        <div style="margin-top:3px;color:var(--accent);">BY: ${USERNAME}</div>
+      </div>
+    </div>`;
+
+    preview.innerHTML = header + (sections.length > 0 ? sections.join("") : `<div style="color:var(--text3);font-family:var(--mono);font-size:11px;padding:20px;text-align:center;">No sections selected.</div>`);
+    pushLog("SYSTEM", "Report generated successfully.");
+    showToast("Report ready — use Export JSON or Print.", "var(--green)");
+  } catch (err) {
+    if (preview) preview.innerHTML = `<div style="color:var(--red);font-family:var(--mono);font-size:11px;padding:20px;">Report generation failed: ${err.message}</div>`;
+    pushLog("ERROR", "Report generation failed: " + err.message);
+  } finally {
+    if (genBtn) {
+      genBtn.disabled = false;
+      genBtn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg> GENERATE`;
+    }
+  }
+}
+
+function exportReportJSON() {
+  if (!_reportData) { showToast("Generate a report first.", "var(--amber)"); return; }
+  const blob = new Blob([JSON.stringify(_reportData, null, 2)], { type: "application/json" });
+  const a    = document.createElement("a");
+  a.href     = URL.createObjectURL(blob);
+  a.download = "net-report-" + new Date().toISOString().slice(0, 19).replace(/:/g, "-") + ".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+  pushLog("SYSTEM", "Report exported as JSON.");
+  showToast("Report downloaded.", "var(--green)");
+}
+
+function printReport() {
+  if (!_reportData) { showToast("Generate a report first.", "var(--amber)"); return; }
+  window.print();
+  pushLog("SYSTEM", "Print dialog opened.");
 }
 
 // ─── INIT ─────────────────────────────────────────────────────────────────────
