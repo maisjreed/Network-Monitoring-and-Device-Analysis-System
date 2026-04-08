@@ -137,7 +137,6 @@
 
   <div class="container">
 
-    <!-- Left branding -->
     <div class="left">
       <h1>Welcome to<br>Net-Monitor Pro</h1>
       <p>
@@ -147,19 +146,18 @@
       </p>
     </div>
 
-    <!-- Right login -->
     <div class="right">
       <h2>Login to your account</h2>
 
-      <form id="loginForm" novalidate>
+      <form id="loginForm">
         <div class="input-group">
           <label for="username">Username</label>
-          <input id="username" type="text" placeholder="Enter your username" autocomplete="username" required>
+          <input id="username" type="text" placeholder="Enter your username" required>
         </div>
 
         <div class="input-group">
           <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
+          <input id="password" type="password" placeholder="Enter your password" required>
         </div>
 
         <div id="error-msg" style="display:none; color:#e74c3c; font-size:13px; margin-bottom:10px; padding:10px; background:rgba(231,76,60,0.08); border-radius:6px; border-left:3px solid #e74c3c;"></div>
@@ -167,7 +165,7 @@
         <button class="btn" id="loginBtn" type="submit">Login</button>
 
         <div class="footer" style="margin-top:20px; color:#888; font-size:12px;">
-          Default: admin / Admin123 &nbsp;|&nbsp; Running on port 8000
+          Default Access: <b>admin</b> / <b>password123</b>
         </div>
       </form>
     </div>
@@ -175,63 +173,30 @@
   </div>
 
   <script>
-    // Redirect if already authenticated
-    if (localStorage.getItem("nmp_token")) {
-      window.location.replace("/dashboard");
-    }
+    const form = document.getElementById("loginForm");
+    const errBox = document.getElementById("error-msg");
 
-    const form    = document.getElementById("loginForm");
-    const errBox  = document.getElementById("error-msg");
-    const loginBtn = document.getElementById("loginBtn");
-
-    function showError(msg) {
-      errBox.textContent = msg;
-      errBox.style.display = "block";
-    }
-
-    function setLoading(loading) {
-      loginBtn.disabled = loading;
-      loginBtn.textContent = loading ? "Authenticating…" : "Login";
-    }
-
-    form.addEventListener("submit", async function (e) {
+    form.addEventListener("submit", function (e) {
       e.preventDefault();
       errBox.style.display = "none";
 
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value;
 
-      if (!username || !password) {
-        showError("Username and password are required.");
-        return;
-      }
+      // Check credentials locally
+      if (username === "admin" && password === "password123") {
+        
+        // Save dummy session data
+        localStorage.setItem("nmp_token", "demo_token");
+        localStorage.setItem("nmp_username", "admin");
 
-      setLoading(true);
-      try {
-        // OAuth2 password flow requires application/x-www-form-urlencoded
-        const body = new URLSearchParams({ username, password });
-        const res  = await fetch("/auth/login", {
-          method:  "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body:    body.toString(),
-        });
-
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          showError(data.detail || "Invalid credentials. Please try again.");
-          return;
-        }
-
-        const data = await res.json();
-        localStorage.setItem("nmp_token",    data.access_token);
-        localStorage.setItem("nmp_username", data.username);
-        localStorage.setItem("nmp_exp",      String(Date.now() + data.expires_in * 1000));
-
-        window.location.replace("/dashboard");
-      } catch (err) {
-        showError("Cannot reach the server. Is it running on port 8000?");
-      } finally {
-        setLoading(false);
+        // Take user to the dashboard
+        window.location.href = "dashboard.html"; 
+        
+      } else {
+        // Show error
+        errBox.textContent = "Invalid username or password. Please try again.";
+        errBox.style.display = "block";
       }
     });
   </script>
