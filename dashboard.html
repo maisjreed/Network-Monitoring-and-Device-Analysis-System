@@ -193,6 +193,15 @@ body {
 .dev-bar-fill { height: 100%; border-radius: 2px; }
 .spinning { display: inline-block; animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
+@keyframes pulse { 0%,100% { opacity:1; box-shadow:0 0 5px var(--green); } 50% { opacity:0.3; box-shadow:none; } }
+/* ─── SCAN PROGRESS STRIP ─── */
+.scan-strip { display:none; align-items:center; gap:10px; padding:8px 14px; background:var(--surface2); border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; }
+.scan-strip-bar-wrap { flex:1; height:4px; background:var(--border); border-radius:2px; overflow:hidden; }
+.scan-strip-bar { height:100%; background:var(--accent); border-radius:2px; transition:width 0.35s ease-out; width:0%; }
+.scan-strip-label { color:var(--text3); white-space:nowrap; }
+.scan-strip-count { color:var(--accent); font-weight:700; white-space:nowrap; min-width:70px; text-align:right; }
+@keyframes devRowIn { from { opacity:0; transform:translateX(-8px); } to { opacity:1; transform:translateX(0); } }
+.device-row-incoming { animation:devRowIn 0.22s ease-out forwards; }
 .toast { position: fixed; bottom: 24px; right: 24px; background: var(--surface); border: 1px solid var(--border2); border-radius: 10px; padding: 14px 20px; font-family: var(--mono); font-size: 12px; z-index: 9999; animation: slideIn .3s ease-out; box-shadow: var(--panel-shadow); }
 
 /* ─── NOTIFICATION BELL ─── */
@@ -324,6 +333,46 @@ body {
 .sort-arrow.asc::after { content:"↑"; }
 .sort-arrow.desc::after { content:"↓"; }
 
+/* ─── TOOL PAGES: SHARED ─── */
+.tool-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:20px; flex-wrap:wrap; gap:12px; }
+.tool-title { font-family:var(--mono); font-size:13px; font-weight:700; }
+.tool-sub { font-size:11px; color:var(--text3); margin-top:4px; }
+.tool-input-row { display:flex; gap:12px; margin-bottom:20px; flex-wrap:wrap; }
+.tool-input { flex:1; min-width:200px; padding:11px 14px; background:var(--bg); border:1px solid var(--border2); border-radius:8px; color:var(--text); font-family:var(--mono); font-size:12px; outline:none; transition:border-color .2s; }
+.tool-input:focus { border-color:var(--accent); }
+.tool-select { padding:11px 14px; background:var(--bg); border:1px solid var(--border2); border-radius:8px; color:var(--text); font-family:var(--mono); font-size:12px; outline:none; cursor:pointer; }
+.tool-spinner { text-align:center; padding:32px; color:var(--accent); font-family:var(--mono); font-size:11px; }
+.tool-spinner .spin { font-size:26px; display:inline-block; animation:spin 1s linear infinite; }
+/* Traceroute */
+.tr-row { display:grid; grid-template-columns:48px 160px 1fr 100px; gap:12px; padding:10px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; align-items:center; }
+.tr-row.hdr { font-size:9px; text-transform:uppercase; color:var(--text3); letter-spacing:.6px; border-bottom:2px solid var(--border2); }
+.tr-hop-num { color:var(--accent); font-weight:700; }
+.tr-bar { height:5px; border-radius:3px; background:var(--accent); transition:width .4s; }
+.tr-timeout { color:var(--text3); font-style:italic; }
+/* DNS Lookup */
+.dns-record { display:flex; align-items:center; gap:12px; padding:10px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; }
+.dns-badge { font-size:9px; padding:2px 8px; border-radius:99px; font-weight:700; letter-spacing:.5px; white-space:nowrap; background:rgba(56,189,248,0.12); color:var(--accent); min-width:48px; text-align:center; flex-shrink:0; }
+.dns-val { color:var(--text); word-break:break-all; }
+/* Wake-on-LAN */
+.wol-history { margin-top:20px; }
+.wol-hist-row { display:flex; justify-content:space-between; align-items:center; padding:9px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; }
+.wol-hist-mac { color:var(--accent); }
+.wol-hist-ts { color:var(--text3); font-size:10px; }
+.wol-result-card { border-radius:12px; padding:20px 24px; margin-bottom:20px; font-family:var(--mono); font-size:12px; border:1px solid; }
+.wol-result-card.ok { background:rgba(34,211,160,0.07); border-color:var(--green); color:var(--green); }
+.wol-result-card.err { background:rgba(248,113,113,0.07); border-color:var(--red); color:var(--red); }
+/* Subnet Calculator */
+.subnet-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px, 1fr)); gap:14px; margin-bottom:20px; }
+.subnet-cell { background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:14px 16px; }
+.subnet-cell-label { font-size:9px; text-transform:uppercase; letter-spacing:.8px; color:var(--text3); font-family:var(--mono); margin-bottom:6px; }
+.subnet-cell-val { font-family:var(--mono); font-size:13px; font-weight:700; color:var(--accent); word-break:break-all; }
+.subnet-binary { font-family:var(--mono); font-size:10px; color:var(--text3); margin-top:4px; word-break:break-all; letter-spacing:1px; }
+/* ARP Table */
+.arp-row { display:grid; grid-template-columns:140px 155px 1fr 85px 130px; gap:10px; padding:9px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; align-items:center; }
+.arp-row.hdr { font-size:9px; text-transform:uppercase; color:var(--text3); letter-spacing:.6px; border-bottom:2px solid var(--border2); }
+.arp-badge { font-size:9px; padding:2px 7px; border-radius:99px; font-family:var(--mono); font-weight:700; text-transform:uppercase; }
+.arp-badge.dynamic { background:rgba(56,189,248,0.12); color:var(--accent); }
+.arp-badge.static  { background:rgba(34,211,160,0.12); color:var(--green); }
 /* ─── REPORTS PAGE ─── */
 .report-builder { display:grid; grid-template-columns:280px 1fr; gap:20px; }
 .report-options { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:20px; box-shadow:var(--panel-shadow); height:fit-content; }
@@ -343,6 +392,22 @@ body {
 .rpt-table td { padding:7px 10px; border-bottom:1px solid var(--border); color:var(--text2); }
 .rpt-table tr:last-child td { border-bottom:none; }
 
+/* ─── PUBLIC WIFI ADDITIONS ─── */
+.tab-badge { display:inline-flex; align-items:center; justify-content:center; min-width:16px; height:16px; border-radius:99px; background:var(--red); color:#fff; font-size:9px; font-family:var(--mono); font-weight:700; padding:0 4px; margin-left:5px; line-height:1; }
+.wifi-client-row { display:grid; grid-template-columns:155px 130px 1fr 90px 90px 90px 90px; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; align-items:center; }
+.wifi-client-row.hdr { font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; border-bottom:2px solid var(--border2); }
+.wifi-client-row:hover:not(.hdr) { background:var(--accent-glow); border-radius:8px; }
+.rssi-wrap { display:flex; align-items:center; gap:6px; }
+.rssi-bars { display:flex; align-items:flex-end; gap:2px; height:14px; }
+.rssi-bar { width:4px; border-radius:2px 2px 0 0; background:var(--border2); }
+.rssi-bar.lit { background:var(--green); }
+.rssi-bar.amber.lit { background:var(--amber); }
+.rssi-bar.red.lit { background:var(--red); }
+.block-btn { padding:3px 9px; border:1px solid var(--red); border-radius:5px; background:rgba(248,113,113,0.08); color:var(--red); font-family:var(--mono); font-size:9px; cursor:pointer; text-transform:uppercase; letter-spacing:.4px; white-space:nowrap; }
+.block-btn:hover { background:rgba(248,113,113,0.18); }
+.nd-row { display:grid; grid-template-columns:130px 1fr 90px 90px 140px; gap:10px; padding:10px 14px; border-bottom:1px solid var(--border); font-family:var(--mono); font-size:11px; align-items:center; }
+.nd-row.hdr { font-size:10px; color:var(--text3); text-transform:uppercase; letter-spacing:.5px; border-bottom:2px solid var(--border2); }
+.nd-row:hover:not(.hdr) { background:var(--accent-glow); border-radius:8px; }
 @media print {
   .sidebar, .topbar, #notif-panel { display:none !important; }
   .main { overflow:visible !important; }
@@ -407,6 +472,26 @@ body {
     <li onclick="switchPage('wifiscan', this)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0114.08 0M1.42 9a16 16 0 0121.16 0M8.53 16.11a6 6 0 016.95 0M12 20h.01"/></svg>
       WiFi Scanner
+    </li>
+    <li onclick="switchPage('traceroute', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="5 9 2 12 5 15"/><polyline points="19 9 22 12 19 15"/><line x1="2" y1="12" x2="22" y2="12"/></svg>
+      Traceroute
+    </li>
+    <li onclick="switchPage('dnslookup', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      DNS Lookup
+    </li>
+    <li onclick="switchPage('wol', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+      Wake-on-LAN
+    </li>
+    <li onclick="switchPage('subnetcalc', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="2"/><line x1="9" y1="9" x2="15" y2="15"/><line x1="15" y1="9" x2="9" y2="15"/></svg>
+      Subnet Calc
+    </li>
+    <li onclick="switchPage('arptable', this)">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="9" x2="9" y2="21"/></svg>
+      ARP Table
     </li>
     <li onclick="switchPage('reports', this)">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
@@ -619,8 +704,16 @@ body {
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
             Alerts
           </button>
+          <button class="dash-tab-btn" onclick="switchDashTab('dtab-wifi',this);loadWifiClients()">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12.55a11 11 0 0 1 14.08 0"/><path d="M1.42 9a16 16 0 0 1 21.16 0"/><path d="M8.53 16.11a6 6 0 0 1 6.95 0"/><line x1="12" y1="20" x2="12.01" y2="20"/></svg>
+            WiFi Clients
+          </button>
+          <button class="dash-tab-btn" onclick="switchDashTab('dtab-newdevs',this);loadNewDeviceAlerts()" id="btn-newdevs">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>
+            New Devices<span class="tab-badge" id="badge-newdevs" style="display:none;">0</span>
+          </button>
           <div style="margin-left:auto;display:flex;align-items:center;gap:10px;padding:8px 4px;">
-            <button onclick="initNodeGraph(!!_lastDevices.length)" style="background:none;border:1px solid var(--border2);color:var(--accent);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--mono);font-size:10px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
+            <button onclick="initNodeGraph()" style="background:none;border:1px solid var(--border2);color:var(--accent);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--mono);font-size:10px;text-transform:uppercase;display:flex;align-items:center;gap:6px;">
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
               Refresh Map
             </button>
@@ -645,6 +738,26 @@ body {
         <div class="dash-tab-panel" id="dtab-alerts" style="padding:24px;">
           <div style="font-family:var(--mono);font-size:12px;font-weight:700;margin-bottom:16px;color:var(--text2);">Recent System Activity</div>
           <div id="activity-log" style="height:300px;overflow-y:auto;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:14px;font-family:var(--mono);font-size:11px;"></div>
+        </div>
+
+        <!-- WiFi Clients Panel -->
+        <div class="dash-tab-panel" id="dtab-wifi" style="padding:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text2);">Wireless Client Association Table</div>
+            <button onclick="loadWifiClients()" style="background:none;border:1px solid var(--border2);color:var(--accent);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--mono);font-size:10px;text-transform:uppercase;">↻ Refresh</button>
+          </div>
+          <div style="font-size:10px;color:var(--text3);font-family:var(--mono);margin-bottom:12px;">Live data from MikroTik gateway — requires NMP_GW_USER / NMP_GW_PASS environment variables.</div>
+          <div id="wifi-clients-table"><div style="padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">Click Refresh to load wireless clients…</div></div>
+        </div>
+
+        <!-- New Devices Panel -->
+        <div class="dash-tab-panel" id="dtab-newdevs" style="padding:20px;">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+            <div style="font-family:var(--mono);font-size:12px;font-weight:700;color:var(--text2);">New Device Alert Log</div>
+            <button onclick="loadNewDeviceAlerts()" style="background:none;border:1px solid var(--border2);color:var(--accent);border-radius:6px;padding:5px 14px;cursor:pointer;font-family:var(--mono);font-size:10px;text-transform:uppercase;">↻ Refresh</button>
+          </div>
+          <div style="font-size:10px;color:var(--text3);font-family:var(--mono);margin-bottom:12px;">Every new MAC address seen for the first time triggers an entry here. Configure NMP_ALERT_WEBHOOK or NMP_ALERT_EMAIL for external notifications.</div>
+          <div id="new-devs-table"><div style="padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">Loading…</div></div>
         </div>
       </div>
     </div>
@@ -806,16 +919,36 @@ body {
         <div class="panel">
             <div id="devices-overlay" class="module-overlay">
                 <div style="text-align:center;">
-                  <div style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:16px;">Performs ARP sweep of local /24 subnet</div>
-                  <div style="width:200px"><button onclick="scanDevices()" class="btn-primary">SCAN HARDWARE NODES</button></div>
+                  <div style="font-size:28px;animation:spin 1s linear infinite;display:inline-block;color:var(--accent);">&#8635;</div>
+                  <div style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-top:12px;margin-bottom:4px;">Auto-detecting devices on network&hellip;</div>
+                  <div style="font-family:var(--mono);font-size:9px;color:var(--text3);margin-bottom:16px;">Scans every 15 s &bull; Updates automatically</div>
+                  <div style="width:200px"><button onclick="scanDevices()" class="btn-primary">FORCE RESCAN NOW</button></div>
                 </div>
             </div>
             <div class="panel-header">
-              <div class="panel-title">Hardware Discovery List</div>
-              <div id="devices-meta" style="font-size:10px;color:var(--text3);font-family:var(--mono);"></div>
+              <div style="display:flex;align-items:center;gap:10px;">
+                <div class="panel-title">Hardware Discovery List</div>
+                <div style="display:flex;align-items:center;gap:5px;font-size:9px;color:var(--green);font-family:var(--mono);letter-spacing:.5px;">
+                  <span style="width:6px;height:6px;background:var(--green);border-radius:50%;display:inline-block;animation:pulse 2s ease-in-out infinite;"></span>
+                  LIVE
+                </div>
+              </div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <div id="devices-meta" style="font-size:10px;color:var(--text3);font-family:var(--mono);"></div>
+                <button onclick="scanDevices()" style="background:none;border:1px solid var(--border2);color:var(--accent);border-radius:6px;padding:5px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;text-transform:uppercase;display:flex;align-items:center;gap:5px;">
+                  <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                  Rescan
+                </button>
+              </div>
             </div>
             <div class="device-row header">
               <span>DEVICE NAME</span><span>IP ADDRESS</span><span>STATUS</span><span>CPU</span><span>RAM</span><span>LATENCY</span>
+            </div>
+            <div id="scan-progress-strip" class="scan-strip">
+              <span style="color:var(--accent);animation:spin 1s linear infinite;display:inline-block;font-size:15px;">&#8635;</span>
+              <div class="scan-strip-bar-wrap"><div id="scan-progress-bar" class="scan-strip-bar"></div></div>
+              <span id="scan-progress-label" class="scan-strip-label">Starting scan&hellip;</span>
+              <span id="scan-progress-count" class="scan-strip-count"></span>
             </div>
             <div id="device-list" style="height:400px; overflow-y:auto;"></div>
         </div>
@@ -834,6 +967,34 @@ body {
                 </div>
                 <div id="speed-status" style="font-family:var(--mono); font-size:11px; margin-bottom:10px; color:var(--accent);">AWAITING SIGNAL...</div>
                 <div class="progress-container"><div id="speed-bar" class="progress-bar"></div></div>
+            </div>
+            <!-- ── Last-scan results — persisted until next run ── -->
+            <div id="speed-results" style="display:none; max-width:520px; margin: 0 auto 24px; border-top: 1px solid var(--border); padding-top: 22px;">
+              <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:18px;">
+                <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;">
+                  <div style="font-size:9px;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Download</div>
+                  <div id="speed-dl" style="font-family:var(--mono);font-size:24px;font-weight:700;color:var(--green);">—</div>
+                  <div style="font-size:9px;color:var(--text3);font-family:var(--mono);margin-top:2px;">Mbps</div>
+                </div>
+                <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;">
+                  <div style="font-size:9px;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Upload</div>
+                  <div id="speed-ul" style="font-family:var(--mono);font-size:24px;font-weight:700;color:var(--accent);">—</div>
+                  <div style="font-size:9px;color:var(--text3);font-family:var(--mono);margin-top:2px;">Mbps</div>
+                </div>
+                <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px 12px;text-align:center;">
+                  <div style="font-size:9px;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Latency</div>
+                  <div id="speed-ping" style="font-family:var(--mono);font-size:24px;font-weight:700;color:var(--amber);">—</div>
+                  <div style="font-size:9px;color:var(--text3);font-family:var(--mono);margin-top:2px;">ms</div>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;padding: 0 2px;">
+                <div style="font-size:10px;font-family:var(--mono);color:var(--text3);">
+                  Last scan: <span id="speed-ts" style="color:var(--text2);">—</span>
+                </div>
+                <button onclick="runSpeedTest()" class="btn-primary" style="padding:7px 20px;font-size:11px;">
+                  ↺ RE-RUN BENCHMARK
+                </button>
+              </div>
             </div>
         </div>
     </div>
@@ -980,6 +1141,166 @@ body {
             <div style="color:var(--text3);font-family:var(--mono);font-size:11px;">No traceroute data.</div>
           </div>
         </div>
+      </div>
+    </div>
+
+    <!-- ─── TRACEROUTE PAGE ─── -->
+    <div id="traceroute" class="page-view">
+      <div class="tool-header">
+        <div>
+          <div class="tool-title">Traceroute</div>
+          <div class="tool-sub">Visual hop-by-hop path discovery to any host or IP</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="tool-input-row">
+          <input id="tr-host" class="tool-input" type="text" placeholder="Hostname or IP (e.g. google.com, 8.8.8.8)"
+            onkeydown="if(event.key==='Enter') runTraceroute()">
+          <select id="tr-hops" class="tool-select">
+            <option value="15">15 hops</option>
+            <option value="20">20 hops</option>
+            <option value="30" selected>30 hops</option>
+          </select>
+          <button onclick="runTraceroute()" class="btn-primary" style="width:160px;" id="tr-btn">TRACE ROUTE</button>
+        </div>
+        <div id="tr-spinner" style="display:none;" class="tool-spinner">
+          <div class="spin">&#8635;</div>
+          <div style="margin-top:10px;">Tracing route — may take up to 60 seconds…</div>
+        </div>
+        <div id="tr-result" style="display:none;">
+          <div id="tr-summary" style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:12px;"></div>
+          <div class="tr-row hdr"><span>HOP</span><span>IP ADDRESS</span><span>RTT BAR</span><span>RTT (ms)</span></div>
+          <div id="tr-list" style="max-height:400px;overflow-y:auto;"></div>
+        </div>
+        <div id="tr-empty" style="display:none;padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">No hops returned — host may be unreachable.</div>
+      </div>
+    </div>
+
+    <!-- ─── DNS LOOKUP PAGE ─── -->
+    <div id="dnslookup" class="page-view">
+      <div class="tool-header">
+        <div>
+          <div class="tool-title">DNS Lookup</div>
+          <div class="tool-sub">Query A, AAAA, MX, CNAME, TXT, PTR, NS and SOA records</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="tool-input-row">
+          <input id="dns-host" class="tool-input" type="text" placeholder="Domain or IP (e.g. github.com, 8.8.8.8)"
+            onkeydown="if(event.key==='Enter') runDnsLookup()">
+          <select id="dns-type" class="tool-select">
+            <option value="A" selected>A</option>
+            <option value="AAAA">AAAA</option>
+            <option value="MX">MX</option>
+            <option value="CNAME">CNAME</option>
+            <option value="TXT">TXT</option>
+            <option value="PTR">PTR</option>
+            <option value="NS">NS</option>
+            <option value="SOA">SOA</option>
+          </select>
+          <button onclick="runDnsLookup()" class="btn-primary" style="width:160px;" id="dns-btn">LOOKUP</button>
+        </div>
+        <div id="dns-spinner" style="display:none;" class="tool-spinner">
+          <div class="spin">&#8635;</div>
+          <div style="margin-top:10px;">Querying DNS…</div>
+        </div>
+        <div id="dns-result" style="display:none;">
+          <div id="dns-summary" style="font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:12px;"></div>
+          <div id="dns-list" style="max-height:400px;overflow-y:auto;"></div>
+        </div>
+        <div id="dns-empty" style="display:none;padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">No records found for this query.</div>
+      </div>
+    </div>
+
+    <!-- ─── WAKE-ON-LAN PAGE ─── -->
+    <div id="wol" class="page-view">
+      <div class="tool-header">
+        <div>
+          <div class="tool-title">Wake-on-LAN</div>
+          <div class="tool-sub">Send magic packets to power on remote devices</div>
+        </div>
+      </div>
+      <div class="panel" style="max-width:600px;">
+        <div style="margin-bottom:18px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Target MAC Address</div>
+          <input id="wol-mac" class="tool-input" type="text" placeholder="AA:BB:CC:DD:EE:FF"
+            style="width:100%;box-sizing:border-box;" onkeydown="if(event.key==='Enter') sendWol()">
+          <div style="font-size:10px;color:var(--text3);font-family:var(--mono);margin-top:6px;">Format: XX:XX:XX:XX:XX:XX — find MAC in the Devices page</div>
+        </div>
+        <div style="margin-bottom:20px;">
+          <div style="font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;">Broadcast Address <span style="opacity:.5;">(optional)</span></div>
+          <input id="wol-bcast" class="tool-input" type="text" placeholder="255.255.255.255"
+            style="width:100%;box-sizing:border-box;">
+        </div>
+        <button onclick="sendWol()" class="btn-primary" style="width:100%;" id="wol-btn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:-2px;margin-right:6px;"><path d="M18.36 6.64a9 9 0 1 1-12.73 0"/><line x1="12" y1="2" x2="12" y2="12"/></svg>
+          SEND MAGIC PACKET
+        </button>
+        <div id="wol-result" style="display:none;margin-top:18px;"></div>
+      </div>
+      <div id="wol-history-wrap" style="display:none;max-width:600px;">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Recent Wake Requests</div>
+            <button onclick="_wolClearHistory()" style="background:none;border:1px solid var(--border2);color:var(--text3);border-radius:6px;padding:4px 12px;cursor:pointer;font-family:var(--mono);font-size:10px;">CLEAR</button>
+          </div>
+          <div class="wol-hist-row hdr" style="font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.6px;border-bottom:2px solid var(--border2);">
+            <span>MAC Address</span><span>Broadcast</span><span>Sent At</span>
+          </div>
+          <div id="wol-hist-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── SUBNET CALCULATOR PAGE ─── -->
+    <div id="subnetcalc" class="page-view">
+      <div class="tool-header">
+        <div>
+          <div class="tool-title">Subnet Calculator</div>
+          <div class="tool-sub">CIDR breakdown, host range, mask and binary representation</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="tool-input-row" style="align-items:center;">
+          <input id="sc-input" class="tool-input" type="text" placeholder="IP/CIDR — e.g. 192.168.1.50/24 or 10.0.0.0/255.255.0.0"
+            onkeydown="if(event.key==='Enter') calcSubnet()">
+          <button onclick="calcSubnet()" class="btn-primary" style="width:160px;">CALCULATE</button>
+        </div>
+        <div id="sc-error" style="display:none;padding:10px 14px;background:rgba(248,113,113,0.08);border:1px solid var(--red);border-radius:8px;color:var(--red);font-family:var(--mono);font-size:11px;margin-bottom:16px;"></div>
+        <div id="sc-result" style="display:none;">
+          <div class="subnet-grid" id="sc-grid"></div>
+          <div class="panel" style="background:var(--surface2);border:1px solid var(--border);">
+            <div class="panel-title" style="margin-bottom:12px;">Binary Representation</div>
+            <div id="sc-binary" style="font-family:var(--mono);font-size:11px;color:var(--text2);line-height:1.9;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── ARP TABLE PAGE ─── -->
+    <div id="arptable" class="page-view">
+      <div class="tool-header">
+        <div>
+          <div class="tool-title">ARP Table Viewer</div>
+          <div class="tool-sub">Live ARP cache with vendor identification</div>
+        </div>
+        <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+          <input id="arp-filter" class="tool-input" type="text" placeholder="Filter by IP, MAC or vendor…"
+            style="width:240px;" oninput="_filterArpTable()">
+          <button onclick="loadArpTable()" class="btn-primary" style="width:130px;" id="arp-btn">REFRESH</button>
+        </div>
+      </div>
+      <div class="panel">
+        <div id="arp-spinner" style="display:none;" class="tool-spinner">
+          <div class="spin">&#8635;</div>
+          <div style="margin-top:10px;">Reading ARP cache…</div>
+        </div>
+        <div id="arp-stats" style="display:none;font-family:var(--mono);font-size:11px;color:var(--text3);margin-bottom:12px;"></div>
+        <div id="arp-result" style="display:none;">
+          <div class="arp-row hdr"><span>IP ADDRESS</span><span>MAC ADDRESS</span><span>VENDOR</span><span>TYPE</span><span>INTERFACE</span></div>
+          <div id="arp-list" style="max-height:480px;overflow-y:auto;"></div>
+        </div>
+        <div id="arp-empty" style="display:none;padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">ARP table is empty or could not be read.</div>
       </div>
     </div>
 
@@ -1141,6 +1462,21 @@ async function apiGet(path) {
   return res.json();
 }
 
+async function apiPost(path, body) {
+  const res = await fetch(path, {
+    method: "POST",
+    headers: { "Authorization": "Bearer " + TOKEN, "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  if (res.status === 401) {
+    localStorage.removeItem("nmp_token");
+    window.location.replace("/");
+    throw new Error("Session expired");
+  }
+  if (!res.ok) throw new Error(await res.text());
+  return res.json();
+}
+
 function showToast(msg, color) {
   const t = document.createElement("div");
   t.className = "toast";
@@ -1172,10 +1508,13 @@ function switchPage(pageId, el) {
   document.querySelectorAll(".menu li").forEach(l => l.classList.remove("active"));
   document.getElementById(pageId).classList.add("active");
   el.classList.add("active");
-  document.getElementById("current-page").textContent = pageId.toUpperCase();
+  const _pageLabels = { dnslookup: "DNS LOOKUP", wol: "WAKE-ON-LAN", subnetcalc: "SUBNET CALC", arptable: "ARP TABLE", wifiscan: "WIFI SCANNER", traceroute: "TRACEROUTE" };
+  document.getElementById("current-page").textContent = _pageLabels[pageId] || pageId.toUpperCase();
   if (pageId === "netmap") { if (!_wifiLoaded) loadWifi(); renderTopology(); }
   if (pageId === "settings") loadSystemInfo();
   if (pageId === "wifiscan") { if (_wscanData.length === 0) runWifiScan(); }
+  if (pageId === "arptable") loadArpTable();
+  if (pageId === "devices" && _lastDevices.length > 0 && !_scanInProgress) { _renderDeviceList(_lastDevices, null); }
   if (pageId === "reports") {
     const srcDev = document.getElementById("rpt-src-dev");
     if (srcDev) { srcDev.textContent = _lastDevices.length > 0 ? _lastDevices.length + " devices" : "No scan (run Devices scan)"; srcDev.style.color = _lastDevices.length > 0 ? "var(--green)" : "var(--text3)"; }
@@ -1323,6 +1662,36 @@ function initWebSocket() {
   const ws = new WebSocket("ws://127.0.0.1:8000/ws?token=" + TOKEN);
   ws.onmessage = (e) => {
     const d = JSON.parse(e.data);
+
+    // ── Scan progress streaming ──────────────────────────────────────────
+    if (d.type === "scan_progress") { _handleScanProgress(d); return; }
+    // ── Auto device detection ──────────────────────────────────────────────
+    if (d.type === "device_update") {
+      _lastDevices = d.devices || [];
+      _updateDeviceStats();
+      renderDevicesTab();
+      if (document.getElementById("devices")?.classList.contains("active")) {
+        _renderDeviceList(_lastDevices, d.ts);
+      }
+      if (d.new_devices && d.new_devices.length > 0) {
+        d.new_devices.forEach(dev => {
+          const label = dev.hostname && dev.hostname !== dev.ip
+            ? dev.hostname.split('.')[0]
+            : (dev.vendor && dev.vendor !== 'Unknown' ? dev.vendor : dev.ip);
+          showToast('🔵 New device: ' + label + ' (' + dev.ip + ')', 'var(--green)');
+          pushAlert('info', 'New device detected: ' + dev.ip + ' — ' + dev.vendor);
+          pushLog('NETWORK', 'New device: ' + label + ' | ' + dev.ip + ' | ' + (dev.vendor || 'Unknown'));
+          const ndBadge = document.getElementById('badge-newdevs');
+          if (ndBadge) {
+            const cur = parseInt(ndBadge.textContent) || 0;
+            ndBadge.textContent = cur + 1;
+            ndBadge.style.display = 'inline-flex';
+          }
+        });
+      }
+      return;
+    }
+
     if (d.type !== "metrics") return;
     _bwIn.shift();  _bwIn.push(d.bandwidth_in);
     _bwOut.shift(); _bwOut.push(d.bandwidth_out);
@@ -1386,61 +1755,152 @@ function stopTraffic() {
   pushLog("SYSTEM", "Traffic analysis engine stopped.");
 }
 
-// ─── DEVICES: REAL ARP SCAN ───────────────────────────────────────────────────
-async function scanDevices() {
-  const overlay = document.getElementById("devices-overlay");
+// ─── DEVICES: ARP SCAN + AUTO-DETECTION ──────────────────────────────────────
+function _renderDeviceList(devices, ts) {
+  if (_scanInProgress) return;
   const list    = document.getElementById("device-list");
   const meta    = document.getElementById("devices-meta");
+  const overlay = document.getElementById("devices-overlay");
+  if (!list) return;
+  if (overlay) overlay.style.display = "none";
+  list.innerHTML = "";
+  if (devices.length === 0) {
+    list.innerHTML = `<div style="padding:24px;color:var(--text3);font-family:var(--mono);text-align:center;">No devices detected yet &mdash; waiting for network activity&hellip;</div>`;
+  } else {
+    devices.forEach(dev => {
+      const row = document.createElement("div");
+      row.className = "device-row";
+      const devName = dev.hostname !== dev.ip ? dev.hostname.split('.')[0] : (dev.vendor !== 'Unknown' ? dev.vendor : dev.ip);
+      const cpuC = dev.cpu_pct > 70 ? 'var(--red)' : dev.cpu_pct > 40 ? '#f59e0b' : 'var(--green)';
+      const ramC = dev.ram_pct > 80 ? 'var(--red)' : dev.ram_pct > 60 ? '#f59e0b' : 'var(--green)';
+      const latC = dev.latency_ms > 30 ? 'var(--red)' : dev.latency_ms > 10 ? '#f59e0b' : 'var(--green)';
+      const isOff = dev.status === "offline";
+      const statusBadge = isOff
+        ? `<span class="badge-online" style="background:rgba(248,113,113,0.12);color:var(--red);">&#9679; OFFLINE</span>`
+        : `<span class="badge-online">&#9679; ONLINE</span>`;
+      row.innerHTML = `
+        <span style="color:${isOff ? 'var(--text3)' : 'var(--text)'}">${devName}</span>
+        <span style="color:${isOff ? 'var(--text3)' : 'var(--accent)'}">${dev.ip}</span>
+        <span>${statusBadge}</span>
+        <span>
+          <div style="color:${cpuC}">${dev.cpu_pct}%</div>
+          <div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${dev.cpu_pct}%;background:${cpuC}"></div></div>
+        </span>
+        <span>
+          <div style="color:${ramC}">${dev.ram_pct}%</div>
+          <div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${dev.ram_pct}%;background:${ramC}"></div></div>
+        </span>
+        <span style="color:${latC}">${dev.latency_ms}ms</span>`;
+      list.appendChild(row);
+    });
+  }
+  if (meta) {
+    const online = devices.filter(d => d.status !== "offline").length;
+    const tsStr  = ts ? new Date(ts).toLocaleTimeString() : new Date().toLocaleTimeString();
+    meta.textContent = online + " online, " + devices.length + " total \u2022 " + tsStr;
+  }
+}
 
-  overlay.style.display = "flex";
-  overlay.innerHTML = `<div style="color:var(--accent);font-family:var(--mono);text-align:center;">
-    <div style="font-size:28px;animation:spin 1s linear infinite;display:inline-block;">&#8635;</div>
-    <div style="margin-top:14px;font-size:11px;">SCANNING SUBNET&hellip;<br><span style="color:var(--text3);font-size:9px;">ARP ping-sweep (may take 30&ndash;60s)</span></div>
-  </div>`;
-  pushLog("NETWORK", "Subnet ARP sweep initiated\u2026");
+let _scanInProgress = false;
 
-  try {
-    const data = await apiGet("/api/devices");
-    _lastDevices = data.devices;
+function _handleScanProgress(d) {
+  _scanInProgress = !d.done;
+  const strip = document.getElementById("scan-progress-strip");
+  const bar   = document.getElementById("scan-progress-bar");
+  const label = document.getElementById("scan-progress-label");
+  const count = document.getElementById("scan-progress-count");
+  if (strip) strip.style.display = d.done ? "none" : "flex";
+  if (bar)   bar.style.width = d.progress + "%";
+  if (label) label.textContent = d.done ? "" : "Scanning\u2026 " + d.progress + "%";
+  if (count) count.textContent = d.found > 0 ? d.found + " found" : "";
+  if (d.new_batch && d.new_batch.length > 0 &&
+      document.getElementById("devices")?.classList.contains("active")) {
+    _appendDeviceRows(d.new_batch);
+  }
+  if (d.done) {
+    _lastDevices = d.devices || [];
     _updateDeviceStats();
     renderDevicesTab();
-    overlay.style.display = "none";
-    list.innerHTML = "";
-
-    if (data.devices.length === 0) {
-      list.innerHTML = `<div style="padding:24px;color:var(--text3);font-family:var(--mono);text-align:center;">No dynamic ARP entries found.</div>`;
-    } else {
-      data.devices.forEach(dev => {
-        const row = document.createElement("div");
-        row.className = "device-row";
-        const devName = dev.hostname !== dev.ip ? dev.hostname.split('.')[0] : (dev.vendor !== 'Unknown' ? dev.vendor : dev.ip);
-        const cpuC = dev.cpu_pct > 70 ? 'var(--red)' : dev.cpu_pct > 40 ? '#f59e0b' : 'var(--green)';
-        const ramC = dev.ram_pct > 80 ? 'var(--red)' : dev.ram_pct > 60 ? '#f59e0b' : 'var(--green)';
-        const latC = dev.latency_ms > 30 ? 'var(--red)' : dev.latency_ms > 10 ? '#f59e0b' : 'var(--green)';
-        row.innerHTML = `
-          <span style="color:var(--text)">${devName}</span>
-          <span style="color:var(--accent)">${dev.ip}</span>
-          <span><span class="badge-online">&#9679; ONLINE</span></span>
-          <span>
-            <div style="color:${cpuC}">${dev.cpu_pct}%</div>
-            <div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${dev.cpu_pct}%;background:${cpuC}"></div></div>
-          </span>
-          <span>
-            <div style="color:${ramC}">${dev.ram_pct}%</div>
-            <div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${dev.ram_pct}%;background:${ramC}"></div></div>
-          </span>
-          <span style="color:${latC}">${dev.latency_ms}ms</span>`;
-        list.appendChild(row);
-      });
+    const meta = document.getElementById("devices-meta");
+    if (meta) {
+      const online = _lastDevices.filter(x => x.status !== "offline").length;
+      meta.textContent = online + " online, " + _lastDevices.length +
+          " total \u2022 " + new Date(d.ts).toLocaleTimeString();
     }
-    document.getElementById("dash-device-count").textContent = data.count;
-    if (meta) meta.textContent = data.count + " node(s) \u2022 " + new Date(data.scanned_at).toLocaleTimeString();
-    pushLog("NETWORK", "Discovery complete: " + data.count + " active node(s) found.");
+    if (d.found > 0)
+      pushLog("NETWORK", "Scan complete: " + d.found + " device(s) found.");
+    initNodeGraph();
+  }
+}
+
+function _appendDeviceRows(devices) {
+  const list = document.getElementById("device-list");
+  if (!list) return;
+  const placeholder = list.querySelector("[data-placeholder]");
+  if (placeholder) placeholder.remove();
+  const existing = new Set(
+    Array.from(list.querySelectorAll("[data-ip]")).map(el => el.getAttribute("data-ip"))
+  );
+  devices.forEach(dev => {
+    if (existing.has(dev.ip)) return;
+    existing.add(dev.ip);
+    const row = document.createElement("div");
+    row.className = "device-row device-row-incoming";
+    row.setAttribute("data-ip", dev.ip);
+    const devName = dev.hostname !== dev.ip
+      ? dev.hostname.split(".")[0]
+      : (dev.vendor !== "Unknown" ? dev.vendor : dev.ip);
+    const cpuC = dev.cpu_pct > 70 ? "var(--red)" : dev.cpu_pct > 40 ? "#f59e0b" : "var(--green)";
+    const ramC = dev.ram_pct > 80 ? "var(--red)" : dev.ram_pct > 60 ? "#f59e0b" : "var(--green)";
+    const latC = dev.latency_ms > 30 ? "var(--red)" : dev.latency_ms > 10 ? "#f59e0b" : "var(--green)";
+    row.innerHTML = `
+      <span style="color:var(--text)">${devName}</span>
+      <span style="color:var(--accent)">${dev.ip}</span>
+      <span><span class="badge-online">&#9679; ONLINE</span></span>
+      <span><div style="color:${cpuC}">${dev.cpu_pct}%</div><div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${dev.cpu_pct}%;background:${cpuC}"></div></div></span>
+      <span><div style="color:${ramC}">${dev.ram_pct}%</div><div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${dev.ram_pct}%;background:${ramC}"></div></div></span>
+      <span style="color:${latC}">${dev.latency_ms}ms</span>`;
+    list.appendChild(row);
+  });
+}
+
+async function _autoLoadDevices() {
+  try {
+    const data = await apiGet("/api/devices/cache");
+    if (data.devices && data.devices.length > 0) {
+      _lastDevices = data.devices;
+      _updateDeviceStats();
+      renderDevicesTab();
+      if (document.getElementById("devices")?.classList.contains("active")) {
+        _renderDeviceList(_lastDevices, data.scanned_at);
+      }
+    }
+  } catch {}
+}
+
+async function scanDevices() {
+  if (_scanInProgress) return;
+  _scanInProgress = true;
+  const list    = document.getElementById("device-list");
+  const overlay = document.getElementById("devices-overlay");
+  const strip   = document.getElementById("scan-progress-strip");
+  const bar     = document.getElementById("scan-progress-bar");
+  const label   = document.getElementById("scan-progress-label");
+  const count   = document.getElementById("scan-progress-count");
+  if (overlay) overlay.style.display = "none";
+  if (list)  list.innerHTML = `<div data-placeholder style="padding:16px;color:var(--text3);font-family:var(--mono);font-size:11px;text-align:center;">Discovering devices in real-time&hellip;</div>`;
+  if (strip)  strip.style.display = "flex";
+  if (bar)    bar.style.width = "2%";
+  if (label)  label.textContent = "Starting scan\u2026";
+  if (count)  count.textContent = "";
+  pushLog("NETWORK", "Fast parallel subnet scan started\u2026");
+  try {
+    await apiGet("/api/devices");
+    // scan_progress WS messages handle all real-time UI updates
   } catch (err) {
-    overlay.style.display = "flex";
-    overlay.innerHTML = `<div style="color:var(--red);font-family:var(--mono);text-align:center;">
-      SCAN FAILED<br><span style="font-size:10px;color:var(--text3)">${err.message}</span><br><br>
-      <button onclick="scanDevices()" class="btn-primary" style="width:160px;margin-top:8px;">RETRY</button></div>`;
+    _scanInProgress = false;
+    if (strip) strip.style.display = "none";
+    if (list)  list.innerHTML = `<div style="padding:24px;color:var(--red);font-family:var(--mono);text-align:center;">Scan failed: ${err.message}<br><button onclick="scanDevices()" class="btn-primary" style="margin-top:12px;width:140px;">RETRY</button></div>`;
     pushLog("ERROR", "Device scan failed: " + err.message);
   }
 }
@@ -1461,30 +1921,87 @@ async function pingDevice(ip, btn) {
 }
 
 // ─── SPEED TEST ───────────────────────────────────────────────────────────────
+
+/** Apply a saved result object to the UI without running a new test. */
+function _applySpeedResults(r) {
+  document.getElementById("speed-overlay").style.display = "none";
+  document.getElementById("speed-num").textContent  = r.download;
+  document.getElementById("speed-bar").style.width  = "100%";
+  document.getElementById("speed-status").textContent = "BENCHMARK COMPLETE";
+  document.getElementById("speed-dl").textContent   = r.download;
+  document.getElementById("speed-ul").textContent   = r.upload;
+  document.getElementById("speed-ping").textContent = r.ping;
+  document.getElementById("speed-ts").textContent   = r.ts;
+  document.getElementById("speed-results").style.display = "block";
+}
+
+/** Restore the last speed-test result from localStorage on page load. */
+(function _restoreSpeedResults() {
+  try {
+    const saved = localStorage.getItem("speedtest_last");
+    if (saved) _applySpeedResults(JSON.parse(saved));
+  } catch (e) {}
+})();
+
 function runSpeedTest() {
   const overlay = document.getElementById("speed-overlay");
   const val     = document.getElementById("speed-num");
   const bar     = document.getElementById("speed-bar");
   const sts     = document.getElementById("speed-status");
-  overlay.style.display = "none";
+  const results = document.getElementById("speed-results");
+
+  // Hide overlay + previous results while the new test runs
+  overlay.style.display  = "none";
+  results.style.display  = "none";
+  bar.style.width        = "0%";
+  val.textContent        = "0.0";
+
   let prog = 0;
-  const target = (Math.random() * 500 + 100).toFixed(1);
+  const dlTarget = parseFloat((Math.random() * 500 + 100).toFixed(1));
+  const ulTarget = parseFloat((Math.random() * dlTarget * 0.6 + 20).toFixed(1));
+  const ping     = Math.floor(Math.random() * 25 + 3);
+
   pushLog("SPEED", "Bandwidth benchmark initiated.");
+
   const t = setInterval(() => {
     prog += 2;
     bar.style.width = prog + "%";
-    val.textContent = (Math.random() * target).toFixed(1);
-    sts.textContent = prog < 50 ? "TESTING DOWNLOAD\u2026" : "TESTING UPLOAD\u2026";
+
+    if (prog <= 50) {
+      val.textContent = (Math.random() * dlTarget).toFixed(1);
+      sts.textContent = "TESTING DOWNLOAD\u2026";
+    } else {
+      val.textContent = (Math.random() * ulTarget).toFixed(1);
+      sts.textContent = "TESTING UPLOAD\u2026";
+    }
+
     if (prog >= 100) {
       clearInterval(t);
-      val.textContent = target;
+      const dl = dlTarget.toFixed(1);
+      const ul = ulTarget.toFixed(1);
+      const ts = new Date().toLocaleString();
+
+      // Update the gauge
+      val.textContent = dl;
       sts.textContent = "BENCHMARK COMPLETE";
-      document.getElementById("dash-speed-val").textContent = target;
-      pushLog("SPEED", "Benchmark complete: " + target + " Mbps.");
-      setTimeout(() => {
-        overlay.style.display = "flex";
-        overlay.innerHTML = `<button onclick="runSpeedTest()" class="btn-primary" style="width:180px;">RE-RUN BENCHMARK</button>`;
-      }, 3000);
+
+      // Update dashboard stat card
+      const dashVal = document.getElementById("dash-speed-val");
+      if (dashVal) dashVal.textContent = dl;
+
+      // Populate and show results panel — remains visible until next run
+      document.getElementById("speed-dl").textContent   = dl;
+      document.getElementById("speed-ul").textContent   = ul;
+      document.getElementById("speed-ping").textContent = ping;
+      document.getElementById("speed-ts").textContent   = ts;
+      results.style.display = "block";
+
+      // Persist so results survive navigation away and back
+      try {
+        localStorage.setItem("speedtest_last", JSON.stringify({ download: dl, upload: ul, ping, ts }));
+      } catch (e) {}
+
+      pushLog("SPEED", `Benchmark complete: ↓${dl} / ↑${ul} Mbps, ping ${ping} ms.`);
     }
   }, 100);
 }
@@ -1971,6 +2488,35 @@ function _updateDeviceStats() {
   updateDonut(online, warning, 0);
 }
 
+function _fmtFirstSeen(iso) {
+  if (!iso) return '—';
+  try {
+    const d = new Date(iso);
+    const now = new Date();
+    const diff = Math.floor((now - d) / 1000);
+    if (diff < 60)  return diff + 's ago';
+    if (diff < 3600) return Math.floor(diff/60) + 'm ago';
+    if (diff < 86400) return Math.floor(diff/3600) + 'h ago';
+    return d.toLocaleDateString();
+  } catch { return '—'; }
+}
+
+function _blockDevice(ip) {
+  if (!confirm('Block ' + ip + ' on the MikroTik gateway?')) return;
+  const tok = localStorage.getItem('nmp_token');
+  fetch('/api/block-device', {
+    method: 'POST',
+    headers: { 'Authorization': 'Bearer ' + tok, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ ip }),
+  })
+  .then(r => r.json())
+  .then(r => {
+    if (r.blocked_ip) showToast('⛔ Blocked ' + ip + ' on gateway', 'var(--red)');
+    else showToast('Block failed: ' + (r.detail || 'Unknown error'), 'var(--red)');
+  })
+  .catch(() => showToast('Block request failed', 'var(--red)'));
+}
+
 function renderDevicesTab() {
   const table = document.getElementById("dtab-dev-table");
   const label = document.getElementById("dtab-dev-label");
@@ -1980,21 +2526,101 @@ function renderDevicesTab() {
     table.innerHTML = ""; return;
   }
   if (label) label.textContent = `${_lastDevices.length} device${_lastDevices.length > 1 ? "s" : ""} discovered`;
-  const hdr = `<div style="display:grid;grid-template-columns:1fr 120px 90px 85px 85px 72px;gap:10px;padding:8px 12px;border-bottom:2px solid var(--border2);font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;"><div>Device Name</div><div>IP Address</div><div>Status</div><div>CPU</div><div>RAM</div><div>Latency</div></div>`;
+  const COL = '1fr 115px 80px 75px 75px 65px 90px 72px';
+  const hdr = `<div style="display:grid;grid-template-columns:${COL};gap:8px;padding:8px 12px;border-bottom:2px solid var(--border2);font-family:var(--mono);font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;">
+    <div>Device Name</div><div>IP</div><div>Status</div><div>CPU</div><div>RAM</div><div>Latency</div><div>First Seen</div><div>Action</div></div>`;
   table.innerHTML = hdr + _lastDevices.map(d => {
     const n   = d.hostname !== d.ip ? d.hostname.split('.')[0] : (d.vendor !== 'Unknown' ? d.vendor : d.ip);
     const cpuC = d.cpu_pct > 70 ? 'var(--red)' : d.cpu_pct > 40 ? '#f59e0b' : 'var(--green)';
     const ramC = d.ram_pct > 80 ? 'var(--red)' : d.ram_pct > 60 ? '#f59e0b' : 'var(--green)';
     const latC = d.latency_ms > 30 ? 'var(--red)' : d.latency_ms > 10 ? '#f59e0b' : 'var(--green)';
-    return `<div style="display:grid;grid-template-columns:1fr 120px 90px 85px 85px 72px;gap:10px;padding:10px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;align-items:center;">
-      <div style="color:var(--text)">${n}</div>
+    const stC  = d.status === 'offline' ? 'var(--red)' : 'var(--green)';
+    const stTxt= d.status === 'offline' ? '● Offline' : '● Online';
+    const sessions = d.session_count > 1 ? ` <span style="color:var(--text3)">×${d.session_count}</span>` : '';
+    return `<div style="display:grid;grid-template-columns:${COL};gap:8px;padding:10px 12px;border-bottom:1px solid var(--border);font-family:var(--mono);font-size:11px;align-items:center;">
+      <div style="color:var(--text)" title="${d.vendor || ''} • ${d.mac || ''}">${n}${sessions}</div>
       <div style="color:var(--accent)">${d.ip}</div>
-      <div><span style="color:var(--green);font-size:10px;">&#9679; Online</span></div>
+      <div><span style="color:${stC};font-size:10px;">${stTxt}</span></div>
       <div><span style="color:${cpuC}">${d.cpu_pct}%</span><div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${d.cpu_pct}%;background:${cpuC}"></div></div></div>
       <div><span style="color:${ramC}">${d.ram_pct}%</span><div class="dev-bar-wrap"><div class="dev-bar-fill" style="width:${d.ram_pct}%;background:${ramC}"></div></div></div>
       <div style="color:${latC}">${d.latency_ms}ms</div>
+      <div style="color:var(--text3);font-size:10px;">${_fmtFirstSeen(d.first_seen)}</div>
+      <div><button class="block-btn" onclick="_blockDevice('${d.ip}')">Block</button></div>
     </div>`;
   }).join("");
+}
+
+// ─── WIFI CLIENTS & NEW-DEVICE ALERTS ────────────────────────────────────────
+
+function _rssiBar(pct) {
+  if (pct === null || pct === undefined) return '<span style="color:var(--text3)">—</span>';
+  const cls  = pct >= 66 ? 'lit' : pct >= 33 ? 'amber lit' : 'red lit';
+  const lit  = pct >= 75 ? 4 : pct >= 50 ? 3 : pct >= 25 ? 2 : 1;
+  const bars = [1,2,3,4].map(i =>
+    '<div class="rssi-bar ' + (i<=lit ? cls : '') + '" style="height:' + (3+i*3) + 'px"></div>'
+  ).join('');
+  return '<div class="rssi-wrap"><div class="rssi-bars">' + bars + '</div><span style="color:var(--text3);font-size:10px;">' + pct + '%</span></div>';
+}
+
+function loadWifiClients() {
+  const el = document.getElementById('wifi-clients-table');
+  if (!el) return;
+  el.innerHTML = '<div style="padding:18px;text-align:center;color:var(--accent);font-family:var(--mono);font-size:11px;">Loading…</div>';
+  apiGet('/api/wifi-clients')
+  .then(function(data) {
+    const clients = data.clients || [];
+    if (!clients.length) {
+      el.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">No wireless clients detected. Ensure NMP_GW_USER and NMP_GW_PASS are configured and the router supports REST API.</div>';
+      return;
+    }
+    const hdr = '<div class="wifi-client-row hdr"><div>MAC</div><div>Hostname / IP</div><div>Signal</div><div>TX Rate</div><div>RX Rate</div><div>Uptime</div><div>AP Interface</div></div>';
+    const rows = clients.map(function(c) {
+      const label = (c.hostname && c.hostname !== c.mac) ? c.hostname.split('.')[0] : (c.ip || c.mac);
+      return '<div class="wifi-client-row">' +
+        '<div style="color:var(--accent)">' + c.mac + '</div>' +
+        '<div>' + label + (c.ip ? '<br><span style="color:var(--text3);font-size:10px;">' + c.ip + '</span>' : '') + '</div>' +
+        '<div>' + _rssiBar(c.signal_pct) + (c.rssi_dbm !== null && c.rssi_dbm !== undefined ? '<div style="font-size:10px;color:var(--text3);margin-top:2px;">' + c.rssi_dbm + ' dBm</div>' : '') + '</div>' +
+        '<div style="color:var(--text2)">' + (c.tx_rate || '—') + '</div>' +
+        '<div style="color:var(--text2)">' + (c.rx_rate || '—') + '</div>' +
+        '<div style="color:var(--text3)">' + (c.uptime || '—') + '</div>' +
+        '<div style="color:var(--text3)">' + (c.ap_iface || '—') + (c.channel ? '<br><span style="font-size:10px;">' + c.channel + '</span>' : '') + '</div>' +
+      '</div>';
+    }).join('');
+    el.innerHTML = hdr + rows;
+  })
+  .catch(function(e) {
+    el.innerHTML = '<div style="padding:18px;text-align:center;color:var(--red);font-family:var(--mono);font-size:11px;">Error: ' + e.message + '</div>';
+  });
+}
+
+function loadNewDeviceAlerts() {
+  const el    = document.getElementById('new-devs-table');
+  const badge = document.getElementById('badge-newdevs');
+  if (!el) return;
+  apiGet('/api/alerts/new-devices?limit=100')
+  .then(function(data) {
+    const alerts = (data.alerts || []).slice().reverse();
+    if (badge) badge.style.display = 'none';
+    if (!alerts.length) {
+      el.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">No new devices recorded this session.</div>';
+      return;
+    }
+    const hdr = '<div class="nd-row hdr"><div>IP Address</div><div>Hostname / Vendor</div><div>MAC</div><div>Device Type</div><div>First Seen</div></div>';
+    const rows = alerts.map(function(a) {
+      const label = (a.hostname && a.hostname !== a.ip) ? a.hostname : (a.vendor || '—');
+      return '<div class="nd-row">' +
+        '<div style="color:var(--accent)">' + a.ip + '</div>' +
+        '<div>' + label + (a.vendor && a.hostname !== a.vendor ? '<br><span style="color:var(--text3);font-size:10px;">' + a.vendor + '</span>' : '') + '</div>' +
+        '<div style="color:var(--text3)">' + (a.mac || '—') + '</div>' +
+        '<div style="color:var(--text2)">' + (a.device_type || 'unknown') + '</div>' +
+        '<div style="color:var(--text3);font-size:10px;">' + (a.first_seen ? new Date(a.first_seen).toLocaleString() : '—') + '</div>' +
+      '</div>';
+    }).join('');
+    el.innerHTML = hdr + rows;
+  })
+  .catch(function(e) {
+    el.innerHTML = '<div style="padding:18px;text-align:center;color:var(--red);font-family:var(--mono);font-size:11px;">Error: ' + e.message + '</div>';
+  });
 }
 
 // ─── DASHBOARD TAB SWITCHER ───────────────────────────────────────────────────
@@ -2006,20 +2632,34 @@ function switchDashTab(panelId, btn) {
 }
 
 // ─── NODE GRAPH ───────────────────────────────────────────────────────────────
-const _NG_DEMO = {
-  nodes: [
-    { id:"gw",  label:"Gateway",       role:"router",      x:380, y:55,  s:"online"  },
-    { id:"fw",  label:"Firewall-Edge", role:"firewall",    x:380, y:150, s:"online"  },
-    { id:"cr",  label:"Core Router",   role:"router",      x:240, y:235, s:"online"  },
-    { id:"lb",  label:"LoadBalancer",  role:"server",      x:520, y:235, s:"online"  },
-    { id:"sw1", label:"Switch-Floor2", role:"switch",      x:135, y:315, s:"online"  },
-    { id:"nas", label:"NAS-Storage",   role:"server",      x:520, y:315, s:"offline" },
-    { id:"ap1", label:"AP-Lobby",      role:"ap",          x:60,  y:340, s:"online"  },
-    { id:"ws1", label:"MAP-Office",    role:"workstation", x:220, y:340, s:"online"  },
-  ],
-  links: [["gw","fw"],["fw","cr"],["fw","lb"],["cr","sw1"],["lb","nas"],["sw1","ap1"],["sw1","ws1"]]
-};
+// _NG_DEMO removed — topology is built entirely from live API data
 let _ngData = { nodes: [], links: [] };
+
+/* Map backend device_type → icon role */
+function deviceRole(d) {
+  const t = (d.device_type || "").toLowerCase();
+  if (t === "access_point")                             return "ap";
+  if (t === "switch")                                   return "switch";
+  if (t === "router")                                   return "router";
+  if (t === "firewall")                                 return "firewall";
+  if (t === "server" || t === "nas" || t === "virtual") return "server";
+  // Hostname/vendor heuristics as last resort
+  const h = (d.hostname || "").toLowerCase();
+  const v = (d.vendor   || "").toLowerCase();
+  if (/\b(router|gateway|gw|rtr)\b/.test(h) || v.includes("mikrotik") || v.includes("cisco")) return "router";
+  if (/\b(switch|sw[-_])/.test(h))           return "switch";
+  if (/\b(ap[-_]|access.?point|wifi)/.test(h) || v.includes("ubiquiti") || v.includes("aruba")) return "ap";
+  if (/\b(nas|storage|backup)/.test(h))      return "server";
+  if (/\b(firewall|fw[-_])/.test(h))         return "firewall";
+  return "workstation";
+}
+
+/* Best display label for a device */
+function deviceLabel(d) {
+  if (d.hostname && d.hostname !== d.ip) return d.hostname.split(".")[0].substring(0, 14);
+  if (d.vendor   && d.vendor   !== "Unknown") return d.vendor.substring(0, 14);
+  return d.ip;
+}
 
 function _ngColor(s) { return s==="offline"?"var(--red)":s==="warning"?"var(--amber)":"var(--green)"; }
 function _ngFill(s)  {
@@ -2039,40 +2679,116 @@ function _ngIconPath(role) {
   };
   return P[role] || P.workstation;
 }
-function guessNodeRole(dev) {
-  const h = (dev.hostname||"").toLowerCase(), v = (dev.vendor||"").toLowerCase();
-  if (h.includes("router")||h.includes("gateway")) return "router";
-  if (h.includes("switch")||h.includes("sw-"))     return "switch";
-  if (h.includes("ap")||h.includes("wifi")||v.includes("tp-link")) return "ap";
-  if (h.includes("nas")||h.includes("storage"))    return "server";
-  if (h.includes("firewall")||h.includes("fw"))    return "firewall";
-  return "workstation";
+function guessNodeRole(dev) { return deviceRole(dev); }
+
+function initNodeGraph() {
+  // Wrapper: calls the async implementation and surfaces errors to log
+  _initNodeGraphAsync().catch(e => pushLog("ERROR", "Topology error: " + e.message));
 }
 
-function initNodeGraph(useReal) {
+async function _initNodeGraphAsync() {
   const svg = document.getElementById("ng-svg");
   if (!svg) return;
-  const W = svg.clientWidth || 760, H = 360;
-  svg.setAttribute("viewBox", `0 0 ${W} ${H}`);
-  if (useReal && _lastDevices.length > 0) {
-    const devs = _lastDevices.slice(0, 10);
-    const cols  = Math.ceil(Math.sqrt(devs.length + 1));
-    _ngData.nodes = [
-      { id: "gw", label: "Gateway", role: "router", x: W / 2, y: 60, s: "online", ip: "—" },
-      ...devs.map((d, i) => ({
-        id: d.ip,
-        label: (d.hostname !== d.ip ? d.hostname.split(".")[0] : d.ip).substring(0, 14),
-        role: guessNodeRole(d), ip: d.ip, s: "online",
-        x: 70 + (i % cols) * Math.max(1, Math.floor((W - 140) / Math.max(cols - 1, 1))),
-        y: 190 + Math.floor(i / cols) * 100,
-      })),
-    ];
-    _ngData.links = devs.map(d => ["gw", d.ip]);
-  } else {
-    _ngData.nodes = _NG_DEMO.nodes.map(n => ({...n}));
-    _ngData.links = _NG_DEMO.links.map(l => [...l]);
+
+  const W = Math.max(svg.clientWidth || 760, 560);
+
+  // ── Fetch live topology from server ─────────────────────────────────────────
+  let gw_ip = null, gw_vendor = null, host_ip = null, devices = [];
+  try {
+    const data = await apiGet("/api/topology");
+    gw_ip      = data.gateway_ip;
+    gw_vendor  = data.gateway_vendor;
+    host_ip    = data.host_ip;
+    devices    = data.devices || [];
+  } catch (e) { /* show empty state with gateway placeholder */ }
+
+  // ── Bucket devices into tiers ──────────────────────────────────────────────
+  const INFRA_TYPES = new Set(["router", "access_point", "switch", "firewall"]);
+  const gwDev     = gw_ip ? devices.find(d => d.ip === gw_ip) : null;
+  const infraAll  = devices.filter(d => d.ip !== gw_ip && INFRA_TYPES.has(d.device_type));
+  const endAll    = devices.filter(d => d.ip !== gw_ip && !INFRA_TYPES.has(d.device_type));
+  const MAX_END   = 28;
+  const endShown  = endAll.slice(0, MAX_END);
+  const endHidden = endAll.length - endShown.length;
+
+  // ── Tier Y positions ─────────────────────────────────────────────────────────
+  const MARGIN = 60;
+  const T0_Y   = 60;
+  const T1_Y   = 185;
+  const T2_Y   = 315;
+  const H = (infraAll.length > 0 && endShown.length > 0) ? T2_Y + 70
+          : (infraAll.length > 0 || endShown.length > 0) ? T1_Y + 70
+          : T0_Y + 80;
+
+  // ── Even horizontal spread ──────────────────────────────────────────────────
+  function xPos(i, n) {
+    if (n <= 1) return W / 2;
+    const step = Math.min((W - 2 * MARGIN) / (n - 1), 130);
+    const totalW = step * (n - 1);
+    return (W - totalW) / 2 + i * step;
   }
-  _ngRender(svg, W, H);
+
+  const nodes = [], links = [];
+
+  // ── Gateway node ─────────────────────────────────────────────────────────────
+  const gwLabel = gwDev
+    ? deviceLabel(gwDev)
+    : (gw_vendor && gw_vendor !== "Unknown" ? gw_vendor.substring(0, 14) : "Gateway");
+  nodes.push({
+    id: "gw", label: gwLabel, role: "router",
+    ip: gw_ip || "—", s: gwDev ? (gwDev.status || "online") : "online",
+    x: W / 2, y: T0_Y, isGw: true,
+  });
+
+  // ── Infrastructure (tier 1) ──────────────────────────────────────────────────
+  infraAll.forEach((d, i) => {
+    nodes.push({
+      id: d.ip, label: deviceLabel(d), role: deviceRole(d),
+      ip: d.ip, s: d.status || "online",
+      x: xPos(i, infraAll.length), y: T1_Y,
+    });
+    links.push(["gw", d.ip]);
+  });
+
+  // ── End devices (tier 2, or tier 1 if no infra) ───────────────────────────
+  const tierParents = infraAll.length > 0 ? infraAll.map(d => d.ip) : ["gw"];
+  const tY = infraAll.length > 0 ? T2_Y : T1_Y;
+  endShown.forEach((d, i) => {
+    const pid     = tierParents[i % tierParents.length];
+    const stagger = (i % 2 === 0) ? 0 : 14;
+    nodes.push({
+      id: d.ip, label: deviceLabel(d), role: deviceRole(d),
+      ip: d.ip, s: d.status || "online",
+      x: xPos(i, endShown.length + (endHidden > 0 ? 1 : 0)), y: tY + stagger,
+    });
+    links.push([pid, d.ip]);
+  });
+
+  // ── "+N more" cluster ─────────────────────────────────────────────────────────
+  if (endHidden > 0) {
+    const idx = endShown.length;
+    nodes.push({
+      id: "__more", label: `+${endHidden} more`, role: "workstation",
+      ip: "", s: "online", x: xPos(idx, endShown.length + 1), y: tY,
+    });
+    links.push([tierParents[idx % tierParents.length], "__more"]);
+  }
+
+  // ── No devices yet ────────────────────────────────────────────────────────────
+  if (devices.length === 0) {
+    nodes.length = 0; links.length = 0;
+    nodes.push({
+      id: "gw", label: gw_ip ? `Gateway (${gw_ip})` : "Gateway",
+      role: "router", ip: gw_ip || "—", s: "online", x: W / 2, y: T0_Y, isGw: true,
+    });
+  }
+
+  const finalH = Math.max(H, 300);
+  svg.setAttribute("viewBox", `0 0 ${W} ${finalH}`);
+  svg.style.minHeight = `${finalH}px`;
+  _ngData.nodes = nodes;
+  _ngData.links = links;
+  _ngRender(svg, W, finalH);
   _ngSetupDrag(svg);
 }
 
@@ -2510,15 +3226,309 @@ function printReport() {
   pushLog("SYSTEM", "Print dialog opened.");
 }
 
+// ─── TRACEROUTE ───────────────────────────────────────────────────────────────
+async function runTraceroute() {
+  const host = document.getElementById("tr-host").value.trim();
+  if (!host) { showToast("Enter a hostname or IP address.", "var(--amber)"); return; }
+  const hops = document.getElementById("tr-hops").value;
+  const btn  = document.getElementById("tr-btn");
+
+  document.getElementById("tr-spinner").style.display = "block";
+  document.getElementById("tr-result").style.display  = "none";
+  document.getElementById("tr-empty").style.display   = "none";
+  btn.disabled = true; btn.textContent = "TRACING…";
+
+  try {
+    const d = await apiGet(`/api/traceroute?host=${encodeURIComponent(host)}&max_hops=${hops}`);
+    document.getElementById("tr-spinner").style.display = "none";
+    btn.disabled = false; btn.textContent = "TRACE ROUTE";
+
+    if (!d.hops || d.hops.length === 0) {
+      document.getElementById("tr-empty").style.display = "block";
+      return;
+    }
+
+    const maxRtt = Math.max(...d.hops.filter(h => h.rtt_ms).map(h => h.rtt_ms), 1);
+    document.getElementById("tr-summary").textContent =
+      `Target: ${d.host}  ·  ${d.total} hop${d.total !== 1 ? "s" : ""}  ·  Queried: ${new Date(d.scanned_at).toLocaleTimeString()}`;
+    document.getElementById("tr-list").innerHTML = d.hops.map(h => {
+      const rttColor = h.timed_out ? "var(--text3)"
+                     : h.rtt_ms < 10 ? "var(--green)"
+                     : h.rtt_ms < 50 ? "var(--amber)"
+                     : "var(--red)";
+      const barW = h.rtt_ms ? Math.max(4, Math.round((h.rtt_ms / maxRtt) * 160)) : 0;
+      return `<div class="tr-row">
+        <span class="tr-hop-num">${h.hop}</span>
+        <span style="color:${h.timed_out ? "var(--text3)" : "var(--text)"};">${h.ip}</span>
+        <span>${h.timed_out ? '<span class="tr-timeout">* * * Timed out</span>' : `<div class="tr-bar" style="width:${barW}px;background:${rttColor};"></div>`}</span>
+        <span style="color:${rttColor};">${h.timed_out ? "—" : (h.rtt_ms != null ? h.rtt_ms + " ms" : "< 1 ms")}</span>
+      </div>`;
+    }).join("");
+    document.getElementById("tr-result").style.display = "block";
+    pushLog("NETWORK", `Traceroute to ${host}: ${d.total} hops`);
+  } catch(e) {
+    document.getElementById("tr-spinner").style.display = "none";
+    btn.disabled = false; btn.textContent = "TRACE ROUTE";
+    showToast("Traceroute failed: " + e.message, "var(--red)");
+  }
+}
+
+// ─── DNS LOOKUP ───────────────────────────────────────────────────────────────
+async function runDnsLookup() {
+  const host  = document.getElementById("dns-host").value.trim();
+  const rtype = document.getElementById("dns-type").value;
+  if (!host) { showToast("Enter a hostname or IP address.", "var(--amber)"); return; }
+  const btn = document.getElementById("dns-btn");
+
+  document.getElementById("dns-spinner").style.display = "block";
+  document.getElementById("dns-result").style.display  = "none";
+  document.getElementById("dns-empty").style.display   = "none";
+  btn.disabled = true; btn.textContent = "LOOKING UP…";
+
+  try {
+    const d = await apiGet(`/api/dns?host=${encodeURIComponent(host)}&type=${rtype}`);
+    document.getElementById("dns-spinner").style.display = "none";
+    btn.disabled = false; btn.textContent = "LOOKUP";
+
+    if (!d.records || d.records.length === 0) {
+      document.getElementById("dns-empty").style.display = "block";
+      return;
+    }
+
+    document.getElementById("dns-summary").textContent =
+      `${d.count} record${d.count !== 1 ? "s" : ""} for "${d.host}" (type ${d.type}) · ${new Date(d.queried_at).toLocaleTimeString()}`;
+    document.getElementById("dns-list").innerHTML = d.records.map(r =>
+      `<div class="dns-record">
+        <span class="dns-badge">${r.type || rtype}</span>
+        <span class="dns-val">${r.value}</span>
+        <span style="margin-left:auto;cursor:pointer;color:var(--text3);font-size:12px;"
+          title="Copy" onclick="navigator.clipboard.writeText('${r.value.replace(/'/g,"\\'")}');showToast('Copied!','var(--green)');">&#9112;</span>
+      </div>`
+    ).join("");
+    document.getElementById("dns-result").style.display = "block";
+    pushLog("NETWORK", `DNS ${rtype} for ${host}: ${d.count} record(s)`);
+  } catch(e) {
+    document.getElementById("dns-spinner").style.display = "none";
+    btn.disabled = false; btn.textContent = "LOOKUP";
+    showToast("DNS lookup failed: " + e.message, "var(--red)");
+  }
+}
+
+// ─── WAKE-ON-LAN ──────────────────────────────────────────────────────────────
+let _wolHistory = JSON.parse(localStorage.getItem("nmp_wol_history") || "[]");
+
+function _renderWolHistory() {
+  const list = document.getElementById("wol-hist-list");
+  const wrap = document.getElementById("wol-history-wrap");
+  if (_wolHistory.length === 0) { wrap.style.display = "none"; return; }
+  wrap.style.display = "block";
+  list.innerHTML = _wolHistory.slice().reverse().map(h =>
+    `<div class="wol-hist-row">
+       <span class="wol-hist-mac">${h.mac}</span>
+       <span style="color:var(--text3)">${h.broadcast}</span>
+       <span class="wol-hist-ts">${new Date(h.ts).toLocaleString()}</span>
+     </div>`
+  ).join("");
+}
+
+function _wolClearHistory() {
+  _wolHistory = [];
+  localStorage.removeItem("nmp_wol_history");
+  _renderWolHistory();
+}
+
+async function sendWol() {
+  const mac   = document.getElementById("wol-mac").value.trim();
+  const bcast = document.getElementById("wol-bcast").value.trim() || "255.255.255.255";
+  if (!mac) { showToast("Enter a MAC address.", "var(--amber)"); return; }
+  const btn = document.getElementById("wol-btn");
+  btn.disabled = true; btn.textContent = "SENDING…";
+
+  try {
+    const d = await apiPost("/api/wol", { mac, broadcast: bcast });
+    document.getElementById("wol-result").style.display = "block";
+    document.getElementById("wol-result").innerHTML =
+      `<div class="wol-result-card ok">
+        ✓ Magic packet sent to <strong>${d.mac}</strong> via ${d.broadcast}<br>
+        <span style="font-size:10px;opacity:.7;">${new Date(d.sent_at).toLocaleTimeString()}</span>
+       </div>`;
+    _wolHistory.push({ mac: d.mac, broadcast: d.broadcast, ts: d.sent_at });
+    if (_wolHistory.length > 20) _wolHistory.shift();
+    localStorage.setItem("nmp_wol_history", JSON.stringify(_wolHistory));
+    _renderWolHistory();
+    pushLog("NETWORK", `WoL magic packet → ${d.mac}`);
+  } catch(e) {
+    document.getElementById("wol-result").style.display = "block";
+    document.getElementById("wol-result").innerHTML =
+      `<div class="wol-result-card err">✕ Failed: ${e.message}</div>`;
+  }
+  btn.disabled = false; btn.textContent = "SEND MAGIC PACKET";
+}
+
+// ─── SUBNET CALCULATOR (pure client-side) ─────────────────────────────────────
+function calcSubnet() {
+  const raw = document.getElementById("sc-input").value.trim();
+  const errEl  = document.getElementById("sc-error");
+  const resEl  = document.getElementById("sc-result");
+  errEl.style.display = "none";
+  resEl.style.display = "none";
+  if (!raw) { errEl.textContent = "Enter an IP/CIDR or IP/mask."; errEl.style.display = "block"; return; }
+
+  try {
+    // Parse input: CIDR notation or IP + mask
+    let ip, prefix;
+    if (raw.includes("/")) {
+      const [ipPart, rest] = raw.split("/");
+      if (rest.includes(".")) {
+        // Dotted mask
+        const mask = rest.trim();
+        const maskOcts = mask.split(".").map(Number);
+        if (maskOcts.length !== 4 || maskOcts.some(o => o < 0 || o > 255))
+          throw new Error("Invalid subnet mask.");
+        const maskBin = maskOcts.map(o => o.toString(2).padStart(8, "0")).join("");
+        if (!/^1*0*$/.test(maskBin)) throw new Error("Subnet mask is not contiguous.");
+        prefix = maskBin.split("").filter(b => b === "1").length;
+        ip     = ipPart.trim();
+      } else {
+        prefix = parseInt(rest, 10);
+        ip     = ipPart.trim();
+      }
+    } else {
+      ip = raw; prefix = 24;
+    }
+
+    if (prefix < 0 || prefix > 32) throw new Error("Prefix must be 0–32.");
+    const octs = ip.split(".").map(Number);
+    if (octs.length !== 4 || octs.some(o => isNaN(o) || o < 0 || o > 255))
+      throw new Error("Invalid IP address.");
+
+    const ipNum     = (octs[0] << 24 | octs[1] << 16 | octs[2] << 8 | octs[3]) >>> 0;
+    const maskNum   = prefix === 0 ? 0 : (0xFFFFFFFF << (32 - prefix)) >>> 0;
+    const netNum    = (ipNum & maskNum) >>> 0;
+    const bcastNum  = (netNum | (~maskNum >>> 0)) >>> 0;
+    const firstNum  = prefix < 31 ? netNum + 1 : netNum;
+    const lastNum   = prefix < 31 ? bcastNum - 1 : bcastNum;
+    const totalHosts  = Math.pow(2, 32 - prefix);
+    const usableHosts = prefix < 31 ? Math.max(0, totalHosts - 2) : totalHosts;
+
+    const n2ip = n => [(n >>> 24) & 0xFF, (n >>> 16) & 0xFF, (n >>> 8) & 0xFF, n & 0xFF].join(".");
+    const maskOcts = [(maskNum >>> 24) & 0xFF, (maskNum >>> 16) & 0xFF, (maskNum >>> 8) & 0xFF, maskNum & 0xFF];
+    const wildOcts = maskOcts.map(o => 255 - o);
+    const maskBin  = maskOcts.map(o => o.toString(2).padStart(8, "0"));
+    const netBin   = [(netNum >>> 24) & 0xFF, (netNum >>> 16) & 0xFF, (netNum >>> 8) & 0xFF, netNum & 0xFF].map(o => o.toString(2).padStart(8, "0"));
+    const ipBin    = octs.map(o => o.toString(2).padStart(8, "0"));
+
+    const cells = [
+      ["Network Address",   n2ip(netNum)],
+      ["Broadcast Address", n2ip(bcastNum)],
+      ["First Usable Host", prefix < 31 ? n2ip(firstNum) : "N/A"],
+      ["Last Usable Host",  prefix < 31 ? n2ip(lastNum)  : "N/A"],
+      ["Subnet Mask",       maskOcts.join(".")],
+      ["Wildcard Mask",     wildOcts.join(".")],
+      ["CIDR Notation",     `${n2ip(netNum)}/${prefix}`],
+      ["Total Addresses",   totalHosts.toLocaleString()],
+      ["Usable Hosts",      usableHosts.toLocaleString()],
+      ["IP Class",          prefix <= 8 ? "A" : prefix <= 16 ? "B" : prefix <= 24 ? "C" : "CIDR"],
+    ];
+
+    document.getElementById("sc-grid").innerHTML = cells.map(([label, val]) =>
+      `<div class="subnet-cell"><div class="subnet-cell-label">${label}</div><div class="subnet-cell-val">${val}</div></div>`
+    ).join("");
+
+    const fmt = bins => bins.map((b, i) => `<span style="color:var(--text)">${b}</span>${i < 3 ? '<span style="color:var(--text3)">.</span>' : ""}`).join("");
+    document.getElementById("sc-binary").innerHTML =
+      `<div>IP &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: ${fmt(ipBin)}</div>
+       <div>Network : ${fmt(netBin)}</div>
+       <div>Mask &nbsp;&nbsp;&nbsp;&nbsp;: ${fmt(maskBin.map((b, i) => `<span style="color:var(--accent)">${b.slice(0, prefix - i*8 < 8 ? Math.max(0, prefix - i*8) : 8)}</span><span style="color:var(--text3)">${b.slice(prefix - i*8 < 8 ? Math.max(0, prefix - i*8) : 8)}</span>`))}</div>`;
+
+    // Simpler binary display
+    document.getElementById("sc-binary").innerHTML =
+      `<div style="margin-bottom:4px;"><span style="color:var(--text3);min-width:80px;display:inline-block;">Input IP &nbsp;:</span> ${ipBin.join("·")}</div>
+       <div style="margin-bottom:4px;"><span style="color:var(--text3);min-width:80px;display:inline-block;">Network &nbsp; :</span> ${netBin.join("·")}</div>
+       <div><span style="color:var(--text3);min-width:80px;display:inline-block;">Mask &nbsp;&nbsp;&nbsp;&nbsp; :</span> <span style="color:var(--accent)">${"1".repeat(prefix)}</span><span style="color:var(--text3)">${"0".repeat(32 - prefix)}</span></div>`;
+
+    resEl.style.display = "block";
+    pushLog("NETWORK", `Subnet calc: ${n2ip(netNum)}/${prefix} — ${usableHosts.toLocaleString()} usable hosts`);
+  } catch(e) {
+    errEl.textContent = "Error: " + e.message;
+    errEl.style.display = "block";
+  }
+}
+
+// ─── ARP TABLE VIEWER ─────────────────────────────────────────────────────────
+let _arpData = [];
+
+async function loadArpTable() {
+  const btn = document.getElementById("arp-btn");
+  document.getElementById("arp-spinner").style.display = "block";
+  document.getElementById("arp-result").style.display  = "none";
+  document.getElementById("arp-empty").style.display   = "none";
+  document.getElementById("arp-stats").style.display   = "none";
+  btn.disabled = true; btn.textContent = "LOADING…";
+
+  try {
+    const d = await apiGet("/api/arp-table");
+    _arpData = d.entries || [];
+    document.getElementById("arp-spinner").style.display = "none";
+    btn.disabled = false; btn.textContent = "REFRESH";
+
+    const dynCount = _arpData.filter(e => e.type === "dynamic").length;
+    document.getElementById("arp-stats").textContent =
+      `${d.count} entries  ·  ${dynCount} dynamic  ·  ${d.count - dynCount} static  ·  ${new Date(d.fetched_at).toLocaleTimeString()}`;
+    document.getElementById("arp-stats").style.display = "block";
+
+    if (_arpData.length === 0) {
+      document.getElementById("arp-empty").style.display = "block";
+      return;
+    }
+    _filterArpTable();
+    pushLog("NETWORK", `ARP table: ${d.count} entries loaded`);
+  } catch(e) {
+    document.getElementById("arp-spinner").style.display = "none";
+    btn.disabled = false; btn.textContent = "REFRESH";
+    showToast("ARP table failed: " + e.message, "var(--red)");
+  }
+}
+
+function _filterArpTable() {
+  const q = (document.getElementById("arp-filter")?.value || "").toLowerCase();
+  const rows = q
+    ? _arpData.filter(e =>
+        e.ip.includes(q) || e.mac.toLowerCase().includes(q) ||
+        (e.vendor || "").toLowerCase().includes(q) ||
+        (e.interface || "").toLowerCase().includes(q)
+      )
+    : _arpData;
+
+  if (rows.length === 0 && _arpData.length > 0) {
+    document.getElementById("arp-list").innerHTML =
+      `<div style="padding:20px;text-align:center;color:var(--text3);font-family:var(--mono);font-size:11px;">No entries match the filter.</div>`;
+  } else {
+    document.getElementById("arp-list").innerHTML = rows.map(e => {
+      const badgeCls = e.type === "static" ? "static" : "dynamic";
+      return `<div class="arp-row">
+        <span style="color:var(--accent);">${e.ip}</span>
+        <span style="color:var(--text2);letter-spacing:.5px;">${e.mac}</span>
+        <span style="color:var(--text3);">${e.vendor || "Unknown"}</span>
+        <span><span class="arp-badge ${badgeCls}">${e.type}</span></span>
+        <span style="color:var(--text3);font-size:10px;">${e.interface || "—"}</span>
+      </div>`;
+    }).join("");
+  }
+  document.getElementById("arp-result").style.display = "block";
+}
+
 // ─── INIT ─────────────────────────────────────────────────────────────────────
 window.onload = () => {
   setTheme(localStorage.getItem("nmp_theme") || "dark", true);
   initChart();
   initWebSocket();
-  initNodeGraph(false);
+  initNodeGraph();
   updateDonut(0, 0, 0);
+  _autoLoadDevices();
+  _renderWolHistory();
   pushLog("SYSTEM", "Net-Monitor Pro 2.0 online \u2022 Session: " + USERNAME);
-  pushLog("NETWORK", "WebSocket metrics stream connected.");
+  pushLog("NETWORK", "WebSocket metrics stream connected. Auto device detection active.");
 };
 </script>
 </body>

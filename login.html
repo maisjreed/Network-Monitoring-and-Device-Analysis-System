@@ -3,238 +3,768 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Net-Monitor Pro | Login</title>
-
+  <title>Net-Monitor Pro | Secure Login</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+
+    :root {
+      --bg:        #070d1a;
+      --surface:   rgba(10,20,45,0.85);
+      --border:    rgba(56,189,248,0.18);
+      --accent:    #38bdf8;
+      --accent2:   #0ea5e9;
+      --green:     #22d3a0;
+      --text:      #e2e8f0;
+      --text2:     #94a3b8;
+      --text3:     #475569;
+      --mono:      'JetBrains Mono', monospace;
     }
+
+    html, body { height:100%; overflow:hidden; }
 
     body {
-      height: 100vh;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
       display: flex;
-      justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+      justify-content: center;
+      min-height: 100vh;
+      position: relative;
     }
 
-    .container {
-      width: 900px;
-      max-width: 95%;
+    /* ── Animated background canvas ────────────────────────────── */
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ── Scan line overlay ──────────────────────────────────────── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(0,0,0,0.03) 2px,
+        rgba(0,0,0,0.03) 4px
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* ── Main layout ────────────────────────────────────────────── */
+    .page-wrap {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 1100px;
+      padding: 24px;
       display: flex;
-      border-radius: 15px;
+      align-items: stretch;
+      gap: 0;
+      border-radius: 20px;
       overflow: hidden;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.4);
-      background: #fff;
+      box-shadow:
+        0 0 0 1px var(--border),
+        0 40px 80px rgba(0,0,0,0.7),
+        0 0 60px rgba(56,189,248,0.06);
     }
 
-    /* Left panel */
-    .left {
-      flex: 1;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      color: white;
-      padding: 40px;
+    /* ── Left hero panel ────────────────────────────────────────── */
+    .hero {
+      flex: 1.1;
+      background: linear-gradient(145deg, rgba(14,165,233,0.12), rgba(34,211,160,0.06));
+      border-right: 1px solid var(--border);
+      padding: 52px 44px;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      justify-content: space-between;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      position: relative;
+      overflow: hidden;
     }
 
-    .left h1 {
-      font-size: 32px;
-      margin-bottom: 15px;
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 320px; height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(56,189,248,0.12), transparent 70%);
+      pointer-events: none;
     }
 
-    .left p {
-      font-size: 15px;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    /* Right panel */
-    .right {
-      flex: 1;
-      padding: 40px;
+    .hero-brand {
       display: flex;
-      flex-direction: column;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .hero-logo {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--accent), var(--green));
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
       justify-content: center;
+      box-shadow: 0 0 20px rgba(56,189,248,0.35);
+      flex-shrink: 0;
     }
 
-    .right h2 {
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    .input-group {
-      margin-bottom: 15px;
-    }
-
-    .input-group label {
-      display: block;
-      margin-bottom: 5px;
-      font-size: 14px;
-      color: #555;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      outline: none;
-      transition: 0.3s;
-    }
-
-    .input-group input:focus {
-      border-color: #4facfe;
-      box-shadow: 0 0 5px rgba(79,172,254,0.5);
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      background: linear-gradient(135deg, #4facfe, #00f2fe);
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      transition: 0.3s;
-      margin-top: 10px;
-    }
-
-    .btn:hover {
-      opacity: 0.9;
-      transform: scale(1.02);
-    }
-
-    .footer {
-      margin-top: 15px;
-      text-align: center;
+    .hero-brand-text {
+      font-family: var(--mono);
       font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
     }
 
-    .footer a {
-      color: #4facfe;
-      text-decoration: none;
+    .hero-brand-sub {
+      font-size: 10px;
+      color: var(--text3);
+      font-family: var(--mono);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
     }
 
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-      }
+    .hero-main { margin-top: 40px; }
 
-      .left {
-        text-align: center;
-      }
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(56,189,248,0.1);
+      border: 1px solid rgba(56,189,248,0.25);
+      border-radius: 999px;
+      padding: 4px 12px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .hero-tag-dot {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 6px var(--green);
+      animation: pulse-dot 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-dot {
+      0%,100% { opacity:1; transform:scale(1); }
+      50%      { opacity:.5; transform:scale(0.75); }
+    }
+
+    .hero-title {
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-title span {
+      background: linear-gradient(90deg, var(--accent), var(--green));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-desc {
+      margin-top: 16px;
+      font-size: 14px;
+      color: var(--text2);
+      line-height: 1.7;
+      max-width: 360px;
+    }
+
+    .hero-stats {
+      display: flex;
+      gap: 20px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .hstat {
+      background: rgba(56,189,248,0.07);
+      border: 1px solid rgba(56,189,248,0.14);
+      border-radius: 10px;
+      padding: 12px 18px;
+    }
+
+    .hstat-val {
+      font-family: var(--mono);
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .hstat-lbl {
+      font-size: 10px;
+      color: var(--text3);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      margin-top: 3px;
+      font-family: var(--mono);
+    }
+
+    /* WiFi symbol centrepiece */
+    .wifi-wrap {
+      display: flex;
+      justify-content: center;
+      margin-top: 36px;
+    }
+
+    .wifi-svg { filter: drop-shadow(0 0 18px rgba(56,189,248,0.5)); }
+
+    .wifi-ring { animation: wifi-ping 2.2s ease-out infinite; transform-origin: 50% 80%; }
+    .wifi-ring:nth-child(2) { animation-delay: 0.35s; }
+    .wifi-ring:nth-child(3) { animation-delay: 0.7s; }
+
+    @keyframes wifi-ping {
+      0%   { opacity:0.9; }
+      60%  { opacity:0.2; }
+      100% { opacity:0.9; }
+    }
+
+    /* Ticker strip */
+    .ticker {
+      overflow: hidden;
+      white-space: nowrap;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      margin-top: 32px;
+    }
+
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker-scroll 28s linear infinite;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: .6px;
+    }
+
+    @keyframes ticker-scroll {
+      0%   { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* ── Right login panel ──────────────────────────────────────── */
+    .login-panel {
+      width: 400px;
+      flex-shrink: 0;
+      background: rgba(7,13,26,0.92);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      padding: 52px 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-header { margin-bottom: 32px; }
+
+    .login-eyebrow {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .login-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.3px;
+    }
+
+    .login-sub {
+      font-size: 13px;
+      color: var(--text3);
+      margin-top: 6px;
+    }
+
+    .field { margin-bottom: 18px; }
+
+    .field label {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text2);
+      text-transform: uppercase;
+      letter-spacing: .8px;
+      font-family: var(--mono);
+      margin-bottom: 8px;
+    }
+
+    .field label svg { flex-shrink:0; }
+
+    .field input {
+      width: 100%;
+      padding: 13px 16px 13px 44px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 13px;
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      position: relative;
+    }
+
+    .input-wrap {
+      position: relative;
+    }
+
+    .input-icon {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--text3);
+      transition: color .2s;
+    }
+
+    .field input:focus {
+      border-color: var(--accent);
+      background: rgba(56,189,248,0.05);
+      box-shadow: 0 0 0 3px rgba(56,189,248,0.12);
+    }
+
+    .field input:focus ~ .input-icon,
+    .input-wrap:focus-within .input-icon { color: var(--accent); }
+
+    .field input::placeholder { color: var(--text3); }
+
+    #error-msg {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      background: rgba(248,113,113,0.08);
+      border: 1px solid rgba(248,113,113,0.3);
+      border-radius: 8px;
+      padding: 11px 14px;
+      font-size: 12px;
+      color: #f87171;
+      font-family: var(--mono);
+      margin-bottom: 18px;
+    }
+
+    #error-msg.visible { display: flex; }
+
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--accent2), var(--accent));
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      font-family: 'Inter', sans-serif;
+      cursor: pointer;
+      letter-spacing: .3px;
+      transition: opacity .2s, transform .15s, box-shadow .2s;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(56,189,248,0.3);
+    }
+
+    .btn-login::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.12), transparent);
+      pointer-events: none;
+    }
+
+    .btn-login:hover:not(:disabled) {
+      opacity: .92;
+      transform: translateY(-1px);
+      box-shadow: 0 8px 28px rgba(56,189,248,0.4);
+    }
+
+    .btn-login:active:not(:disabled) { transform: translateY(0); }
+
+    .btn-login:disabled { opacity:.6; cursor:not-allowed; }
+
+    .btn-login .spinner {
+      display: none;
+      width: 16px; height: 16px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto;
+    }
+
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    .login-footer {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .login-footer-item {
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--text3);
+      letter-spacing: .5px;
+    }
+
+    .login-footer-item span {
+      color: var(--text2);
+      font-weight: 500;
+    }
+
+    .secure-badge {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--mono);
+      font-size: 10px;
+      color: var(--green);
+      letter-spacing: .5px;
+    }
+
+    @media (max-width: 860px) {
+      .hero { display: none; }
+      .login-panel { width: 100%; border-radius: 20px; }
+      .page-wrap { border-radius: 20px; padding: 0; }
     }
   </style>
 </head>
-
 <body>
 
-  <div class="container">
+<canvas id="bg-canvas"></canvas>
 
-    <!-- Left branding -->
-    <div class="left">
-      <h1>Welcome to<br>Net-Monitor Pro</h1>
-      <p>
-        A modern network monitoring solution designed to help you track,
-        analyze, and manage your network performance in real time.
-        Stay connected. Stay informed. Stay in control.
-      </p>
+<div class="page-wrap">
+
+  <!-- ── Left Hero Panel ───────────────────────────────────────── -->
+  <div class="hero">
+    <div>
+      <div class="hero-brand">
+        <div class="hero-logo">
+          <!-- Network pulse icon -->
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M5 12.55a11 11 0 0 1 14.08 0"/>
+            <path d="M1.42 9a16 16 0 0 1 21.16 0"/>
+            <path d="M8.53 16.11a6 6 0 0 1 6.95 0"/>
+            <line x1="12" y1="20" x2="12.01" y2="20"/>
+          </svg>
+        </div>
+        <div>
+          <div class="hero-brand-text">Net-Monitor Pro</div>
+          <div class="hero-brand-sub">Enterprise Network Intelligence</div>
+        </div>
+      </div>
+
+      <div class="hero-main">
+        <div class="hero-tag">
+          <div class="hero-tag-dot"></div>
+          System Operational
+        </div>
+        <div class="hero-title">
+          Network<br><span>Command Center</span>
+        </div>
+        <div class="hero-desc">
+          Real-time device discovery, traffic analysis, and infrastructure health monitoring for enterprise WiFi networks.
+        </div>
+      </div>
+
+      <!-- Animated WiFi Symbol -->
+      <div class="wifi-wrap">
+        <svg class="wifi-svg" width="120" height="90" viewBox="0 0 120 90" fill="none">
+          <!-- Outermost ring -->
+          <path class="wifi-ring" d="M8 42 C25 18, 95 18, 112 42" stroke="rgba(56,189,248,0.4)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <!-- Middle ring -->
+          <path class="wifi-ring" d="M22 54 C33 38, 87 38, 98 54" stroke="rgba(56,189,248,0.65)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <!-- Inner ring -->
+          <path class="wifi-ring" d="M36 66 C42 56, 78 56, 84 66" stroke="rgba(56,189,248,0.9)" stroke-width="5" stroke-linecap="round" fill="none"/>
+          <!-- Dot -->
+          <circle cx="60" cy="78" r="5" fill="#38bdf8" style="filter:drop-shadow(0 0 8px #38bdf8)"/>
+          <!-- Signal lines radiating from dot -->
+          <line x1="60" y1="78" x2="60" y2="14" stroke="rgba(56,189,248,0.08)" stroke-width="1" stroke-dasharray="3 4"/>
+          <line x1="60" y1="78" x2="20" y2="40" stroke="rgba(56,189,248,0.06)" stroke-width="1" stroke-dasharray="3 4"/>
+          <line x1="60" y1="78" x2="100" y2="40" stroke="rgba(56,189,248,0.06)" stroke-width="1" stroke-dasharray="3 4"/>
+        </svg>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-val" id="stat-devices">—</div>
+          <div class="hstat-lbl">Devices</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-val" style="color:var(--green)" id="stat-online">—</div>
+          <div class="hstat-lbl">Online</div>
+        </div>
+        <div class="hstat">
+          <div class="hstat-val">v2.0</div>
+          <div class="hstat-lbl">Version</div>
+        </div>
+      </div>
     </div>
 
-    <!-- Right login -->
-    <div class="right">
-      <h2>Login to your account</h2>
-
-      <form id="loginForm" novalidate>
-        <div class="input-group">
-          <label for="username">Username</label>
-          <input id="username" type="text" placeholder="Enter your username" autocomplete="username" required>
-        </div>
-
-        <div class="input-group">
-          <label for="password">Password</label>
-          <input id="password" type="password" placeholder="Enter your password" autocomplete="current-password" required>
-        </div>
-
-        <div id="error-msg" style="display:none; color:#e74c3c; font-size:13px; margin-bottom:10px; padding:10px; background:rgba(231,76,60,0.08); border-radius:6px; border-left:3px solid #e74c3c;"></div>
-
-        <button class="btn" id="loginBtn" type="submit">Login</button>
-
-        <div class="footer" style="margin-top:20px; color:#888; font-size:12px;">
-          Default: admin / Admin123 &nbsp;|&nbsp; Running on port 8000
-        </div>
-      </form>
+    <div class="ticker">
+      <span class="ticker-inner" id="ticker-text">
+        ● SYSTEM READY &nbsp;·&nbsp; ARP MONITOR ACTIVE &nbsp;·&nbsp; SNMP PROBE ENABLED &nbsp;·&nbsp; TOPOLOGY MAP LIVE &nbsp;·&nbsp; DEVICE CLASSIFICATION RUNNING &nbsp;·&nbsp; LATENCY TRACKING ON &nbsp;·&nbsp; CACHE PERSISTENCE ENABLED &nbsp;·&nbsp; JWT AUTH ACTIVE &nbsp;·&nbsp;
+        ● SYSTEM READY &nbsp;·&nbsp; ARP MONITOR ACTIVE &nbsp;·&nbsp; SNMP PROBE ENABLED &nbsp;·&nbsp; TOPOLOGY MAP LIVE &nbsp;·&nbsp; DEVICE CLASSIFICATION RUNNING &nbsp;·&nbsp; LATENCY TRACKING ON &nbsp;·&nbsp; CACHE PERSISTENCE ENABLED &nbsp;·&nbsp; JWT AUTH ACTIVE &nbsp;·&nbsp;
+      </span>
     </div>
-
   </div>
 
-  <script>
-    // Redirect if already authenticated
-    if (localStorage.getItem("nmp_token")) {
-      window.location.replace("/dashboard");
+  <!-- ── Right Login Panel ─────────────────────────────────────── -->
+  <div class="login-panel">
+    <div class="login-header">
+      <div class="login-eyebrow">Secure Access</div>
+      <div class="login-title">Sign in to your account</div>
+      <div class="login-sub">Enter your administrator credentials to continue</div>
+    </div>
+
+    <form id="loginForm" novalidate>
+      <div class="field">
+        <label>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          Username
+        </label>
+        <div class="input-wrap">
+          <input id="username" type="text" placeholder="admin" autocomplete="username" required spellcheck="false">
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Password
+        </label>
+        <div class="input-wrap">
+          <input id="password" type="password" placeholder="••••••••" autocomplete="current-password" required>
+          <svg class="input-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        </div>
+      </div>
+
+      <div id="error-msg">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span id="error-text">Invalid credentials.</span>
+      </div>
+
+      <button class="btn-login" id="loginBtn" type="submit">
+        <span id="btn-label">Sign In</span>
+        <div class="spinner" id="btn-spinner"></div>
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <div>
+        <div class="login-footer-item">Default &nbsp;<span>admin / Admin123</span></div>
+        <div class="login-footer-item" style="margin-top:4px;">Port &nbsp;<span>8000</span></div>
+      </div>
+      <div class="secure-badge">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        JWT Secured
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // ── Redirect if already authenticated ─────────────────────────
+  if (localStorage.getItem("nmp_token")) {
+    window.location.replace("/dashboard");
+  }
+
+  // ── Animated background: network node graph ───────────────────
+  (function () {
+    const canvas = document.getElementById("bg-canvas");
+    const ctx    = canvas.getContext("2d");
+    let W, H, nodes, animId;
+
+    function resize() {
+      W = canvas.width  = window.innerWidth;
+      H = canvas.height = window.innerHeight;
     }
 
-    const form    = document.getElementById("loginForm");
-    const errBox  = document.getElementById("error-msg");
-    const loginBtn = document.getElementById("loginBtn");
-
-    function showError(msg) {
-      errBox.textContent = msg;
-      errBox.style.display = "block";
+    function mkNodes(n) {
+      return Array.from({ length: n }, function() {
+        return {
+          x:  Math.random() * W,
+          y:  Math.random() * H,
+          vx: (Math.random() - 0.5) * 0.4,
+          vy: (Math.random() - 0.5) * 0.4,
+          r:  1.5 + Math.random() * 2.5,
+          pulse: Math.random() * Math.PI * 2,
+        };
+      });
     }
 
-    function setLoading(loading) {
-      loginBtn.disabled = loading;
-      loginBtn.textContent = loading ? "Authenticating…" : "Login";
+    resize();
+    nodes = mkNodes(55);
+    window.addEventListener("resize", function() { resize(); nodes = mkNodes(55); });
+
+    const LINK_DIST = 160;
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Subtle radial glow at center
+      const grad = ctx.createRadialGradient(W/2, H/2, 0, W/2, H/2, Math.max(W, H) * 0.6);
+      grad.addColorStop(0, "rgba(14,165,233,0.04)");
+      grad.addColorStop(1, "transparent");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, W, H);
+
+      // Links
+      for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+          const dx = nodes[j].x - nodes[i].x;
+          const dy = nodes[j].y - nodes[i].y;
+          const d  = Math.sqrt(dx*dx + dy*dy);
+          if (d < LINK_DIST) {
+            const alpha = (1 - d / LINK_DIST) * 0.18;
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(56,189,248,${alpha})`;
+            ctx.lineWidth   = 0.8;
+            ctx.stroke();
+          }
+        }
+      }
+
+      // Nodes
+      nodes.forEach(function(n) {
+        n.pulse += 0.025;
+        const glow = 0.5 + 0.5 * Math.sin(n.pulse);
+
+        // Outer glow ring
+        const radGrad = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r * 5);
+        radGrad.addColorStop(0, "rgba(56,189,248," + (glow * 0.15) + ")");
+        radGrad.addColorStop(1, "transparent");
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r * 5, 0, Math.PI * 2);
+        ctx.fillStyle = radGrad;
+        ctx.fill();
+
+        // Core dot
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+        ctx.fillStyle = "rgba(56,189,248," + (0.5 + glow * 0.5) + ")";
+        ctx.fill();
+
+        // Move
+        n.x += n.vx;
+        n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1;
+        if (n.y < 0 || n.y > H) n.vy *= -1;
+      });
+
+      animId = requestAnimationFrame(draw);
+    }
+    draw();
+  })();
+
+  // ── Load stats anonymously (no auth needed for status) ────────
+  fetch("/api/status").then(function(r) { return r.json(); }).then(function(d) {
+    var t = d.device_count != null ? d.device_count : "—";
+    var o = d.online_count  != null ? d.online_count  : "—";
+    var el1 = document.getElementById("stat-devices");
+    var el2 = document.getElementById("stat-online");
+    if (el1) el1.textContent = t;
+    if (el2) el2.textContent = o;
+  }).catch(function() {});
+
+  // ── Login form logic ──────────────────────────────────────────
+  const form     = document.getElementById("loginForm");
+  const errBox   = document.getElementById("error-msg");
+  const errText  = document.getElementById("error-text");
+  const loginBtn = document.getElementById("loginBtn");
+  const btnLabel = document.getElementById("btn-label");
+  const spinner  = document.getElementById("btn-spinner");
+
+  function showError(msg) {
+    errText.textContent = msg;
+    errBox.classList.add("visible");
+    loginBtn.disabled = false;
+    btnLabel.style.display = "block";
+    spinner.style.display  = "none";
+  }
+
+  function setLoading(on) {
+    loginBtn.disabled     = on;
+    btnLabel.style.display = on ? "none"  : "block";
+    spinner.style.display  = on ? "block" : "none";
+    if (!on) errBox.classList.remove("visible");
+  }
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    errBox.classList.remove("visible");
+
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!username || !password) {
+      showError("Username and password are required.");
+      return;
     }
 
-    form.addEventListener("submit", async function (e) {
-      e.preventDefault();
-      errBox.style.display = "none";
+    setLoading(true);
+    try {
+      const body = new URLSearchParams({ username, password });
+      const res  = await fetch("/auth/login", {
+        method:  "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body:    body.toString(),
+      });
 
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value;
-
-      if (!username || !password) {
-        showError("Username and password are required.");
+      if (!res.ok) {
+        const data = await res.json().catch(function() { return {}; });
+        showError(data.detail || "Invalid credentials. Please try again.");
         return;
       }
 
-      setLoading(true);
-      try {
-        // OAuth2 password flow requires application/x-www-form-urlencoded
-        const body = new URLSearchParams({ username, password });
-        const res  = await fetch("/auth/login", {
-          method:  "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body:    body.toString(),
-        });
+      const data = await res.json();
+      localStorage.setItem("nmp_token",    data.access_token);
+      localStorage.setItem("nmp_username", data.username);
+      localStorage.setItem("nmp_exp",      String(Date.now() + data.expires_in * 1000));
+      window.location.replace("/dashboard");
+    } catch (err) {
+      showError("Cannot reach the server. Is it running on port 8000?");
+    } finally {
+      if (!window.location.href.includes("dashboard")) setLoading(false);
+    }
+  });
 
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}));
-          showError(data.detail || "Invalid credentials. Please try again.");
-          return;
-        }
-
-        const data = await res.json();
-        localStorage.setItem("nmp_token",    data.access_token);
-        localStorage.setItem("nmp_username", data.username);
-        localStorage.setItem("nmp_exp",      String(Date.now() + data.expires_in * 1000));
-
-        window.location.replace("/dashboard");
-      } catch (err) {
-        showError("Cannot reach the server. Is it running on port 8000?");
-      } finally {
-        setLoading(false);
-      }
-    });
-  </script>
-
+  // Focus username on load
+  window.addEventListener("DOMContentLoaded", function() {
+    document.getElementById("username").focus();
+  });
+</script>
 </body>
 </html>
